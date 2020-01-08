@@ -1,0 +1,41 @@
+#! /bin/bash
+
+declare -r PROGRAM=$(basename $0)
+
+if [[ $1 == "-D" ]]; then
+    dir="$HOME/test/.vimswap"
+    echo "::DEBUG MODE:: a test directory in \$HOME/test/.vimswap/ must exist"
+    shift
+else
+    dir="$HOME/.vimswap"
+fi
+
+# force it. don't ask just delete
+if [[ $1 == "-f" ]]; then
+    rm $dir/*
+    exit 0
+fi
+
+files="$(ls $dir) all done"
+if [[ $(echo $files | wc -w | tr -d '[:blank:]') -eq 2 ]]
+then
+    echo "No files in ~/.vimswap"
+    exit 0
+fi
+
+PS3="what file(s) do you want to delete? "
+echo "note: '$PROGRAM -f' removes all files with no extra action necassary"
+select file in $files
+do
+    if [[ $file == "all" ]]; then
+        echo "you chose... wisely"
+        rm -v $dir/*
+        break
+    fi
+    if [[ $file == "done" ]]; then
+        break
+    fi
+    rm -v $dir/$file
+done
+
+exit 0

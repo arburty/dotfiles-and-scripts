@@ -1,0 +1,27 @@
+#! /bin/bash
+
+# Author: Austin Burt
+# Email: austin@burt.us.com
+# Date:
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+[[ -f /Users/austin.burt/bin/colorValues ]] && source /Users/austin.burt/bin/colorValues
+
+if [[ -z $1 ]]
+then
+    echo no arg given
+else
+    if [[ $1 == "make"  ]] # remove
+    then # remove
+        if [[ ! -z $2 ]] # remove
+        then # remove
+            cat $0 | grep -v "remove" >> ~/bin/$2 # remove
+            echo "the script '$2' has been created" # remove
+            chmod 755 ~/bin/$2 # remove
+            exit 0 # remove
+        fi # remove
+    fi # remove
+    echo arg given
+fi
+
+exit 0

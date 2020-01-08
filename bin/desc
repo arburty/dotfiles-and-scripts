@@ -1,0 +1,143 @@
+#! /bin/bash
+
+# Author: Austin Burt
+# Email: austin@burt.us.com
+# Date: 5/23/19
+
+declare -r PROGRAM=$(basename $0)
+declare -r branchFile="$HOME/git/branchnames"
+declare -r backup="$HOME/notes/branchnamesbackup"
+declare -r backup2="$HOME/notes/branchnamesbackup2"
+declare -r cleanedBranches="$HOME/notes/cleanedbranchnames"
+declare -r myBranch=$(git mybr)
+
+die() {
+    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
+    exit 1
+}
+
+USAGE() {
+    echo "USAGE:"
+    echo "Create descriptions for a git branch branch. default is the current one."
+    echo "Descriptions live in $branchFile."
+    echo "desc [flag] <description>"
+    echo "FLAGS:"
+    echo "-n: give a different branch a name"
+    echo "      desc -n <branchname> <description>"
+    echo "-c: clean up the file holding descriptions. It leaves the most recent one"
+    echo "    it moves the removed lines from the description file,"
+    echo "    to $cleanedBranches. "
+    echo "    searchTerm defaults to current branch."
+    echo "      desc -c [searchTerm]"
+    echo "-rm: like -c but it does not leave the most recent description"
+    echo "      desc -rm [searchTerm]"
+    echo "-l: list the lines in $branchFile bases on searchTerm"
+    echo "      desc -l [searchTerm]"
+    echo "-la: list every description in $branchFile"
+    echo "      desc -la"
+    echo "-u: Undo. copies the backup file in $backup"
+    echo "    back into the descripion file."
+    exit 0
+}
+
+[[ ! -z $1 ]] || USAGE
+[[ ! -z $myBranch ]] || die "Not in a git repo."
+[[ $myBranch == "master" ]] && die "Can't give master a description"
+
+new() {
+    branchName=$myBranch
+    desc=$@
+    echo "making description: $desc, for branch: $branchName"
+    echo "$myBranch $@" >> $branchFile
+}
+
+newName() {
+    branchName=$1; shift
+    desc=$@
+    echo "making description: $desc, for branch: $branchName"
+    echo "$branchName $@" >> $branchFile
+}
+
+remove() {
+    [[ ! -z $1 ]] || die "no string given to remove"
+    string=$1
+    tmpFile="/tmp/uniqName"
+    cat $branchFile | grep -v -e "$string" > $tmpFile
+    cp $tmpFile $branchFile
+}
+
+clean() {
+    cleanUpBranch=$myBranch
+    [[ ! -z $1 ]] && cleanUpBranch=$1
+    count=$(cat $branchFile | grep -e "$cleanUpBranch" | wc -l)
+
+    if [[ $count -le 1 ]]
+    then
+        return
+    fi
+
+    cat $branchFile | grep -e "$cleanUpBranch"
+    list=$(cat $branchFile | grep -e "$cleanUpBranch")
+    ((count--))
+    echo "$list" | head -n $count >> $cleanedBranches
+    save=$(echo "$list" | tail -n 1)
+
+    remove $cleanUpBranch
+    echo "$save" >> $branchFile
+}
+
+listAll() {
+    searchTerm=$myBranch
+    [[ ! -z $1 ]] && searchTerm=$1
+    count=$(cat $branchFile | grep -e "$searchTerm" | wc -l)
+
+    if [[ $count -ge 1 ]]
+    then
+        cat $branchFile | grep -e "$searchTerm"
+    fi
+}
+
+backup() {
+    cp $backup $backup2
+    cp $branchFile $backup
+}
+
+main() {
+    case $1 in
+        "-l" )
+            shift
+            listAll "$1"
+            ;;
+        "-la" )
+            cat $branchFile
+            ;;
+        "-c" )
+            backup
+            shift
+            clean "$@"
+            ;;
+        "-rm" )
+            backup
+            shift
+            remove "$@"
+            ;;
+        "-n" )
+            backup
+            shift
+            newName "$@"
+            ;;
+        "-u" )
+            cp $backup $branchFile
+            cp $backup2 $backup
+            ;;
+        "--help" )
+            USAGE
+        ;;
+        * )
+            new "$@"
+    esac
+}
+
+main "$@"
+
+exit 0

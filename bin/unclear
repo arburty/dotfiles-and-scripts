@@ -1,0 +1,15 @@
+#! /bin/bash
+
+colorValuesPath=$HOME/bin/colorValues
+[[ -f $colorValuesPath ]] && . $colorValuesPath || echo couldnt source $colorValuesPath
+
+let lines=$(tput lines)-3
+let cols=$(tput cols)
+let total=$(($lines * $cols))
+# repeat $(($lines * $cols)) echo -n X
+while [[ $x -lt $total ]] ; do
+	echo -e -n "${GREEN}X"
+	((x++))
+done
+
+exit 0

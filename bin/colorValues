@@ -1,0 +1,100 @@
+#! /bin/bash
+
+# Author: Austin Burt
+# Email: austin@burt.us.com
+# Date: 18/07/19
+
+# This script is mosty used to be sourced from shell startup or in scripts wanting to use color,
+
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0) if not sourced declare the program name
+
+declareColors() {
+    declare -rg BLACK='\033[0;30m'
+    declare -rg RED='\033[0;31m'
+    declare -rg GREEN='\033[0;32m'
+    declare -rg DARK_GRAY='\033[1;30m'
+    declare -rg LIGHT_RED='\033[1;31m'
+    declare -rg LIGHT_GREEN='\033[1;32m'
+    declare -rg BROWN_ORANGE='\033[0;33m'
+    declare -rg YELLOW='\033[1;33m'
+    declare -rg BLUE='\033[0;34m'
+    declare -rg LIGHT_BLUE='\033[1;34m'
+    declare -rg PURPLE='\033[0;35m'
+    declare -rg LIGHT_PURPLE='\033[1;35m'
+    declare -rg CYAN='\033[0;36m'
+    declare -rg LIGHT_CYAN='\033[1;36m'
+    declare -rg LIGHT_GRAY='\033[0;37m'
+    declare -rg WHITE='\033[1;37m'
+    declare -rg NC='\033[0m' # No Color
+
+    declare -g COLORARRAY[1]=$RED
+    declare -g COLORARRAY[2]=$GREEN
+    declare -g COLORARRAY[3]=$LIGHT_BLUE
+    declare -g COLORARRAY[4]=$PURPLE
+    declare -g COLORARRAY[5]=$BROWN_ORANGE
+    declare -g COLORARRAY[6]=$CYAN
+    declare -g COLORARRAY[7]=$YELLOW
+}
+
+printColors() {
+    echo -e "Default ${BLACK}black${NC} << black"
+    echo -e "Default ${RED}Red${NC}"
+    echo -e "Default ${LIGHT_RED}light red${NC}"
+    echo -e "Default ${GREEN}Green${NC}"
+    echo -e "Default ${LIGHT_GREEN}light green${NC}"
+    echo -e "Default ${DARK_GRAY}dark gray${NC}"
+    echo -e "Default ${LIGHT_GRAY}light gray${NC}"
+    echo -e "Default ${WHITE}white${NC}"
+    echo -e "Default ${BROWN_ORANGE}brown_orange${NC}"
+    echo -e "Default ${YELLOW}yellow${NC}"
+    echo -e "Default ${BLUE}blue${NC}"
+    echo -e "Default ${LIGHT_BLUE}light blue${NC}"
+    echo -e "Default ${CYAN}cyan${NC}"
+    echo -e "Default ${lIGHT_CYAN}light cyan${NC}"
+    echo -e "Default ${PURPLE}purple${NC}"
+    echo -e "Default ${LIGHT_PURPLE}light purple${NC}"
+    shift
+}
+
+rainbow() { # print text in alternating colors. For pretty
+    if [ $# = 0 ]
+    then
+        DEFAULT_INPUT_FILE=/dev/stdin
+    else
+        DEFAULT_INPUT_FILE=
+    fi
+
+    # Iterates over all parameters or /dev/stdin
+    for FILE in "$@" $DEFAULT_INPUT_FILE
+    do
+        while IFS= read -r LINE
+        do
+            # Do whatever you want with LINE here.
+            for (( i=0; i<${#LINE}; i++ )); do
+                char=${LINE:$i:1}
+                [[ $char == "\\" && ${LINE:$i+1:1} == "n" ]] && echo "" && let i=$i+1 && continue
+                echo -ne "${COLORARRAY[(($i%7))]}${LINE:$i:1}"
+            done
+        done < "$FILE"
+    done
+        echo -e "${NC}"
+
+    return 0
+    foo="12345671234567"
+    [[ $# -gt 0 ]] && foo=$(echo "$@")
+    for (( i=0; i<${#foo}; i++ )); do
+        char=${foo:$i:1}
+        [[ $char == "\\" && ${foo:$i+1:1} == "n" ]] && echo "" && let i=$i+1 && continue
+        echo -ne "${COLORARRAY[(($i%7))]}${foo:$i:1}"
+    done
+    echo -e "${NC}"
+}
+
+# Main
+arraysize=${#COLORARRAY[@]} # used to determine if the read only variables are already declared
+[[ $arraysize -eq 0 ]] && declareColors
+[[ $1 == "-p" ]] && printColors
+[[ $1 == "-r" ]] && shift && rainbow "$@"
+
+return 0

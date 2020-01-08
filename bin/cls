@@ -1,0 +1,38 @@
+#! /usr/local/bin/python3
+
+# Clear the screen in a random order.
+import sys
+from time import time, sleep
+from os import getenv, system, get_terminal_size
+from subprocess import check_output
+from random import randrange, shuffle
+
+end = time() + 1.15			# When we’ll be done
+    #was .85, I changed it because of hardcoded lines & columns
+
+# Capture this output earlier so timing is accurate
+cnorm = check_output(['tput', 'cnorm'], universal_newlines=True)
+
+system('tput civis')			# Make the cursor invisible
+
+# lines = int(sys.argv[1])
+# columns = int(sys.argv[2])
+# lines = int(str(getenv('LINES')))
+# columns = int(str(getenv('COLUMNS')))
+# lines, columns = subprocess.check_output(['stty', 'size']).decode().split()
+ts = get_terminal_size()
+lines = ts.lines
+columns = ts.columns
+
+list = ['\033[%d;%dH ' % (y+1,x+1)
+        for y in range(lines)
+            for x in range(columns)] [:-1]  # last element might scroll
+shuffle(list)
+
+while list:
+    delta = (end - time())/len(list)
+    if delta > 0:
+        sleep(delta)		                # Sleep if we have to
+    print(list.pop(), end='', flush=True)	# Clear a character position
+
+print(cnorm, end='\033[H\033[J')	# Normal cursor; home and clear screen

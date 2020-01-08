@@ -1,0 +1,41 @@
+" visual setup
+set relativenumber
+colorscheme solarized8_dark_high
+
+"mods
+nnoremap Q @q
+nnoremap Y y$
+nnoremap _ ggY``p
+
+vnoremap <Esc> <Esc>gV
+
+"vi movement in normal mode using ctrl
+inoremap <C-k> <Up>
+inoremap <C-j> <Down>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+" Custom Leader Commands
+nnoremap <leader>s :w<cr>
+inoremap <leader>s <C-c>:w<cr>
+ noremap <leader>q :q!<cr>
+
+nnoremap <leader>H :bp<cr>
+nnoremap <leader>L :bn<cr>
+nnoremap <leader><space> :noh<cr>
+nnoremap <leader>o o<Esc>
+nnoremap <leader>O O<Esc>
+nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
+nnoremap <leader>b :set filetype=sh
+
+" Redraw the cursor to have a line cursor in insert and a block cursor in normal added 12/27/19
+if has("autocmd")
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+  au InsertEnter,InsertChange *
+\ if v:insertmode == 'i' |
+\   silent execute '!echo -ne "\e[6 q"' | redraw! |
+\ elseif v:insertmode == 'r' |
+\   silent execute '!echo -ne "\e[4 q"' | redraw! |
+\ endif
+au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif

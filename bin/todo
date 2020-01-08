@@ -1,0 +1,250 @@
+#! /bin/bash
+# Austin Burt
+# A todo list to keep you organized
+
+# save the path to where the data is stored
+path="$HOME/.to_do_files"
+
+# save the program name because add (and others) use shift
+# set debug
+# fileCount is how many todo list items there are plus the header
+PROGRAM=$(basename $0)
+debug=false
+
+# For testing
+if [[ "$1" == "--D" ]]
+then
+    debug=true;
+    shift
+fi
+if $debug ; then
+    echo "::DEBUGGING::"
+    path="$HOME/test/.to_do_files"
+    echo ::DB::$path
+fi
+
+# after debug setup for $path
+let fileCount=$(ls $path | wc -l | tr -d '[:blank:]')
+
+# if there is no directory yet, the directory is empty,
+# or the header file is missing
+if [[ ! -d $path || ! -f $path/header ]]
+then
+	mkdir $path 2> /dev/null
+	echo "The Ever Growing List of Things To Do" >> $path/header
+fi
+
+# precedes main for efficiency
+# main starts at bottom
+if [[ $# -eq 0 ]]
+then 
+	cat "$path/header"
+
+	if [[ $fileCount -eq 1 ]]
+	then
+		echo "Nothing to do!"
+		exit 0
+	fi
+
+	for (( i=1; i<$fileCount; i++ ))
+	do
+		echo -n "	$i) "
+		cat "$path/$i"
+	done
+
+	exit 0
+fi
+
+###########################
+        # Methods #
+###########################
+USAGE() {
+	echo "USAGE: '...' means you can repeat last []"
+	echo "todo add [[OPTION] [STRING]] ..."
+	echo "todo addto [List Number] [[OPTION] [STRING]] ..."
+	echo "todo rm [list number] ..."
+	echo "todo swap [List Number] [List Number]"
+	echo "todo header [STRING] // changes the header text"
+	echo "  OPTIONS:"
+	echo "    -h  header // not valid for addto"
+	echo "    -t  task"
+	echo "    -s  subtask"
+	exit 1
+}
+
+addH() {
+	echo "$1" >> $path/$fileCount 
+	echo "adding header  : $1"
+	let "fileCount++"
+}
+
+# PARAM: string to be added, (optional) file to edit
+# $1 = string | $2 = "" || filename
+addT() {
+	if [[ $2 != "" ]]
+	then
+		let file=$2
+	else
+		let file="$fileCount-1"
+	fi
+	echo "		# $1" >> $path/$file
+        echo "adding task    :   # $1"
+}
+
+
+# PARAM: string to be added, (optional) file to edit
+# $1 = string | $2 = "" || filename
+addS(){
+	if [[ $2 != "" ]]
+	then
+		let file=$2
+	else
+		let file="$fileCount-1"
+	fi
+
+	echo "			~ $1" >> $path/$file
+	echo "adding subtask :      ~ $1"
+	
+}
+
+# should be passed option and string
+# $1 = option | $2 = string
+add() {
+    case $1 in
+	    "-h" )
+	        addH "$2";;
+	    "-t" )
+	        addT "$2";;
+	    "-s" )
+	        addS "$2";;
+	    * )
+	        USAGE;;
+    esac
+}
+
+# parameters are file to edit, option, then the string
+# $1 = file | $2 = option | $3 = string
+addTo() {
+    case $2 in
+        "-t" )
+	        addT "$3" "$1" #passing string to be added and then which file
+            ;;
+        "-s" )
+		    addS "$3" "$1"
+            ;;
+        * )
+            USAGE;;
+    esac
+}
+
+remove() {
+	shift # move 'rm' out of files to delete
+	for file in $@
+	do
+		if [[ -f $path/$file ]]
+		then
+			echo -n "removed task #$file: "
+			head -n 1 $path/$file 
+			rm $path/$file
+		else
+			echo "$PROGRAM: $file is not a list number" 1>&2
+		fi
+	done
+}
+
+reorder() {
+	let fileCount=$(ls $path | wc -l)
+	let current=1 # where the file should be
+	let wrong=1 # what the file actually is (4 instead of 3)
+
+	while [[ $current -lt $fileCount ]]
+	do
+		if [[ -f $path/$current ]]
+		then
+			let "current++"
+			let "wrong++"
+		elif [[ -f $path/$wrong && $current -ne $wrong ]]
+		then
+			mv $path/$wrong $path/$current
+			let "current++"
+			let "wrong++"
+		else
+			let "wrong++"
+		fi
+	done
+}
+
+swap() {
+	if [[ -f $path/$1 && -f $path/$2 ]]
+	then
+		mv $path/$1 $path/$1.old
+		mv $path/$2 $path/$1
+		mv $path/$1.old $path/$2
+	else
+		echo "Not valid options. Are you sure $1, and $2 are list item numbers?" 1>&2
+	fi
+}
+
+
+########################
+        # Main #
+########################
+
+main() {
+
+	case $1 in
+	"add" )
+		shift # option has become $1 and "add" became $0
+			
+		while (( "$#" ))
+		do
+			option="$1"
+			string="$2"
+			add "$option" "$string"
+			shift 2
+		done
+		;;
+	"rm" )
+		remove "$@"
+		reorder
+		;;
+	"swap" )
+		if [[ $# -eq 3 ]]
+		then
+			swap $2 $3
+		# if flagged for task swapping 
+		elif [[ $2 -eq '-t' ]]
+		then
+			shift 2
+			swapT "$@"
+		else
+			echo "$PROGRAM: swap takes two list numbers as arguments" 1>&2
+		fi
+		;;
+	"addto" )
+		# example input is [addto -t string]
+		# give addto string first then the option
+		file="$2"
+		shift 2 # move option into $1
+
+		while (( "$#" )) #add infinite -t and -s options into file
+		do
+			option="$1"
+			string="$2"
+			addTo "$file" "$option" "$string"
+			shift 2
+		done
+		;;
+	"header" )
+		if [[ $2 == "" ]] ; then
+			echo "$PROGRAM: header takes a string argument to change the header text" 1>&2
+			exit 2
+		fi
+		echo "$2" > $path/header
+		;;
+	* ) USAGE ;;
+	esac
+	exit 0
+}
+
+main "$@"
