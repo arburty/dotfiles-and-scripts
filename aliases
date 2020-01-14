@@ -2,10 +2,10 @@
 # Austin Burt
 # austin@burt.us.com
 
-# Alias' {{{1
+# Alias's {{{1
 alias cl='clear'
 alias bd='. bd -si'
-alias fortune='fortune | tee -a ~/.fortunecookies && echo "" >> ~/.fortunecookies'
+alias fortune='fortune | tee -a ~/.fortuneCookies && echo "" >> ~/.fortuneCookies'
 alias exer="exercism"
 alias exersub="exercism submit src/main/java/*.java"
 alias fzf='fzf -m --cycle --reverse'
@@ -21,7 +21,7 @@ alias vv='vim $HOME/.vimrc.local'
 alias va='vim $HOME/.config/aliases'
 # }}}
 
-# firefox{{{2
+# firefox {{{2
 alias ff="firefox"
 alias ffw="firefox new-window"
 alias fft="firefox new-tab"

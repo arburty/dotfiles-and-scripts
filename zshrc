@@ -12,9 +12,6 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"
 
-# Uncomment the following line to enable command auto-correction.
-#ENABLE_CORRECTION="true"
-
 plugins=(
     git
     zsh-autosuggestions
@@ -23,7 +20,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# Preferred editor for local and remote sessions
+# Preferred Vim editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
@@ -42,10 +39,18 @@ if [[ $(print -P "%#") =~ "#" ]]; then
     user_symbol = "#"
 fi
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
+
+# Enable 'O' in Vi mode to edit current command in Vim editor
+# source: https://nuclearsquid.com/writings/edit-long-commands/
+autoload -U edit-command-line
+# Vi style:
+zle -N edit-command-line
+bindkey -M vicmd O edit-command-line
+
 # }}}1
 
 # Personal
-PATH=$PATH:/home/vladislav/bin/
+PATH=$PATH:/home/vladislav/bin/:./
 tabs -4
 
 # Custom Alias's Variables and Functions {{{1
