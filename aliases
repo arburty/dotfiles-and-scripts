@@ -2,6 +2,19 @@
 # Austin Burt
 # austin@burt.us.com
 
+# Functions {{{1
+gbye() { . gbye $@; }
+dif() { diff $1 $2 2>/dev/null; [[ $? -eq 2 ]] && git diff; }
+clmns() { columns.sh $COLUMNS;  }
+# kill port $1
+kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
+    lsof -ti :$1 | xargs kill -9 && echo "${GREEN}Murderer!! You have killed port $1!${NC}"; fi; }
+
+# Markdown command {{{2
+#removeMD() { which md >>/dev/null;[[ $? -eq 0 ]] && echo true; }
+#[[ $SHELL == "/bin/zsh" ]] && [[ $(removeMD) == "true" ]] && unalias md
+markd() { pandoc ${@:-$HOME/.helpful_commands.md} | lynx -vikeys -stdin && clear; }
+
 # Alias's {{{1
 alias cl='clear'
 alias bd='. bd -si'
@@ -14,41 +27,27 @@ alias saiy='sudo apt install -y'
 alias copy='xclip -selection clip'   # shorter
 alias pbcopy='xclip -selection clip' # what im used to
 alias wow="rainbow such color. much impress. very dork"
+alias say="espeak"
 
 # Vim related alias's {{{1
 alias v='vim'
 alias vz='vim $HOME/.zshrc'
 alias vb='vim $HOME/.bashrc'
+alias vh='vim $HOME/.helpful_commands.md'
 alias vv='vim $HOME/.vimrc.local'
 alias va='vim $HOME/.config/aliases'
 # }}}
 
 # firefox {{{2
-#alias ff="firefox"
-alias ffs="firefox -search"
-alias ffw="firefox -new-window"
-alias ffws="firefox -new-window -search"
-alias fft="firefox -new-tab"
-alias ffts="firefox -new-tab -search"
-alias firefoxP="firefox -private-window"
+fireryfoxes() {
+    ( firefox "$@" > /dev/null 2>&1 & )
+}
+alias ff="fireryfoxes"
+alias ffs="fireryfoxes -search"
+alias ffw="fireryfoxes -new-window"
+alias ffws="fireryfoxes -new-window -search"
+alias fft="fireryfoxes -new-tab"
+alias ffts="fireryfoxes -new-tab -search"
+alias firefoxP="fireryfoxes -private-window"
 alias ffp=" firefoxP"
 # }}}2
-
-# Functions {{{1
-gbye() { . gbye $@; }
-dif() { diff $1 $2 2>/dev/null; [[ $? -eq 2 ]] && git diff; }
-clmns() { columns.sh $COLUMNS;  }
-# kill port $1
-kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
-    lsof -ti :$1 | xargs kill -9 && echo "${GREEN}Murderer!! You have killed port $1!${NC}"; fi; }
-
-
-# Markdown command {{{2
-#removeMD() { which md >>/dev/null;[[ $? -eq 0 ]] && echo true; }
-#[[ $SHELL == "/bin/zsh" ]] && [[ $(removeMD) == "true" ]] && unalias md
-markd() { pandoc ${@:-$HOME/.helpful_commands.md} | lynx -stdin && clear; }
-
-# Firefox {{{2
-ff() {
-    ( firefox $@ & > /dev/null 2&>1 )
-}

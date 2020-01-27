@@ -49,11 +49,11 @@ bindkey -M vicmd O edit-command-line
 
 # }}}1
 
-# Personal
+# Personal {{{1
 PATH=$PATH:/home/vladislav/bin/:./
 tabs -4
 
-# Custom Alias's Variables and Functions {{{1
+# Custom Alias's Variables and Functions {{{2
 badSource() { # Used to send a message to std out in red if theres a problem with sourcing a file
     >&2 echo "${RED}Problem sourcing $*${NC}"
 }
@@ -66,3 +66,25 @@ zshSynHighlight="$ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highligh
 [ -f $HOME/.config/zshvibindings ] && . $HOME/.config/zshvibindings  || badSource vi bindings for zsh
 [ -f $pL10k ] && . $pL10k                                            || badSource $pL10k
 [ -f $zshSynHighlight ] && . $zshSynHighlight                        || badSource $zshSynHighlight
+
+# TMUX is love. TMUX is life {{{3
+if [[ $(tmux ls 2&> /dev/null) ]]
+then # a tmux session exists
+    if [[ -z $(tmux ls | grep -e "(attached)$") && -z "$TMUX" ]]
+    then # not attached to a session, and not an session being created
+        echo "A TMUX server is running. Attaching"
+        sleep 2
+        tmux attach
+    fi
+else # create new session
+    if [[ $(which tmstart) ]]
+    then
+        tmstart -w
+    else
+        tmux new-session -s workin
+    fi
+fi
+
+# }}}3
+# }}}2
+# }}}1
