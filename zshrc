@@ -28,9 +28,22 @@ else
 fi
 
 # Setup for personalizing the colors and prompt
+# https://github.com/Powerlevel9k/powerlevel9k/wiki/Stylizing-Your-Prompt was quite helpful
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
+# Directory colors
+POWERLEVEL9K_DIR_HOME_FOREGROUND='green'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='dark yellow'
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='white'
+POWERLEVEL9K_DIR_ETC_FOREGROUND='009' # a red
+
+# VCS colors
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='green'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='232' # a dark grey
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='yellow'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='238' # a light grey
 
 # Add a space in the first prompt
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%f" # Visual customisation of the second prompt line

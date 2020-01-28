@@ -6,7 +6,7 @@
 xterm*faceName: DroidSansMono Nerd Font:style=Book
 xterm*faceSize: 11
 
-! Every shell is a login shell by default (for inclusion of all necessary environment variables)
+! 9 Every shell is a login shell by default (for inclusion of all necessary environment variables)
 xterm*loginshell: true
 
 ! I like a LOT of scrollback...
@@ -18,13 +18,10 @@ xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 ! DOS-box colours...
 xterm*foreground: rgb:a8/a8/a8
 xterm*background: rgb:00/00/00
-xterm*foreground: rgb:a8/a8/a8
-xterm*foreground: rgb:a8/a8/a8
 xterm*color0: rgb:00/00/00
-!xterm*color1: rgb:a8/00/00
-xterm*color1: rgb:f3/c5/28
+xterm*color1: rgb:a8/00/00
 xterm*color2: rgb:00/a8/00
-xterm*color3: rgb:a8/54/00
+xterm*color3: rgb:f3/c5/28
 xterm*color4: rgb:00/00/a8
 xterm*color5: rgb:a8/00/a8
 xterm*color6: rgb:00/a8/a8
@@ -37,6 +34,11 @@ xterm*color12: rgb:54/54/fc
 xterm*color13: rgb:fc/54/fc
 xterm*color14: rgb:54/fc/fc
 xterm*color15: rgb:fc/fc/fc
+! color0 is white
+! color1 is black
+! color2 is green
+! color3 is yellow
+!xterm*color3: rgb:a8/54/00 this was more orangish, i changed it to yellow
 
 ! right hand side scrollbar...
 xterm*rightScrollBar: false
