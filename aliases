@@ -28,6 +28,7 @@ alias copy='xclip -selection clip'   # shorter
 alias pbcopy='xclip -selection clip' # what im used to
 alias wow="rainbow such color. much impress. very dork"
 alias say="espeak"
+alias alldone="say 'the task has been completed master'"
 
 # Vim related alias's {{{1
 alias v='vim'
