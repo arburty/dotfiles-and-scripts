@@ -1,3 +1,7 @@
+" vimrc.local
+" Austin Burt
+" austin@burt.us.com
+
 " visual setup
 set relativenumber
 colorscheme solarized8_dark_high
@@ -25,6 +29,8 @@ nnoremap <leader>L :bn<cr>
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>o o<Esc>
 nnoremap <leader>O O<Esc>
+nnoremap <leader>l "lpcit
+
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>b :set filetype=sh
 
