@@ -9,7 +9,9 @@ colorscheme solarized8_dark_high
 "mods
 nnoremap Q @q
 nnoremap Y y$
-nnoremap _ ggY``p
+nnoremap _g ggY``p
+nnoremap _j jY``p
+nnoremap _k kY``p
 
 vnoremap <Esc> <Esc>gV
 
