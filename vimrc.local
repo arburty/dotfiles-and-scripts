@@ -32,6 +32,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>o o<Esc>
 nnoremap <leader>O O<Esc>
 nnoremap <leader>l "lpcit
+nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>b :set filetype=sh

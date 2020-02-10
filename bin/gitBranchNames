@@ -4,7 +4,7 @@
 # Email: austin@burt.us.com
 # Date:5/23/19
 
-declare -r PROGRAM=$(basename $0)
+. ${BASH_SOURCE%/*}/bash-functions      # for die
 
 declare -r mybr=$(git mybr)
 declare -r branchnames="$HOME/git/branchnames"
@@ -14,21 +14,21 @@ let columns=$(tput cols)-17
 
 while read line
 do
-    isCurrBranch=$(echo $line | grep "$mybr")
-    if [[ ! -z $isCurrBranch  ]]
+    isCurrBranch=$(echo "$line" | grep "$mybr")
+    if [[ ! -z $isCurrBranch ]]
     then
         echo -n "$line"
         line=$(echo "$line" | cut -d " " -f2)
     else
         echo -n "  $line"
     fi
-    [ -f $branchnames ] || >&2 echo -e "\nno branchFiles file" && exit 1
-    description=$(cat $branchnames | grep "$line" | tail -n 1)
-    description=$(echo $description | cut -d " " -f 2-)
+    [[ -f $branchnames ]] || die "no branchFiles file" #TODO don't error out. create it
+
+
+    description=$(cat $branchnames | grep "$line" | tail -n 1 | cut -d " " -f 2-)
     if [[ $line != "master" ]]
     then
         echo "   | ${description::columns}"
-        #echo "   | $description"
     else
         echo
     fi
