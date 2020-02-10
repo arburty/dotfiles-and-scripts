@@ -4,16 +4,30 @@
 # Email: austin@burt.us.com
 # Date:5/23/19
 
-. ${BASH_SOURCE%/*}/bash-functions      # for die
+. ${BASH_SOURCE%/*}/bash-functions      # for and tempfile()
 
+# Setup for needed variables
 declare -r mybr=$(git mybr)
 declare -r branchnames="$HOME/git/branchnames"
+tempfile output
 
 branches=$(git branch)
-let columns=$(tput cols)-17
 
-while read line
-do
+findLongestName() {
+    let local longest=-1
+    while read name
+    do
+        if [[ ${#name} -gt $longest ]]; then
+            longest=${#name}
+        fi
+    done < <(echo "$branches")
+    echo $longest
+}
+let longestName=$(findLongestName)
+let columns=$(tput cols)-$longestName-7 # there are 6 spaces and a '|' before the description
+# End Setup
+
+printName() {
     isCurrBranch=$(echo "$line" | grep "$mybr")
     if [[ ! -z $isCurrBranch ]]
     then
@@ -22,16 +36,31 @@ do
     else
         echo -n "  $line"
     fi
-    [[ -f $branchnames ]] || die "no branchFiles file" #TODO don't error out. create it
+}
 
+printDescription() {
+    [[ -f $branchnames ]] || echo "" >> $branchnames # Create the file if currently nonexistent
 
     description=$(cat $branchnames | grep "$line" | tail -n 1 | cut -d " " -f 2-)
     if [[ $line != "master" ]]
     then
-        echo "   | ${description::columns}"
+        # the '@' are used to delimit the column command
+        echo "@|@${description::columns}"
     else
         echo
     fi
-done < <(echo "$branches")
+}
 
+main() {
+    while read line
+    do
+        printName >> "$output"
+        printDescription >> "$output"
+    done < <(echo "$branches")
+
+    column -t -s'@' "$output"
+    rm "$output" # cleanup
+}
+
+main
 exit 0
