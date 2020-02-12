@@ -23,7 +23,7 @@ inoremap <C-l> <Right>
 
 " Custom Leader Commands
 nnoremap <leader>s :w<cr>
-inoremap <leader>s <C-c>:w<cr>
+inoremap <leader>s <esc>:w<cr>
  noremap <leader>q :q!<cr>
 
 nnoremap <leader>H :bp<cr>
