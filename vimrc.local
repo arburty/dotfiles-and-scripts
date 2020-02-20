@@ -2,11 +2,24 @@
 " Austin Burt
 " austin@burt.us.com
 
-" visual setup
+" Visual Setup
 set relativenumber
 colorscheme solarized8_dark_high
 
-"mods
+" ==========[ Tab Colors ]================================
+" changer vertical split color
+highlight VertSplit guibg=Orange guifg=Black ctermbg=9 ctermfg=0
+
+" make actice tab green with black text
+hi tablinesel ctermfg=DarkGreen ctermbg=Black
+
+" other tabs are black w/ yellow text
+hi tabline ctermfg=Black ctermbg=Yellow
+
+" gray tab bar
+hi tablinefill ctermfg=DarkGray ctermbg=White
+
+" Mods
 nnoremap Q @q
 nnoremap Y y$
 nnoremap _g ggY``p
@@ -14,12 +27,6 @@ nnoremap _j jY``p
 nnoremap _k kY``p
 
 vnoremap <Esc> <Esc>gV
-
-"vi movement in normal mode using ctrl
-inoremap <C-k> <Up>
-inoremap <C-j> <Down>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
 
 " Custom Leader Commands
 nnoremap <leader>s :w<cr>
