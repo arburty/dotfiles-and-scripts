@@ -57,28 +57,48 @@ printColors() {
     shift
 }
 
+rainbowLine() {
+    offset=$(($RANDOM%7))
+    LINE="$@"
+    for (( i=0; i<${#LINE}; i++ )); do
+        char=${LINE:$i:1}
+        [[ $char == "\\" && ${LINE:$i+1:1} == "n" ]] && echo "NEWLINE" && let i=$i+1 && continue
+        echo -ne "${COLORARRAY[(((($offset+$i))%7))]}${LINE:$i:1}"
+    done
+    echo -ne "${NC}"
+}
+
 rainbow() { # print text in alternating colors. For pretty
     if [ $# = 0 ]
     then
-        DEFAULT_INPUT_FILE=/dev/stdin
+#        echo "/dev/stdin" #DEBUG
+        DEFAULT_INPUT=/dev/stdin
     else
-        DEFAULT_INPUT_FILE=
+#        echo "not /dev/stdin" #DEBUG
+        if [[ -f $1 ]] # if the first is a file they must all be files
+        then
+            DEFAULT_INPUT="$@"
+        else
+#            echo "straight to rainbowLine: $@" #DEBUG
+            rainbowLine "$@"
+            echo
+            return 0
+        fi
     fi
 
+    # TODO: STILL BROKEN.  Can't handle >1 file and has an empty line to start
     # Iterates over all parameters or /dev/stdin
-    for FILE in "$@" $DEFAULT_INPUT_FILE
+#    echo "DEFAULT_INPUT: $DEFAULT_INPUT" #DEBUG
+    for FILE in "$DEFAULT_INPUT"
     do
-        while IFS= read -r LINE
+#        echo "FILE: $FILE" #DEBUG
+        while IFS= read LINE
         do
-            # Do whatever you want with LINE here.
-            for (( i=0; i<${#LINE}; i++ )); do
-                char=${LINE:$i:1}
-                [[ $char == "\\" && ${LINE:$i+1:1} == "n" ]] && echo "" && let i=$i+1 && continue
-                echo -ne "${COLORARRAY[(($i%7))]}${LINE:$i:1}"
-            done
+            echo ""
+            rainbowLine "$LINE"
         done < "$FILE"
     done
-        echo -e "${NC}"
+    echo -e "${NC}"
 
     return 0
     foo="12345671234567"
