@@ -4,6 +4,7 @@
 # Email: austin@burt.us.com
 # Date: 5/23/19
 
+# Declare Variables
 declare -r PROGRAM=$(basename $0)
 source $HOME/bin/colorValues
 declare -r branchFile="$HOME/git/branchnames"
@@ -43,8 +44,13 @@ USAGE() {
 }
 
 [[ ! -z $1 ]] || USAGE
-[[ ! -z $myBranch ]] || die "Not in a git repo."
-[[ $myBranch == "master" ]] && die "Can't give master a description"
+[[ "$1" == "-h" ]] && USAGE
+[[ "$1" == "--help" ]] && USAGE
+
+checkValidBranchAndGit() {
+    [[ ! -z $myBranch ]] || die "Not in a git repo."
+    [[ $myBranch == "master" ]] && die "Can't give master a description"
+}
 
 new() {
     branchName=$myBranch
@@ -100,13 +106,13 @@ listAll() {
 }
 
 backup() {
-    cp $backup $backup2
+    [[ ! -f $backup ]] && cp $backup $backup2
     cp $branchFile $backup
 }
 
 main() {
     case $1 in
-        "-l" )
+        "-l" ) # uses a search term
             shift
             listAll "$1"
             ;;
@@ -124,6 +130,7 @@ main() {
             remove "$@"
             ;;
         "-n" )
+            checkValidBranchAndGit
             backup
             shift
             newName "$@"
@@ -136,6 +143,7 @@ main() {
             USAGE
         ;;
         * )
+            checkValidBranchAndGit
             new "$@"
     esac
 }
