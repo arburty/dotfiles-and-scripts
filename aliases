@@ -22,13 +22,15 @@ alias fortune='fortune | tee -a ~/.fortuneCookies && echo "" >> ~/.fortuneCookie
 alias exer="exercism"
 alias exersub="exercism submit src/main/java/*.java"
 alias fzf='fzf -m --cycle --reverse'
+alias say="espeak"
+alias alldone="say 'The task has been completed master. May I have another'"
+alias ifailed="say 'I have failed you. Please have mercy on my kernel.'"
 alias sai='sudo apt install'
 alias saiy='sudo apt install -y'
+saiyd() { saiy "$@" && alldone || ifailed }
 alias copy='xclip -selection clip'   # shorter
 alias pbcopy='xclip -selection clip' # what im used to
-alias wow="rainbow such color. much impress. very dork"
-alias say="espeak"
-alias alldone="say 'the task has been completed master'"
+alias wow="rainbow such color. much impress. very dork | tee say"
 
 # Vim related alias's {{{1
 alias v='vim'
@@ -37,6 +39,7 @@ alias vb='vim $HOME/.bashrc'
 alias vh='vim $HOME/.helpful_commands.md'
 alias vv='vim $HOME/.vimrc.local'
 alias va='vim $HOME/.config/aliases'
+alias vt='vim $HOME/todo'
 # }}}
 
 # firefox {{{2
@@ -44,11 +47,13 @@ fireryfoxes() {
     ( firefox "$@" > /dev/null 2>&1 & )
 }
 alias ff="fireryfoxes"
+alias maps="fireryfoxes google.com/maps"
 alias ffs="fireryfoxes -search"
 alias ffw="fireryfoxes -new-window"
 alias ffws="fireryfoxes -new-window -search"
 alias fft="fireryfoxes -new-tab"
 alias ffts="fireryfoxes -new-tab -search"
-alias firefoxP="fireryfoxes -private-window"
-alias ffp=" firefoxP"
+alias ffp=" fireryfoxes -private-window"
 # }}}2
+
+return 0
