@@ -10,6 +10,7 @@
 declare -r mybr=$(git mybr)
 declare -r branchnames="$HOME/git/branchnames"
 tempfile output
+#output=$(mktemp /tmp/$PROGRAM.XXX) # more portable
 
 branches=$(git branch)
 
