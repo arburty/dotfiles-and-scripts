@@ -1,6 +1,6 @@
 # Commands That Helped Me Do Something I May Want Again.
 
-## Find command
+## Find commands
 `find / -name burtar* 2> >(grep -v 'Permission denied' >&2) #HELPFUL`
 : This command found all files burtar\* starting in the root directory and taking out 
 every instance of 'Permission denied".  There were a lot.
@@ -93,3 +93,5 @@ https://github.com/chubin/wttr.in
 
 `nc towel.blinkenlights.nl 23 - Star wars movie`
 : Star Wars IV: A New Hope, remastered
+
+## Not Organized Yet (Recently Added)
