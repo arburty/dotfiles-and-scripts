@@ -5,7 +5,7 @@
 # Date:
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
-[[ -f /Users/austin.burt/bin/colorValues ]] && source /Users/austin.burt/bin/colorValues
+[[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
 
 if [[ -z $1 ]]
 then

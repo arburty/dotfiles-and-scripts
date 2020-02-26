@@ -69,6 +69,7 @@ every instance of 'Permission denied".  There were a lot.
 
 ## Random
 `curl wttr.in/Denver`
+`curl wttr.in/Denver\?format="%l:+%C:+%t+%m"`
 : the command line way to get the weather.  A lot of option to modify the output. visit:
 https://github.com/chubin/wttr.in
 

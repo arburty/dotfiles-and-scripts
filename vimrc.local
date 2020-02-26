@@ -55,3 +55,13 @@ if has("autocmd")
 \ endif
 au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
+
+" Inc() - Allow for Increasing numbers
+""    :let i=1 | s/abc/\='xyz_'. Inc(5)/g
+" Add argument (can be negative, default 1) to global variable i.
+" Return value of i before the change.
+function Inc(...)
+  let result = g:i
+  let g:i += a:0 > 0 ? a:1 : 1
+  return result
+endfunction
