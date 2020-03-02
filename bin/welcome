@@ -15,10 +15,12 @@ tempFile='/tmp/welcomeScreen'
 
 # Say hello
 echo "<h1>Welcome Back Austin</h1>" > $tempFile
+
 # Give the weather
 wttr=$(curl wttr.in/Denver\?format="%l:+%C:+%t+%m" 2> /dev/null)
 echo -n "Today's Weather in " >> $tempFile
 echo "$wttr" >> $tempFile
+
 # git ssb
 if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]
 then
@@ -26,9 +28,12 @@ then
     git ssb 2> /dev/null | tee -a $tempFile
     echo "</pre>" >> $tempFile
 fi
+
 # give me my todo's
 cat $HOME/todo >> $tempFile
+
 # display the output
 markd $tempFile
+rm $tempFile
 
 exit 0
