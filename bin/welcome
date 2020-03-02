@@ -1,0 +1,34 @@
+#! /bin/bash
+
+# Author: Austin Burt
+# Email: austin@burt.us.com
+# Date: 02/24/20 09:04
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+[[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
+
+markd () {
+    pandoc $@ | lynx -vikeys -stdin
+}
+
+tempFile='/tmp/welcomeScreen'
+
+# Say hello
+echo "<h1>Welcome Back Austin</h1>" > $tempFile
+# Give the weather
+wttr=$(curl wttr.in/Denver\?format="%l:+%C:+%t+%m" 2> /dev/null)
+echo -n "Today's Weather in " >> $tempFile
+echo "$wttr" >> $tempFile
+# git ssb
+if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]
+then
+    echo -e "<pre>\n" >> $tempFile
+    git ssb 2> /dev/null | tee -a $tempFile
+    echo "</pre>" >> $tempFile
+fi
+# give me my todo's
+cat $HOME/todo >> $tempFile
+# display the output
+markd $tempFile
+
+exit 0
