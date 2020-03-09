@@ -1,0 +1,39 @@
+#! /bin/awk -f
+
+# Author: Austin Burt
+# Email: austin@burt.us.com
+# Date: 03/09/20
+
+# This awk script prints custom PATH directories
+# if the directories are not already a part of PATH
+#
+# This was created due to these directories being
+# appended to the PATH several times during session
+# creation in TMUX. the zshrc uses this to set them
+# only one time.
+
+BEGIN {
+    FS=":"
+    hm="false"
+    wd="false"
+}
+
+{
+    for(i=1;i<=NF;i++) {
+        if($i ~ /\/home\/vladislav\/bin\/?/) {
+            hm="true"
+        }
+        if($i ~ /\.\//){
+            wd="true"
+        }
+    }
+}
+
+END {
+    # print directories to append to PATH
+    if (hm ~ /false/) directories=":/home/vladislav/bin"
+    if (wd ~ /false/) directories=val ":./"
+    print directories
+}
+
+

@@ -21,11 +21,12 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Preferred Vim editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-else
-    export EDITOR='vi'
-fi
+export EDITOR='vim'
+#if [[ -n $SSH_CONNECTION ]]; then
+    #export EDITOR='vim'
+#else
+    #export EDITOR='vi'
+#fi
 
 # Setup for personalizing the colors and prompt
 # https://github.com/Powerlevel9k/powerlevel9k/wiki/Stylizing-Your-Prompt was quite helpful
@@ -63,7 +64,13 @@ bindkey -M vicmd O edit-command-line
 # }}}1
 
 # Personal {{{1
-PATH=$PATH:/home/vladislav/bin/:./
+# Set PATH Variable {{{2
+# Tmux sessions were appending several of these paths
+# printCustomPaths prints the custom paths ($HOME/bin, ./)
+# if not already set
+PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
+# }}}2
+
 tabs -4
 
 # Custom Alias's Variables and Functions {{{2
