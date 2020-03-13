@@ -76,6 +76,9 @@ https://github.com/chubin/wttr.in
 `geth --datadir ./ --rpc --rpccorsdomain '\*'`
 : starts a private chain  
 
+`history | tac | awk '/gpg/ && !/history/ {$1=""; print $0;}' | less`
+: use awk to find recent 'gpg' commands and not the command(s) like above
+
 ## Came from HomeAdvisor/General Mac related
 `docker run -dt -p 80:80 -p 443:443 -e HOSTIP=host.docker.internal -v ~/apps/sm-content:/usr/local/sm-apache/htdocs --name apache apache:2.4.3 #HELPFUL`
 
