@@ -1,13 +1,14 @@
 #! /bin/bash
 
-# Author: Austin Burt
-# Email: austin@burt.us.com
-# Date: 18/07/19
+# ColorValues
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 8/07/19
 
 # This script is mosty used to be sourced from shell startup or in scripts wanting to use color,
+# It also defines the rainbow function.
 
-
-[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0) if not sourced declare the program name
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0) # if not sourced declare the program name
 declare -r PROGRAM_PATH="$HOME/bin/$PROGRAM"
 
 declareColors() {
@@ -61,75 +62,63 @@ printColors() {
 rainbowLine() {
     offset=$(($RANDOM%7))
     LINE="$@"
+
+    # loop through every character and print it in a different color
     for (( i=0; i<${#LINE}; i++ )); do
         char=${LINE:$i:1}
-        # [[ $char == "\\" && ${LINE:$i+1:1} == "n" ]] && echo "NEWLINE" && let i=$i+1 && continue
-        echo -ne "${COLORARRAY[(((($offset+$i))%7))]}${LINE:$i:1}"
+        echo -ne "${COLORARRAY[(((($offset+$i))%7))]}${char}"
     done
     echo -ne "${NC}"
 }
 
-rainbow() { # print text in alternating colors. For pretty
+# Print text in alternating colors. For pretty
+# A sourced function and can be used like a command
+# Can take STDIN, file(s), or arguments as text
+rainbow() {
     if [ $# = 0 ]
     then
-        # echo "/dev/stdin" #DEBUG
+        # No arguments, so use STDIN
         DEFAULT_INPUT=/dev/stdin
     else
-        # echo "not /dev/stdin" #DEBUG
+        # Not STDIN
         # if the first arg is a file they must all be files
         # a crude assumption but works well enough
         if [[ -f $1 ]]
         then
             DEFAULT_INPUT="$@"
         else
-            # echo "straight to rainbowLine: $@" #DEBUG
+            # Arguments are the text to be colorized
+            # Pass them straight to rainbowLine
             rainbowLine "$@"
             echo
             return 0
         fi
     fi
 
-    # TODO: STILL BROKEN.  Can't handle >1 file and has an empty line to start
-    # Iterates over all parameters or /dev/stdin
-    echo "DEFAULT_INPUT: $DEFAULT_INPUT" #DEBUG
+
+    quote="'" # to help send single quoted text to bash function inside awk
+
+    # Iterates over all file parameters (/dev/stdin or command line args)
     for FILE in $(echo $DEFAULT_INPUT)
     do
-        #echo "FILE: $FILE" #DEBUG
-        # awk '{printf("line: %s ",$0); system("bash -c '\''rainbowLine "$0"'\''")}' $FILE
-        # awk '{printf("line: %s ",$0);a="'$PROGRAM_PATH'";b=a " -rl " $0; print b}'
-        # awk '{printf("line: %s ",$0);a="'$PROGRAM_PATH'" " -rl " $0; system(a)}'
-        # awk '{if(NR!=1) print "";printf("line: %s ",$0); a="'$PROGRAM_PATH'" " -rl " "'$quote'"$0"'$quote'";print a; system(a)}' $FILE
-        quote="'"
         awk '{ \
+            # a is a string that executes a call to rainbowLine in colorValues
+            # with each line of the file
             a="'$PROGRAM_PATH'" " -rl " "'$quote'"$0"'$quote'"; \
             system(a); \
             print ""}' "$FILE"
-        continue
-
-        while IFS= read LINE
-        do
-            echo ""
-            rainbowLine "$LINE"
-        done < "$FILE"
     done
     echo -en "${NC}"
 
     return 0
-    foo="12345671234567"
-    [[ $# -gt 0 ]] && foo=$(echo "$@")
-    for (( i=0; i<${#foo}; i++ )); do
-        char=${foo:$i:1}
-        [[ $char == "\\" && ${foo:$i+1:1} == "n" ]] && echo "" && let i=$i+1 && continue
-        echo -ne "${COLORARRAY[(($i%7))]}${foo:$i:1}"
-    done
-    echo -e "${NC}"
 }
 
 # Main
-arraysize=${#COLORARRAY[@]} # used to determine if the read only variables are already declared
+# 'arraysize' used to determine if the read only variables are already declared
+arraysize=${#COLORARRAY[@]}
 [[ $arraysize -eq 0 ]] && declareColors
-[[ $1 == "-p" ]] && printColors
-[[ $1 == "-r" ]] && shift && rainbow "$@"
-[[ $1 == "-rl" ]] && shift && rainbowLine "$@" && exit 0
+[[ $1 == "-p" ]]       && printColors
+[[ $1 == "-r" ]]       && shift         && rainbow "$@"
+[[ $1 == "-rl" ]]      && shift         && rainbowLine "$@" && exit 0
 
 return 0

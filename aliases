@@ -30,7 +30,8 @@ alias saiy='sudo apt install -y'
 saiyd() { saiy "$@" && alldone || ifailed }
 alias copy='xclip -selection clip'   # shorter
 alias pbcopy='xclip -selection clip' # what im used to
-alias wow="rainbow such color. much impress. very dork | tee say"
+alias rainclear="unclear | rainbow"
+alias wow="echo such color. much impress. very dork > /tmp/wowfile | say | rainbow /tmp/wowfile"
 
 # Vim related alias's {{{1
 alias v='vim'
