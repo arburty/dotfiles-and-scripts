@@ -8,6 +8,7 @@
 
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0) if not sourced declare the program name
+declare -r PROGRAM_PATH="$HOME/bin/$PROGRAM"
 
 declareColors() {
     declare -rg BLACK='\033[0;30m'
@@ -62,7 +63,7 @@ rainbowLine() {
     LINE="$@"
     for (( i=0; i<${#LINE}; i++ )); do
         char=${LINE:$i:1}
-        [[ $char == "\\" && ${LINE:$i+1:1} == "n" ]] && echo "NEWLINE" && let i=$i+1 && continue
+        # [[ $char == "\\" && ${LINE:$i+1:1} == "n" ]] && echo "NEWLINE" && let i=$i+1 && continue
         echo -ne "${COLORARRAY[(((($offset+$i))%7))]}${LINE:$i:1}"
     done
     echo -ne "${NC}"
@@ -71,15 +72,17 @@ rainbowLine() {
 rainbow() { # print text in alternating colors. For pretty
     if [ $# = 0 ]
     then
-#        echo "/dev/stdin" #DEBUG
+        # echo "/dev/stdin" #DEBUG
         DEFAULT_INPUT=/dev/stdin
     else
-#        echo "not /dev/stdin" #DEBUG
-        if [[ -f $1 ]] # if the first is a file they must all be files
+        # echo "not /dev/stdin" #DEBUG
+        # if the first arg is a file they must all be files
+        # a crude assumption but works well enough
+        if [[ -f $1 ]]
         then
             DEFAULT_INPUT="$@"
         else
-#            echo "straight to rainbowLine: $@" #DEBUG
+            # echo "straight to rainbowLine: $@" #DEBUG
             rainbowLine "$@"
             echo
             return 0
@@ -88,17 +91,28 @@ rainbow() { # print text in alternating colors. For pretty
 
     # TODO: STILL BROKEN.  Can't handle >1 file and has an empty line to start
     # Iterates over all parameters or /dev/stdin
-#    echo "DEFAULT_INPUT: $DEFAULT_INPUT" #DEBUG
-    for FILE in "$DEFAULT_INPUT"
+    echo "DEFAULT_INPUT: $DEFAULT_INPUT" #DEBUG
+    for FILE in $(echo $DEFAULT_INPUT)
     do
-#        echo "FILE: $FILE" #DEBUG
+        #echo "FILE: $FILE" #DEBUG
+        # awk '{printf("line: %s ",$0); system("bash -c '\''rainbowLine "$0"'\''")}' $FILE
+        # awk '{printf("line: %s ",$0);a="'$PROGRAM_PATH'";b=a " -rl " $0; print b}'
+        # awk '{printf("line: %s ",$0);a="'$PROGRAM_PATH'" " -rl " $0; system(a)}'
+        # awk '{if(NR!=1) print "";printf("line: %s ",$0); a="'$PROGRAM_PATH'" " -rl " "'$quote'"$0"'$quote'";print a; system(a)}' $FILE
+        quote="'"
+        awk '{ \
+            a="'$PROGRAM_PATH'" " -rl " "'$quote'"$0"'$quote'"; \
+            system(a); \
+            print ""}' "$FILE"
+        continue
+
         while IFS= read LINE
         do
             echo ""
             rainbowLine "$LINE"
         done < "$FILE"
     done
-    echo -e "${NC}"
+    echo -en "${NC}"
 
     return 0
     foo="12345671234567"
@@ -116,5 +130,6 @@ arraysize=${#COLORARRAY[@]} # used to determine if the read only variables are a
 [[ $arraysize -eq 0 ]] && declareColors
 [[ $1 == "-p" ]] && printColors
 [[ $1 == "-r" ]] && shift && rainbow "$@"
+[[ $1 == "-rl" ]] && shift && rainbowLine "$@" && exit 0
 
 return 0
