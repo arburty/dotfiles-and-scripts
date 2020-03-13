@@ -22,6 +22,8 @@ hi tablinefill ctermfg=DarkGray ctermbg=White
 " Mods
 nnoremap Q @q
 nnoremap Y y$
+" copy line to current position
+" g=line number, j=line down, k=line up
 nnoremap _g ggY``p
 nnoremap _j jY``p
 nnoremap _k kY``p
@@ -41,10 +43,16 @@ nnoremap <leader>O O<Esc>
 nnoremap <leader>l "lpcit
 nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 
+" Capitalize First Letter of Words
+nnoremap <leader>C :s/\<./\u&/g<cr>:noh<cr>
+vnoremap <leader>C :s/\%V\<./\u&/g<cr>:noh<cr>
+
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>b :set filetype=sh
 
-" Redraw the cursor to have a line cursor in insert and a block cursor in normal added 12/27/19
+" Functions {{{1
+" Redraw The Cursor
+" to have a line cursor in insert and a block cursor in normal: added 12/27/19
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
   au InsertEnter,InsertChange *
@@ -65,3 +73,4 @@ function Inc(...)
   let g:i += a:0 > 0 ? a:1 : 1
   return result
 endfunction
+" }}}1
