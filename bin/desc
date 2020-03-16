@@ -1,8 +1,9 @@
 #! /bin/bash
 
-# Author: Austin Burt
-# Email: austin@burt.us.com
-# Date: 5/23/19
+# desc
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 5/23/19
 
 # Declare Variables
 declare -r PROGRAM=$(basename $0)
@@ -10,8 +11,8 @@ source $HOME/bin/colorValues
 declare -r branchFile="$HOME/git/branchnames"
 declare -r backup="$HOME/notes/branchnamesbackup"
 declare -r backup2="$HOME/notes/branchnamesbackup2"
+declare -r myBranch=$(git mybr 2> /dev/null)
 declare -r cleanedBranches="$HOME/notes/cleanedbranchnames"
-declare -r myBranch=$(git mybr)
 
 die() {
     echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
@@ -43,6 +44,7 @@ USAGE() {
     exit 0
 }
 
+# Call USAGE If Needed
 [[ ! -z $1 ]] || USAGE
 [[ "$1" == "-h" ]] && USAGE
 [[ "$1" == "--help" ]] && USAGE
