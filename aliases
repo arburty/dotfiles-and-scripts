@@ -41,6 +41,8 @@ alias vh='vim $HOME/.helpful_commands.md'
 alias vv='vim $HOME/.vimrc.local'
 alias va='vim $HOME/.config/aliases'
 alias vt='vim $HOME/todo'
+# function to open vim with Gitstatus open
+vst() { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
 # }}}
 
 # firefox {{{2
