@@ -21,7 +21,7 @@ hi tablinefill ctermfg=DarkGray ctermbg=White
 
 " Mods
 nnoremap Q @q
-nnoremap Y y$
+" nnoremap Y y$ " already in .vimrc
 " copy line to current position
 " g=line number, j=line down, k=line up
 nnoremap _g ggY``p

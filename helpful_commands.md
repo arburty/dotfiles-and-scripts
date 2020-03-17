@@ -99,3 +99,6 @@ https://github.com/chubin/wttr.in
 : Star Wars IV: A New Hope, remastered
 
 ## Not Organized Yet (Recently Added)
+`awk '{for (i=1;i<100/2;i++){b=100-i; print $i ". (" $i "+" $b") =",$i+$(100-i)}}' file`
+: Will print 1+99, 2+88 etc using a file with 1-99 on one line. Use an empty file to
+show what happens without data.
