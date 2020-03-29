@@ -20,7 +20,7 @@ hi tabline ctermfg=Black ctermbg=Yellow
 hi tablinefill ctermfg=DarkGray ctermbg=White
 
 " Mods
-nnoremap Q @q
+nnoremap Q @@
 nnoremap Y y$
 " copy line to current position
 " g=line number, j=line down, k=line up
@@ -30,7 +30,7 @@ nnoremap _k kY``p
 
 vnoremap <Esc> <Esc>gV
 
-" Custom Leader Commands
+" Custom Leader Mappings
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <esc>:w<cr>
  noremap <leader>q :q!<cr>
@@ -49,6 +49,10 @@ vnoremap <leader>C :s/\%V\<./\u&/g<cr>:noh<cr>
 
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>b :set filetype=sh
+
+" Custom Commnads
+command! Vimrc :vs $MYVIMRC.local
+" https://www.hillelwayne.com/post/intermediate-vim/
 
 " Functions {{{1
 " Redraw The Cursor
