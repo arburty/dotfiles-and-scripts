@@ -20,7 +20,10 @@ hi tabline ctermfg=Black ctermbg=Yellow
 hi tablinefill ctermfg=DarkGray ctermbg=White
 
 " Mods
+runtime! ftplugin/man.vim
+
 nnoremap Q @q
+
 " nnoremap Y y$ " already in .vimrc
 " copy line to current position
 " g=line number, j=line down, k=line up
@@ -48,6 +51,7 @@ nnoremap <leader>C :s/\<./\u&/g<cr>:noh<cr>
 vnoremap <leader>C :s/\%V\<./\u&/g<cr>:noh<cr>
 
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
+nnoremap <leader>M :20messages<cr>
 nnoremap <leader>b :set filetype=sh
 
 " Functions {{{1
