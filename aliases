@@ -2,6 +2,9 @@
 # Austin Burt
 # austin@burt.us.com
 
+# Modeline{{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
+
 # Functions {{{1
 gbye() { . gbye $@; }
 dif() { diff $1 $2 2>/dev/null; [[ $? -eq 2 ]] && git diff; }
@@ -14,6 +17,8 @@ kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
 #removeMD() { which md >>/dev/null;[[ $? -eq 0 ]] && echo true; }
 #[[ $SHELL == "/bin/zsh" ]] && [[ $(removeMD) == "true" ]] && unalias md
 markd() { pandoc ${@:-$HOME/.helpful_commands.md} | lynx -vikeys -stdin && clear; }
+# }}}2
+# }}}1
 
 # Alias's {{{1
 alias cl='clear'
@@ -33,7 +38,7 @@ alias pbcopy='xclip -selection clip' # what im used to
 alias rainclear="unclear | rainbow"
 alias wow="echo such color. much impress. very dork > /tmp/wowfile | say | rainbow /tmp/wowfile"
 
-# Vim related alias's {{{1
+# Vim related alias's {{{2
 alias v='vim'
 alias vz='vim $HOME/.zshrc'
 alias vb='vim $HOME/.bashrc'
@@ -44,7 +49,7 @@ alias vt='vim $HOME/todo'
 # function to open vim with Gitstatus open
 vst()  { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
 vstd() { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
-# }}}1
+# }}}2
 
 # firefox {{{2
 fireryfoxes() {
@@ -59,5 +64,6 @@ alias fft="fireryfoxes -new-tab"
 alias ffts="fireryfoxes -new-tab -search"
 alias ffp=" fireryfoxes -private-window"
 # }}}2
+# }}}1
 
 return 0

@@ -3,6 +3,7 @@
 " austin@burt.us.com
 
 " Visual Setup
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:
 set relativenumber
 colorscheme solarized8_dark_high
 
@@ -48,8 +49,8 @@ nnoremap <leader>l "lpcit
 nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 
 " Capitalize First Letter of Words
-nnoremap <leader>C :s/\<./\u&/g<cr>:noh<cr>
-vnoremap <leader>C :s/\%V\<./\u&/g<cr>:noh<cr>
+nnoremap <silent><leader>C :s/\<./\u&/g<cr>:noh<cr>``
+vnoremap <silent><leader>C :s/\%V\<./\u&/g<cr>:noh<cr>``
 
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>M :20messages<cr>
@@ -57,7 +58,7 @@ nnoremap <leader>b :set filetype=sh
 
 " Custom Commnads
 command! Vimrc :vs $MYVIMRC.local
-" https://www.hillelwayne.com/post/intermediate-vim/
+command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
 
 " Functions {{{1
 " Redraw The Cursor
@@ -83,3 +84,6 @@ function Inc(...)
   return result
 endfunction
 " }}}1
+
+" Helpful Links I Have Used In Here
+" https://www.hillelwayne.com/post/intermediate-vim/
