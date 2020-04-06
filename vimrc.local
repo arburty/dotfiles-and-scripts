@@ -2,12 +2,14 @@
 " Austin Burt
 " austin@burt.us.com
 
-" Visual Setup
-" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:
+" Visual Setup {1
 set relativenumber
 colorscheme solarized8_dark_high
+hi Identifier term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
+hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
+hi DiffDelete term=standout cterm=bold ctermfg=9 gui=bold guifg=#cb4b16
 
-" ==========[ Tab Colors ]================================
+" Tab Colors {2
 " changer vertical split color
 highlight VertSplit guibg=Orange guifg=Black ctermbg=9 ctermfg=0
 
@@ -19,8 +21,10 @@ hi tabline ctermfg=Black ctermbg=Yellow
 
 " gray tab bar
 hi tablinefill ctermfg=DarkGray ctermbg=White
+" }2
+" }1
 
-" Mods
+" Mods {1
 runtime! ftplugin/man.vim
 nnoremap Q @q
 
@@ -34,8 +38,10 @@ nnoremap _j jY``p
 nnoremap _k kY``p
 
 vnoremap <Esc> <Esc>gV
+ noremap <leader>; q:
+" }1
 
-" Custom Leader Mappings
+" Custom Leader Mappings {1
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <esc>:w<cr>
  noremap <leader>q :q!<cr>
@@ -55,13 +61,15 @@ vnoremap <silent><leader>C :s/\%V\<./\u&/g<cr>:noh<cr>``
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>M :20messages<cr>
 nnoremap <leader>b :set filetype=sh
+" }1
 
-" Custom Commnads
+" Custom Commnads {1
 command! Vimrc :vs $MYVIMRC.local
 command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
+" }1
 
-" Functions {{{1
-" Redraw The Cursor
+" Functions {1
+" Redraw The Cursor {2
 " to have a line cursor in insert and a block cursor in normal: added 12/27/19
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
@@ -73,8 +81,9 @@ if has("autocmd")
 \ endif
 au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
+" }2
 
-" Inc() - Allow for Increasing numbers
+" Inc() - Allow for Increasing numbers {2
 ""    :let i=1 | s/abc/\='xyz_'. Inc(5)/g
 " Add argument (can be negative, default 1) to global variable i.
 " Return value of i before the change.
@@ -83,7 +92,12 @@ function Inc(...)
   let g:i += a:0 > 0 ? a:1 : 1
   return result
 endfunction
-" }}}1
+" }2
+" }1
 
-" Helpful Links I Have Used In Here
+" Helpful Links I Have Used {
 " https://www.hillelwayne.com/post/intermediate-vim/
+" }
+
+" Modeline{
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}

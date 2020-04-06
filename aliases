@@ -2,9 +2,6 @@
 # Austin Burt
 # austin@burt.us.com
 
-# Modeline{{{
-# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
-
 # Functions {{{1
 gbye() { . gbye $@; }
 dif() { diff $1 $2 2>/dev/null; [[ $? -eq 2 ]] && git diff; }
@@ -46,6 +43,7 @@ alias vh='vim $HOME/.helpful_commands.md'
 alias vv='vim $HOME/.vimrc.local'
 alias va='vim $HOME/.config/aliases'
 alias vt='vim $HOME/todo'
+alias man='viman'
 # function to open vim with Gitstatus open
 vst()  { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
 vstd() { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
@@ -66,4 +64,6 @@ alias ffp=" fireryfoxes -private-window"
 # }}}2
 # }}}1
 
+# Modeline{{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
 return 0

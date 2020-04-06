@@ -102,3 +102,8 @@ https://github.com/chubin/wttr.in
 `awk '{for (i=1;i<100/2;i++){b=100-i; print $i ". (" $i "+" $b") =",$i+$(100-i)}}' file`
 : Will print 1+99, 2+88 etc using a file with 1-99 on one line. Use an empty file to
 show what happens without data.
+
+
+:so $VIMRUNTIME/syntax/hitest.vim
+RedirMessages(hi Search, '')
+%s/\(echo.*"\s*${\)\(\h\{4,}\)\(}.*\)\(${\h*}\)/\1PURPLE\3==========${RED}

@@ -46,8 +46,8 @@ USAGE() {
 
 # Call USAGE If Needed
 [[ ! -z $1 ]] || USAGE
-[[ "$1" == "-h" ]] && USAGE
-[[ "$1" == "--help" ]] && USAGE
+#[[ "$1" == "-h" ]] && USAGE
+#[[ "$1" == "--help" ]] && USAGE
 
 checkValidBranchAndGit() {
     [[ ! -z $myBranch ]] || die "Not in a git repo."
@@ -141,7 +141,7 @@ main() {
             cp $backup $branchFile
             cp $backup2 $backup
             ;;
-        "--help" )
+        "--help" | "-h" )
             USAGE
         ;;
         * )

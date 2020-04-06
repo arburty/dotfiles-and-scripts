@@ -15,9 +15,10 @@ else
     then # remove
         if [[ ! -z $2 ]] # remove
         then # remove
-            cat $0 | grep -v "remove" >> ~/bin/$2 # remove
+            newscript=~/bin/$2 # remove
+            cat $0 | grep -v "remove" >> $newscript # remove
             echo "the script '$2' has been created" # remove
-            chmod 755 ~/bin/$2 # remove
+            chmod 755 $newscript # remove
             exit 0 # remove
         fi # remove
     fi # remove
