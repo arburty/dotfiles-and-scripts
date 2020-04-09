@@ -1,0 +1,57 @@
+" .helpful_vim
+" Austin Burt
+" austin@burt.us.com
+" Date: 04/09/20
+"
+" Vim Commands, Mappings, Notes, and Regexes I've Found Useful 
+
+" Modeline{{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
+
+From Useful Sites {{{
+    https://vim.fandom.com/wiki/Making_a_list_of_numbers
+        :put =map(range(1,150), 'printf(''%04d'', v:val)')
+        :let i=1 | g/abc/s//\='xyz_'.i/ | let i=i+1
+        :let @a=1 | %s/abc/\='xyz_'.(@a+setreg('a',@a+1))/g
+" }}}
+
+For Using the Surround Plugin (straight from the README): {{{
+    Press cs"' inside
+        "Hello world!"
+    to change it to
+        'Hello world!'
+    Now press cs'<q> to change it to
+        <q>Hello world!</q>
+    To go full circle, press cst" to get
+        "Hello world!"
+    To remove the delimiters entirely, press ds".
+        Hello world!
+    Now with the cursor on "Hello", press ysiw] (iw is a text object).
+        [Hello] world!
+    Let's make that braces and add some space (use } instead of { for no space): cs]{
+        { Hello } world!
+    Now wrap the entire line in parentheses with yssb or yss).
+        ({ Hello } world!)
+    Revert to the original text: ds{ds)
+        Hello world!
+    Emphasize hello: ysiw<em>
+        <em>Hello</em> world!
+    Finally, let's try out visual mode. Press a capital V (for linewise visual mode) followed by S<p class="important">.
+        <p class="important">
+          <em>Hello</em> world!
+        </p>
+" }}}
+
+Helpful For Syntax Color Editing {{{
+    :source $VIMRUNTIME/syntax/hitest.vim
+        creates a file colorcoded with names
+
+    RedirMessages(hi Search, '')
+        return the hilight values for 'Search'. 
+        .vim/personal/redir_messages.vim
+
+    map <leader>h :call RedirMessages("hi " . expand("<cWORD>"),'b 4 \| exe "norm G"')<cr>:bm<cr>``
+        a beaut to map a keybinding to call 'hi' on the word under the cursor, and paste output into
+        the first buffer at the bottom and return to start, requires redir_messages.vim
+" }}}
+
