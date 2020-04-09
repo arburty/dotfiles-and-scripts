@@ -22,12 +22,27 @@ every instance of 'Permission denied".  There were a lot.
 `du -h -d 1 | sort -h | less`
 : sort in human readable format
 
+`bash < <(curl -sL https://raw.githubusercontent.com/arburty/dotfiles-and-scripts/master/bin/install.sh)`
+: call my install script off of github
+
 ## Tmux Related
 `echo -n 'tmux session: '; tmux ls | grep attached | cut -d ':' -f 1`
 : simple find the attached tmux session
 
 `tmux ls | grep -e "^workspace" -e "(attached)$"`
 : simple grep for if attached to workspace
+
+## Vim Related Fun
+`:source $VIMRUNTIME/syntax/hitest.vim`
+: creates a file colorcoded with names
+
+`RedirMessages(hi Search, '')`
+: return the hilight values for 'Search'. 
+.vim/personal/redir_messages.vim
+
+`map <leader>h :call RedirMessages("hi " . expand("<cWORD>"),'b 4 \| exe "norm G"')<cr>:bm<cr>`\``
+: a beaut to map a keybinding to call hi on the word under the cursor, and paste it into
+the first buffer at the bottom and return to start
 
 ## Just4Fun
 `say -v afrikaans -p 80 "indefinitely and indubitable is industrialization"`
@@ -102,8 +117,3 @@ https://github.com/chubin/wttr.in
 `awk '{for (i=1;i<100/2;i++){b=100-i; print $i ". (" $i "+" $b") =",$i+$(100-i)}}' file`
 : Will print 1+99, 2+88 etc using a file with 1-99 on one line. Use an empty file to
 show what happens without data.
-
-
-:so $VIMRUNTIME/syntax/hitest.vim
-RedirMessages(hi Search, '')
-%s/\(echo.*"\s*${\)\(\h\{4,}\)\(}.*\)\(${\h*}\)/\1PURPLE\3==========${RED}
