@@ -8,25 +8,30 @@
     # [ec - bdone] came from ^. use as a reference point
 
     # shorthand aliases
-	co = checkout
-    br = branch
-    st = status
-    ss = status -s
-    sb = !git status && git branch
+	co  = checkout
+    br  = branch
+    st  = status
+    ss  = status -s
+    sb  = !git status && git branch
     ssb = !git status -s && git names
 
     # add a command to your current branch
-    mybr = "!f() { git branch | grep [*] | cut -d ' ' -f 2 | xargs $@; }; f"
+    mybr   = "!f() { git branch | grep [*] | cut -d ' ' -f 2 | xargs $@; }; f"
     mybrnn = "!f() { git mybr | tr -d '\n'; }; f"
     mybrcp = "!f() { git mybrnn | pbcopy; }; f"
-    po   = !git branch | grep [*] | cut -d ' ' -f 2 | xargs git push origin
-    posu = !git branch | grep [*] | cut -d ' ' -f 2 | xargs git push origin --set-upstream
-    names = !gitBranchNames
-    desc = "!f() { desc "$@"; }; f"
+    po     = !git branch | grep [*] | cut -d ' ' -f 2 | xargs git push origin
+    posu   = !git branch | grep [*] | cut -d ' ' -f 2 | xargs git push origin --set-upstream
+    names  = !gitBranchNames
+    desc   = "!f() { desc "$@"; }; f"
 
     # new branch or merging fresh master back in
-    start = "!f() { git co master && git up && git cob $1; }; f"
+    start   = "!f() { git co master && git up && git cob $1; }; f"
     refresh = "!f() { me=$(git mybrnn); git co master && git up && git co $me && git merge master; }; f"
+
+    # Other
+    difflastcm = diff HEAD^ HEAD
+    diffstaged = diff --staged
+      # diff HEAD; i think finds all changes
 
     # Log outputs
     # single line, pretty
@@ -39,18 +44,18 @@
     l4 = log -p -1
 
     # from haacked.com blog
-    ec = config --global -e
-    up = "!f() { git pull --rebase $@ && git submodule update --init --recursive; }; f"
-    cob = checkout -b
-    cm = !git add -A && git commit -m
-    save = !git add -A && git commit -m 'SAVEPOINT'
-    wip = commit -am "WIP"
-    undo = reset HEAD~1 --mixed
-    amend = commit -a --amend
-    #wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
-    wipe = "!f() { rev=$(git rev-parse ${1-HEAD}); git add -A && git commit --allow-empty -qm 'WIPE SAVEPOINT' && git reset $rev --hard; }; f"
+    ec     = config --global -e
+    up     = "!f() { git pull --rebase $@ && git submodule update --init --recursive; }; f"
+    cob    = checkout -b
+    cm     = !git add -A && git commit -m
+    save   = !git add -A && git commit -m 'SAVEPOINT'
+    wip    = commit -am "WIP"
+    undo   = reset HEAD~1 --mixed
+    amend  = commit -a --amend
+    #wipe  = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    wipe   = "!f() { rev=$(git rev-parse ${1-HEAD}); git add -A && git commit --allow-empty -qm 'WIPE SAVEPOINT' && git reset $rev --hard; }; f"
     bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
-    bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
-    lucky = "!f() { git branch | grep -i " $1 " | head -1 | xargs git checkout;  }; f"
+    bdone  = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+    lucky  = "!f() { git branch | grep -i " $1 " | head -1 | xargs git checkout;  }; f"
 [push]
 	default = simple
