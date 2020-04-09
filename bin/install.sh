@@ -68,7 +68,7 @@ cd $confdir
 
 # link the config files to appropriate directory
 linkconfdir aliases ranger mpv zathura zshvibindings
-linkhomedir zshrc bashrc fortuneCookies gitconfig helpful_commands.md tmux.conf vimrc.local Xresources
+linkhomedir zshrc bashrc fortuneCookies gitconfig helpful_commands.md helpful_vim tmux.conf vimrc.local Xresources
 
 # Install Programs
 sudo apt-get install -y fzf lynx pandoc ranger tmux tree xterm zathura
