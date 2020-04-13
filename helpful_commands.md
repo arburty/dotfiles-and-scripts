@@ -13,7 +13,7 @@ every instance of 'Permission denied".  There were a lot.
 ## Normies
 `history | tac | less`
 
-`date '+%m/%d/%y %H:%M'`  
+`date '+%m/%d/%y %H:%M'`
 : Month/day/year hour:minute
 
 `ln -s /home/vladislav/git/dotfiles/helpful_commands.md .helpful_commands.md`
