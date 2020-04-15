@@ -8,12 +8,19 @@
 " Modeline{{{
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
 
-From Useful Sites {{{
+From Useful Sites {{{1
+" Making A List Of Numbers {{{2
     https://vim.fandom.com/wiki/Making_a_list_of_numbers
         :put =map(range(1,150), 'printf(''%04d'', v:val)')
         :let i=1 | g/abc/s//\='xyz_'.i/ | let i=i+1
         :let @a=1 | %s/abc/\='xyz_'.(@a+setreg('a',@a+1))/g
-" }}}
+" }}}2
+
+
+" Ranges: Examples {{{2
+    https://vim.fandom.com/wiki/Ranges
+" }}}2
+" }}}1
 
 For Using the Surround Plugin (straight from the README): {{{
     Press cs"' inside

@@ -9,7 +9,7 @@ colorscheme solarized8_dark_high
 " Change individual colors around {2
 " change identifier and DiffText to bright yellow
 hi Identifier term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
-hi DiffText term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
+hi DiffText   term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
 
 " change Visual to a green highlight
 hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
@@ -18,8 +18,14 @@ hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
 hi DiffDelete term=standout cterm=bold ctermfg=9 gui=bold guifg=#cb4b16
 
 " change to a readable darkblue
-hi vimHiLink ctermfg=12 guifg=#839496
-hi vimHiGroup ctermfg=12 guifg=#839496
+" most of these were a darker blue I couldn't read
+hi vimHiLink          ctermfg=12 guifg=#839496
+hi vimHiGroup         ctermfg=12 guifg=#839496
+hi helpHyperTextJump  ctermfg=12 guifg=#839496
+hi directory          ctermfg=12 guifg=#839496
+hi MoreMsg            ctermfg=12 guifg=#839496
+hi ModeMsg            ctermfg=12 guifg=#839496
+
 " }2
 
 " Tab Colors {2
