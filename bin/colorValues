@@ -71,10 +71,11 @@ rainbowLine() {
     echo -ne "${NC}"
 }
 
-# Print text in alternating colors. For pretty
+# Print text in alternating colors. For pretty, not functionality.
 # A sourced function and can be used like a command
-# Can take STDIN, file(s), or arguments as text
+# Can take file(s), argument(s), or STDIN as text
 rainbow() {
+    # Decide if arguments are STDIN, files, or the text to colorize
     if [ $# = 0 ]
     then
         # No arguments, so use STDIN
@@ -96,9 +97,9 @@ rainbow() {
     fi
 
 
-    quote="'" # to help send single quoted text to bash function inside awk
-
     # Iterates over all file parameters (/dev/stdin or command line args)
+    # Using awk to iterate every line and pass it back to rainbowLine
+    quote="'" # to help send single quoted text to bash function inside awk
     for FILE in $(echo $DEFAULT_INPUT)
     do
         awk '{ \
