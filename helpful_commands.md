@@ -44,6 +44,24 @@ every instance of 'Permission denied".  There were a lot.
 : a beaut to map a keybinding to call hi on the word under the cursor, and paste it into
 the first buffer at the bottom and return to start
 
+## Printing Color
+```awk
+    awk 'BEGIN{
+        s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+        for (colnum = 0; colnum<77; colnum++) {
+            r = 255-(colnum*255/76);
+            g = (colnum*510/76);
+            b = (colnum*255/76);
+            if (g>255) g = 510-g;
+            printf "\033[48;2;%d;%d;%dm", r,g,b;
+            printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+            printf "%s\033[0m", substr(s,colnum+1,1);
+        }
+        printf "\n";
+    }'
+```
+Prints a line of '/\' to show true color, or 256 color.  I did not write this.
+
 ## Just4Fun
 `say -v afrikaans -p 80 "indefinitely and indubitable is industrialization"`
 : will speak, in the afrikaans voice with a pitch of 80 (default 50, 99 max)
@@ -64,9 +82,9 @@ the first buffer at the bottom and return to start
 
 `foo() { for i in {1..12};do echo -e "\t$i"; for k in {15..45..15};do echo -e "\t\t$k";done;done }`
 
-`a=130;b=0; while [[ 0 -gt 0 ]]; do if [[ 10 -eq 10 ]];then b=0; fi;echo -n 10; ((a--)); ((b++));done`
-
 `foo() { for i in {1..12};do echo -e "\t$i"; for k in {15..45..15};do echo -e "\t\s\s$k";done;done }`
+
+`a=130;b=0; while [[ 0 -gt 0 ]]; do if [[ 10 -eq 10 ]];then b=0; fi;echo -n 10; ((a--)); ((b++));done`
 
 `cat ~/sampleNames | while read line; do touch "$line";done`
 : create files from lines in a file
