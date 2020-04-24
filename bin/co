@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# co     : Change audio Output
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 04/23/20
+#
+# Toggle audo output between speakers and headphones.
+# Will probably not work if I add 3rd device
+#
+# This was originally taken from:
+#   https://forums.linuxmint.com/viewtopic.php?t=236439
+#   "How to quickly switch sound output devices?"
+# Really I barely kept anything but used it as a helpful template.
+#
+# The original author is unknown. Changed functionality from looping through
+# outputs (in a hacky broken fashion) to just toggling the two I care about
+
+# Grab the output indexes I want to use. My headphones and stereo.
+arctis="Arctis_Pro_Wireless-00.analog-stereo"
+lineout="analog-surround-40" # AKA 'line out'
+my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
+
+# Get device not currently being used, and remove leading whitespace.
+next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')
+current_default=$(echo "$my_output_devices" | grep \* | sed 's/^ *\*[[:space:]]//g')
+
+# Is there a progam to swap instead of everthing.
+# -s flag only switches the spotify output device
+# -p flag only switches the mpv output device
+# -f flag only switches the firefox output device
+
+case $1 in
+    -s ) swapProgram="Spotify" ;;
+    -p ) swapProgram="mpv Media Player" ;;
+    -f ) swapProgram="Firefox" ;;
+esac
+
+if [[ ! -z $swapProgram ]]
+then
+    # just needs the program name from list-sink-input
+    info=$(pacmd list-sink-inputs | grep -B 15 "$swapProgram")
+    index=$(echo "$info" | sed -n -e 's/.*index:[[:space:]]\([[:digit:]]\)/\1/p')
+    sink=$(echo "$info" | sed -n -e 's/[[:space:]]sink:[[:space:]]\([[:digit:]]\).*/\1/p' | head -n 1)
+
+    # if output is already switched from default, switch it back
+    echo "$sink ?? $next_out" #DEBUG
+    [[ $sink == $next_out ]] && next_out=$current_default
+
+    for i in $(echo $index)
+    do
+        pacmd "move-sink-input $i $next_out"
+    done
+    exit 0
+fi
+
+# Was not a program, switch all output and change default.
+#change the default sink
+pacmd "set-default-sink ${next_out}"
+
+#move all inputs to the new sink
+for input in $(pacmd list-sink-inputs | sed -n -e 's/index:[[:space:]]\([[:digit:]]\)/\1/p');
+do
+    pacmd "move-sink-input $input $next_out"
+done
