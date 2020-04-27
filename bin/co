@@ -44,7 +44,6 @@ then
     sink=$(echo "$info" | sed -n -e 's/[[:space:]]sink:[[:space:]]\([[:digit:]]\).*/\1/p' | head -n 1)
 
     # if output is already switched from default, switch it back
-    echo "$sink ?? $next_out" #DEBUG
     [[ $sink == $next_out ]] && next_out=$current_default
 
     for i in $(echo $index)
