@@ -50,11 +50,14 @@ nnoremap Q @q
 " nnoremap Y y$ " already in .vimrc
 nnoremap Q @@
 nnoremap Y y$
+
 " copy line to current position
 " g=line number, j=line down, k=line up
 nnoremap _g ggY``p
 nnoremap _j jY``p
 nnoremap _k kY``p
+" this will work if i can add count as '5'
+" .+5;,t .-5
 
 vnoremap <Esc> <Esc>gV
  noremap <leader>; q:
@@ -68,10 +71,12 @@ inoremap <leader>s <esc>:w<cr>
 nnoremap <leader>H :bp<cr>
 nnoremap <leader>L :bn<cr>
 nnoremap <leader><space> :noh<cr>
-nnoremap <silent><leader>o o<Esc>k
-nnoremap <silent><leader>O O<Esc>j
-nnoremap <silent>_o O<Esc>jo<Esc>k
-nnoremap <leader>l "lpcit
+
+" ,o doesn't work with [count] for some reason but ,O does
+nnoremap <silent><leader>o :normal! o<esc>k
+nnoremap <silent><leader>O :normal! O<esc>j
+"nnoremap                _o new lines above and below -- under Local Leader
+
 nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 
 " Capitalize First Letter of Words
@@ -81,12 +86,23 @@ vnoremap <silent><leader>C :s/\%V\<./\u&/g<cr>:noh<cr>``
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>M :20messages<cr>
 nnoremap <leader>b :set filetype=sh
+
+" FileType {2
+autocmd FileType html let @l = "<li>placeholder</li>"
+autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
+" }2
+
+" Local Leader {2
+nnoremap <silent><localleader>o O<Esc>jo<Esc>k
+" }2
 " }1
 
 " Custom Commnads {1
 command! Vimrc :vs $MYVIMRC.local
 command! Alias :vs ~/.config/aliases
 command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
+
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 " }1
 
 " Functions {1
