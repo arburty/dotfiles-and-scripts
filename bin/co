@@ -21,35 +21,41 @@ arctis="Arctis_Pro_Wireless-00.analog-stereo"
 lineout="analog-surround-40" # AKA 'line out'
 my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
 
-# Get device not currently being used, and remove leading whitespace.
+# Get index of device not currently being used, and remove leading whitespace.
 next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')
 current_default=$(echo "$my_output_devices" | grep \* | sed 's/^ *\*[[:space:]]//g')
 
 # Is there a progam to swap instead of everthing.
 # -s flag only switches the spotify output device
 # -p flag only switches the mpv output device
+# -m flag only switches the mpv output device
 # -f flag only switches the firefox output device
-
 case $1 in
     -s ) swapProgram="Spotify" ;;
-    -p ) swapProgram="mpv Media Player" ;;
+    -m ) swapProgram="mpv Media Player" ;;
     -f ) swapProgram="Firefox" ;;
 esac
 
-if [[ ! -z $swapProgram ]]
+if [[ ! -z "$swapProgram" ]]
 then
     # just needs the program name from list-sink-input
-    info=$(pacmd list-sink-inputs | grep -B 15 "$swapProgram")
-    index=$(echo "$info" | sed -n -e 's/.*index:[[:space:]]\([[:digit:]]\)/\1/p')
-    sink=$(echo "$info" | sed -n -e 's/[[:space:]]sink:[[:space:]]\([[:digit:]]\).*/\1/p' | head -n 1)
+    appInfo=$(pacmd list-sink-inputs | grep -B 15 "$swapProgram")
+    appIndex=$(echo "$appInfo" | sed -n -e 's/.*index:[[:space:]]\([[:digit:]]\)/\1/p')
+    appSink=$(echo "$appInfo" | sed -n -e 's/[[:space:]]sink:[[:space:]]\([[:digit:]]\).*/\1/p' | head -n 1)
 
     # if output is already switched from default, switch it back
-    [[ $sink == $next_out ]] && next_out=$current_default
+    [[ $appSink == $next_out ]] && next_out=$current_default
 
-    for i in $(echo $index)
+    for i in $(echo $appIndex)
     do
         pacmd "move-sink-input $i $next_out"
     done
+
+    # Send notification of audio switch
+    applicationName=$(echo "$appInfo" | sed -n -e 's/.*application.name[[:space:]]=[[:space:]]"\(.*\)"/\1/p')
+    outputDeviceName=$(pacmd list-sinks | grep -A 65 "index: $next_out" | sed -n -e 's/.*active[[:space:]]port:[[:space:]]<\(.*\)>/\1/p')
+    notify-send -i notification-audio-volume-high "Sound output for $applicationName switched to $outputDeviceName"
+
     exit 0
 fi
 
@@ -62,3 +68,7 @@ for input in $(pacmd list-sink-inputs | sed -n -e 's/index:[[:space:]]\([[:digit
 do
     pacmd "move-sink-input $input $next_out"
 done
+
+# Send notification of audio switch
+outputDeviceName=$(pacmd list-sinks | grep -A 65 "index: $next_out" | sed -n -e 's/.*active[[:space:]]port:[[:space:]]<\(.*\)>/\1/p')
+notify-send -i notification-audio-volume-high "Sound output switched to $outputDeviceName"
