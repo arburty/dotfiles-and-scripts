@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# co     : Change audio Output
+# co     : Change audio Output {{{1
 # Author : Austin Burt
 # Email  : austin@burt.us.com
 # Date   : 04/23/20
@@ -14,20 +14,25 @@
 # Really I barely kept anything but used it as a helpful template.
 #
 # The original author is unknown. Changed functionality from looping through
-# outputs (in a hacky broken fashion) to just toggling the two I care about
+# outputs (in a hacky broken fashion) to just toggling the two I care about.
+#
+# Vim modeline defined at bottom.
+# }}}1
 
+# Find the indexes of the output devices {{{
 # Grab the output indexes I want to use. My headphones and stereo.
 arctis="Arctis_Pro_Wireless-00.analog-stereo"
 lineout="analog-surround-40" # AKA 'line out'
-my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
+lineout2="pci-0000_28_00.3.analog-stereo" # gnome and cinammon had different names. <- was the gnome version
+my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout -e $lineout2 | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
 
 # Get index of device not currently being used, and remove leading whitespace.
 next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')
 current_default=$(echo "$my_output_devices" | grep \* | sed 's/^ *\*[[:space:]]//g')
+# }}}
 
-# Is there a progam to swap instead of everthing.
+# Is there a progam to swap instead of everthing. {{{
 # -s flag only switches the spotify output device
-# -p flag only switches the mpv output device
 # -m flag only switches the mpv output device
 # -f flag only switches the firefox output device
 case $1 in
@@ -52,14 +57,14 @@ then
     done
 
     # Send notification of audio switch
-    applicationName=$(echo "$appInfo" | sed -n -e 's/.*application.name[[:space:]]=[[:space:]]"\(.*\)"/\1/p')
+    applicationName=$(echo "$appInfo" | sed -n -e 's/.*application.name[[:space:]]=[[:space:]]"\(.*\)"/\1/p' | head -n 1)
     outputDeviceName=$(pacmd list-sinks | grep -A 65 "index: $next_out" | sed -n -e 's/.*active[[:space:]]port:[[:space:]]<\(.*\)>/\1/p')
     notify-send -i notification-audio-volume-high "Sound output for $applicationName switched to $outputDeviceName"
 
     exit 0
-fi
+fi # }}}
 
-# Was not a program, switch all output and change default.
+# Was not for a specific program, switch all output and change default. {{{
 #change the default sink
 pacmd "set-default-sink ${next_out}"
 
@@ -72,3 +77,9 @@ done
 # Send notification of audio switch
 outputDeviceName=$(pacmd list-sinks | grep -A 65 "index: $next_out" | sed -n -e 's/.*active[[:space:]]port:[[:space:]]<\(.*\)>/\1/p')
 notify-send -i notification-audio-volume-high "Sound output switched to $outputDeviceName"
+# }}}
+
+exit 0
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}

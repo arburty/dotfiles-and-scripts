@@ -22,6 +22,10 @@ hi DiffDelete term=standout cterm=bold ctermfg=9 gui=bold guifg=#cb4b16
 hi vimHiLink          ctermfg=12 guifg=#839496
 hi vimHiGroup         ctermfg=12 guifg=#839496
 hi helpHyperTextJump  ctermfg=12 guifg=#839496
+hi helpHyperTextJump  ctermfg=12 guifg=#839496
+hi directory          ctermfg=12 guifg=#839496
+hi MoreMsg            ctermfg=12 guifg=#839496
+hi ModeMsg            ctermfg=12 guifg=#839496
 hi directory          ctermfg=12 guifg=#839496
 hi MoreMsg            ctermfg=12 guifg=#839496
 hi ModeMsg            ctermfg=12 guifg=#839496
@@ -45,6 +49,7 @@ hi tablinefill ctermfg=DarkGray ctermbg=White
 
 " Mods {1
 runtime! ftplugin/man.vim
+set lazyredraw
 nnoremap Q @q
 
 " nnoremap Y y$ " already in .vimrc
