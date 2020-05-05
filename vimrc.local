@@ -2,52 +2,103 @@
 " Austin Burt
 " austin@burt.us.com
 
+" Vundle {
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+Plugin 'christoomey/vim-system-copy'
+
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+" }
+
 " Visual Setup {1
 set relativenumber
-colorscheme solarized8_dark_high
+colorscheme torte
+"colorscheme solarized8_dark_high
 
 " Change individual colors around {2
 " change identifier and DiffText to bright yellow
-hi Identifier term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
-hi DiffText   term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
+"hi Identifier term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
+"hi DiffText   term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
 
 " change Visual to a green highlight
-hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
+"hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
 
 " a more readable red
-hi DiffDelete term=standout cterm=bold ctermfg=9 gui=bold guifg=#cb4b16
+"hi DiffDelete term=standout cterm=bold ctermfg=9 gui=bold guifg=#cb4b16
 
 " change to a readable darkblue
 " most of these were a darker blue I couldn't read
-hi vimHiLink          ctermfg=12 guifg=#839496
-hi vimHiGroup         ctermfg=12 guifg=#839496
-hi helpHyperTextJump  ctermfg=12 guifg=#839496
-hi helpHyperTextJump  ctermfg=12 guifg=#839496
-hi directory          ctermfg=12 guifg=#839496
-hi MoreMsg            ctermfg=12 guifg=#839496
-hi ModeMsg            ctermfg=12 guifg=#839496
-hi directory          ctermfg=12 guifg=#839496
-hi MoreMsg            ctermfg=12 guifg=#839496
-hi ModeMsg            ctermfg=12 guifg=#839496
+"hi vimHiLink          ctermfg=12 guifg=#839496
+"hi vimHiGroup         ctermfg=12 guifg=#839496
+"hi helpHyperTextJump  ctermfg=12 guifg=#839496
+"hi helpHyperTextJump  ctermfg=12 guifg=#839496
+"hi directory          ctermfg=12 guifg=#839496
+"hi MoreMsg            ctermfg=12 guifg=#839496
+"hi ModeMsg            ctermfg=12 guifg=#839496
+"hi directory          ctermfg=12 guifg=#839496
+"hi MoreMsg            ctermfg=12 guifg=#839496
+"hi ModeMsg            ctermfg=12 guifg=#839496
 
 " }2
 
 " Tab Colors {2
 " changer vertical split color
-highlight VertSplit guibg=Orange guifg=Black ctermbg=9 ctermfg=0
-
-" make actice tab green with black text
-hi tablinesel ctermfg=DarkGreen ctermbg=Black
-
-" other tabs are black w/ yellow text
-hi tabline ctermfg=Black ctermbg=Yellow
-
-" gray tab bar
-hi tablinefill ctermfg=DarkGray ctermbg=White
+"highlight VertSplit guibg=Orange guifg=Black ctermbg=9 ctermfg=0
+"
+"" make actice tab green with black text
+"hi tablinesel ctermfg=DarkGreen ctermbg=Black
+"
+"" other tabs are black w/ yellow text
+"hi tabline ctermfg=Black ctermbg=Yellow
+"
+"" gray tab bar
+"hi tablinefill ctermfg=DarkGray ctermbg=White
 " }2
 " }1
 
 " Mods {1
+let mapleader = ","
+let localleader = "_"
 runtime! ftplugin/man.vim
 set lazyredraw
 nnoremap Q @q
@@ -62,7 +113,7 @@ nnoremap _g ggY``p
 nnoremap _j jY``p
 nnoremap _k kY``p
 " this will work if i can add count as '5'
-" .+5;,t .-5
+"   :+5t.
 
 vnoremap <Esc> <Esc>gV
  noremap <leader>; q:
@@ -88,6 +139,7 @@ nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 nnoremap <silent><leader>C :s/\<./\u&/g<cr>:noh<cr>``
 vnoremap <silent><leader>C :s/\%V\<./\u&/g<cr>:noh<cr>``
 
+" Useful
 nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>M :20messages<cr>
 nnoremap <leader>b :set filetype=sh
@@ -141,7 +193,9 @@ endfunction
 
 " Helpful Links I Have Used {
 " https://www.hillelwayne.com/post/intermediate-vim/
+" http://vimcasts.org/
 " }
+
 
 " Modeline{
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}

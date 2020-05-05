@@ -9,6 +9,12 @@
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
 
 From Useful Sites {{{1
+    " VimCasts {{{2
+        2: Tabs and Spaces {{{3}}}
+            http://vimcasts.org/episodes/tabs-and-spaces/
+        " }}}3
+    " }}}2
+
 " Making A List Of Numbers {{{2
     https://vim.fandom.com/wiki/Making_a_list_of_numbers
         :put =map(range(1,150), 'printf(''%04d'', v:val)')
