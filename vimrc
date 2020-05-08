@@ -92,7 +92,7 @@
     set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 
     " filetype autocmds from spf13 {
-"	autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+	autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
@@ -124,9 +124,16 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'mbbill/undotree'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-pathogen'
+Plugin 'rhysd/conflict-marker.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'vim-syntastic/syntastic.git'
+Plugin 'vim-scripts/sessionman.vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+
+"Colorschemes
 Plugin 'lifepillar/vim-solarized8'
 "Plugin 'ethanschoonover/vim-solarized'
-Plugin 'junegunn/goyo.vim'
 Plugin 'sainnhe/gruvbox-material'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'dracula/vim', { 'name': 'dracula' }
@@ -174,8 +181,8 @@ packadd! matchit
 " Visual Setup {1
 set termguicolors
 let g:jellybeans_use_term_italics = 1
+let g:jellybeans_overrides = { 'background' : { 'guibg': '000000' }, }
 color jellybeans
-let g:jellybeans_overrides = { 'background': { 'guibg': 'black' }, }
 "hi Comment cterm=italic
 "let g:space_vim_dark_background = 233
 "colorscheme space-vim-dark
@@ -238,7 +245,7 @@ let g:jellybeans_overrides = { 'background': { 'guibg': 'black' }, }
 
 " Mods {1
 let mapleader = ","
-let localleader = "_"
+let maplocalleader = "\\"
 
 map <C-J> <C-W>j
 map <C-K> <C-W>k
@@ -335,7 +342,7 @@ map zl zL
 map zh zH
 
 " Easier formatting
-nnoremap <silent> <leader>q gwip
+nnoremap <silent> <localleader>q gwip
 
 nnoremap Q @q
 nnoremap Y y$
@@ -351,6 +358,83 @@ nnoremap _k kY``p
 vnoremap <Esc> <Esc>gV
  noremap <leader>; q:
 " }2
+
+" }1
+
+" Plugin key-remapping{1
+
+    " Tabularize {2
+        if isdirectory(expand("~/.vim/bundle/tabular"))
+            nmap <Leader>a& :Tabularize /&<CR>
+            vmap <Leader>a& :Tabularize /&<CR>
+            nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+            vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+            nmap <Leader>a=> :Tabularize /=><CR>
+            vmap <Leader>a=> :Tabularize /=><CR>
+            nmap <Leader>a: :Tabularize /:<CR>
+            vmap <Leader>a: :Tabularize /:<CR>
+            nmap <Leader>a:: :Tabularize /:\zs<CR>
+            vmap <Leader>a:: :Tabularize /:\zs<CR>
+            nmap <Leader>a, :Tabularize /,<CR>
+            vmap <Leader>a, :Tabularize /,<CR>
+            nmap <Leader>a,, :Tabularize /,\zs<CR>
+            vmap <Leader>a,, :Tabularize /,\zs<CR>
+            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        endif
+    " }2
+
+    " Session List {2
+        set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
+        if isdirectory(expand("~/.vim/bundle/sessionman.vim/"))
+            nmap <leader>sl :SessionList<CR>
+            nmap <leader>ss :SessionSave<CR>
+            nmap <leader>sc :SessionClose<CR>
+        endif
+    " }2
+
+    " Fugitive {2
+        if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+            nnoremap <silent> <leader>gs :Gstatus<CR>
+            nnoremap <silent> <leader>gd :Gdiff<CR>
+            nnoremap <silent> <leader>gc :Gcommit<CR>
+            nnoremap <silent> <leader>gb :Gblame<CR>
+            nnoremap <silent> <leader>gl :Glog<CR>
+            nnoremap <silent> <leader>gp :Git push<CR>
+            nnoremap <silent> <leader>gr :Gread<CR>
+            nnoremap <silent> <leader>gw :Gwrite<CR>
+            nnoremap <silent> <leader>ge :Gedit<CR>
+            " Mnemonic _i_nteractive
+            nnoremap <silent> <leader>gi :Git add -p %<CR>
+            nnoremap <silent> <leader>gg :SignifyToggle<CR>
+        endif
+    " }2
+
+    " UndoTree {
+        if isdirectory(expand("~/.vim/bundle/undotree/"))
+            nnoremap <Leader>u :UndotreeToggle<CR>
+            " If undotree is opened, it is likely one wants to interact with it.
+            let g:undotree_SetFocusWhenToggle=1
+        endif
+    " }
+
+    " Goyo {2
+        nmap <localleader>g :Goyo<cr>
+    " }2
+
+    " indent_guides {
+        if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
+            let g:indent_guides_start_level = 2
+            let g:indent_guides_guide_size = 1
+            let g:indent_guides_enable_on_vim_startup = 1
+        endif
+    " }
+
+    " JSON {2
+        nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+        let g:vim_json_syntax_conceal = 0
+    " }2
+
 " }1
 
 " Custom Leader Mappings {1
@@ -403,6 +487,38 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 " Functions {1
 source ~/.vim/personal/redir_messages.vim
 
+    " Set directories for backups, views, swaps, and undos {2
+    " They will live under $HOME/.vim/artifacts/
+    function! InitializeDirectories()
+        let parent = $HOME . "/" . ".vim" . "/" . "artifacts"
+        let prefix = 'vim'
+        let dir_list = {
+                    \ 'backup': 'backupdir',
+                    \ 'views': 'viewdir',
+                    \ 'swap': 'directory',
+                    \ 'undo': 'undodir' }
+        let common_dir = parent . '/' . prefix
+        " common_dir= ~/.vim/artifacts/vim
+
+        for [dirname, settingname] in items(dir_list)
+            let directory = common_dir . dirname . '/'
+            if exists("*mkdir")
+                if !isdirectory(directory)
+                    call mkdir(directory)
+                endif
+            endif
+            if !isdirectory(directory)
+                echo "Warning: Unable to create backup directory: " . directory
+                echo "Try: mkdir -p " . directory
+            else
+                let directory = substitute(directory, " ", "\\\\ ", "g")
+                exec "set " . settingname . "=" . directory
+            endif
+        endfor
+    endfunction
+    call InitializeDirectories()
+    " }2
+
 " Redraw The Cursor {2
 " to have a line cursor in insert and a block cursor in normal: added 12/27/19
 if has("autocmd")
@@ -427,13 +543,66 @@ function Inc(...)
   return result
 endfunction
 " }2
+
+    " Strip whitespace {
+    function! StripTrailingWhitespace()
+        " Preparation: save last search, and cursor position.
+        let _s=@/
+        let l = line(".")
+        let c = col(".")
+        " do the business:
+        %s/\s\+$//e
+        " clean up: restore previous search history, and cursor position
+        let @/=_s
+        call cursor(l, c)
+    endfunction
+    " }
+
+    " Shell command {
+    function! s:RunShellCommand(cmdline)
+        botright new
+
+        setlocal buftype=nofile
+        setlocal bufhidden=delete
+        setlocal nobuflisted
+        setlocal noswapfile
+        setlocal nowrap
+        setlocal filetype=shell
+        setlocal syntax=shell
+
+        call setline(1, a:cmdline)
+        call setline(2, substitute(a:cmdline, '.', '=', 'g'))
+        execute 'silent $read !' . escape(a:cmdline, '%#')
+        setlocal nomodifiable
+        1
+    endfunction
+
+    command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+    " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
+    " }
+
+    " ExpandFilenameAndExecute {2
+    function! s:ExpandFilenameAndExecute(command, file)
+        execute a:command . " " . expand(a:file, ":p")
+    endfunction
+    " }2
+
+
 " }1
 
 " Helpful Links I Have Used {
+" much of this vimrc was borrowed from:
+" https://github.com/spf13/spf13-vim
+
 " https://www.hillelwayne.com/post/intermediate-vim/
 " http://vimcasts.org/
 " }
 
+
+nnoremap ,a za
+nnoremap \v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
+nnoremap \e :e /home/vladislav/tmp/vim.backup/bundle<CR>
+nnoremap <leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 
 " Modeline{
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}
