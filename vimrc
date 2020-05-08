@@ -599,10 +599,14 @@ endfunction
 " }
 
 
-nnoremap ,a za
-nnoremap \v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
-nnoremap \e :e /home/vladislav/tmp/vim.backup/bundle<CR>
-nnoremap <leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
+" Space to put 'temporary' mappings that will survive closing vim. {1
+
+nnoremap <localleader>a za
+nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
+nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
+nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
+
+"}1
 
 " Modeline{
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}
