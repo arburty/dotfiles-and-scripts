@@ -46,7 +46,7 @@
 	"set cursorline                  " Highlight current line
 
 	highlight clear SignColumn      " SignColumn should match background
-	highlight clear LineNr          " Current line number row will have same background color in relative mode
+    highlight clear LineNr          " Current line number row will have same background color in relative mode
 	"highlight clear CursorLineNr    " Remove highlight color from current line number
 
 	set ruler                   " Show the ruler
@@ -116,35 +116,45 @@ call vundle#begin() " {2
 Plugin 'VundleVim/Vundle.vim'
 
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-system-copy'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'godlygeek/tabular'
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'mbbill/undotree'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-pathogen'
-Plugin 'rhysd/conflict-marker.vim'
 Plugin 'junegunn/goyo.vim'
-Plugin 'vim-syntastic/syntastic.git'
-Plugin 'vim-scripts/sessionman.vim'
+Plugin 'mbbill/undotree'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'rhysd/conflict-marker.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/sessionman.vim'
+Plugin 'vim-syntastic/syntastic.git'
 
 "Colorschemes
-Plugin 'lifepillar/vim-solarized8'
-"Plugin 'ethanschoonover/vim-solarized'
-Plugin 'sainnhe/gruvbox-material'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'dracula/vim', { 'name': 'dracula' }
-Plugin 'ayu-theme/ayu-vim' " or other package manager
-Plugin 'junegunn/seoul256.vim'
 Plugin 'arcticicestudio/nord-vim'
-Plugin 'crusoexia/vim-monokai'
+Plugin 'ayu-theme/ayu-vim' " or other package manager
 Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plugin 'xero/sourcerer.vim'
+Plugin 'crusoexia/vim-monokai'
+Plugin 'dracula/vim', { 'name': 'dracula' }
+"Plugin 'ethanschoonover/vim-solarized'
+Plugin 'junegunn/seoul256.vim'
+Plugin 'lifepillar/vim-solarized8'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'romainl/Apprentice'
+Plugin 'sainnhe/gruvbox-material'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'sjl/badwolf'
+Plugin 'xero/sourcerer.vim'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -179,34 +189,47 @@ packadd! matchit
 " }1
 
 " Visual Setup {1
+function Pickscheme(scheme)
+endfunction
+
 set termguicolors
-let g:jellybeans_use_term_italics = 1
-let g:jellybeans_overrides = { 'background' : { 'guibg': '000000' }, }
-color jellybeans
-"hi Comment cterm=italic
+
+" A few colorscheme options {2
+let g:badwolf_tabline=3
+colorscheme badwolf
+hi Comment cterm=italic
+hi Normal guibg=black guifg=white
+hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+
+" {3
+"let g:jellybeans_use_term_italics = 1
+"let g:jellybeans_overrides = { 'background' : { 'guibg': '000000' }, }
+"color jellybeans
+
 "let g:space_vim_dark_background = 233
 "colorscheme space-vim-dark
+
 "let g:seoul256_background = 233
 "colorscheme seoul256
+
 "let ayucolor="mirage" " for mirage version of theme
-""let ayucolor=dark"   " for dark version of theme
+"let ayucolor=dark"   " for dark version of theme
 "colorscheme ayu
+
 "let g:gruvbox_material_background = 'hard'
 "let g:gruvbox_material_visual = 'reverse'
 "let g:gruvbox_material_palette = 'material'
 "colorscheme gruvbox-material
-"colorscheme torte
-" elflord was nice.
-" desert was alright.
-" koehler was close. bad statusline
-" industry was close. ì
-"colorscheme solarized8_dark_high
+
+"colorscheme solarized8_dark_high was my scheme before purging spf13
+" }3
+" }2
 
 " Change individual colors around {2
 " change identifier and DiffText to bright yellow
+
 "hi Identifier term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
 "hi DiffText   term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
-
 "" change Visual to a green highlight
 "hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
 
@@ -420,6 +443,32 @@ vnoremap <Esc> <Esc>gV
 
     " Goyo {2
         nmap <localleader>g :Goyo<cr>
+        function! s:goyo_enter()
+            silent !tmux set status off
+            set noshowmode
+            set noshowcmd
+            set scrolloff=6
+            colorscheme pencil
+            hi Normal guibg=black guifg=white
+            hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+            set number
+            set relativenumber
+        endfunction
+        function! s:goyo_leave()
+            silent !tmux set status on
+            "silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+            set showmode
+            set showcmd
+            set scrolloff=3
+            let g:badwolf_tabline=3
+            colorscheme badwolf
+            hi Comment cterm=italic
+            hi Normal guibg=black guifg=white
+            hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+        endfunction
+
+        autocmd! User GoyoEnter nested call <SID>goyo_enter()
+        autocmd! User GoyoLeave nested call <SID>goyo_leave()
     " }2
 
     " indent_guides {
@@ -427,6 +476,7 @@ vnoremap <Esc> <Esc>gV
             let g:indent_guides_start_level = 2
             let g:indent_guides_guide_size = 1
             let g:indent_guides_enable_on_vim_startup = 1
+            let g:indent_guides_color_change_percent = 3
         endif
     " }
 
@@ -590,13 +640,15 @@ endfunction
 
 " }1
 
-" Helpful Links I Have Used {
-" much of this vimrc was borrowed from:
-" https://github.com/spf13/spf13-vim
+" Helpful Links I Have Used {1
+" Much of this vimrc was borrowed from:
+"   https://github.com/spf13/spf13-vim
 
+" https://sherif.io/2016/05/30/favorite-vim-plugins.html
 " https://www.hillelwayne.com/post/intermediate-vim/
 " http://vimcasts.org/
-" }
+" https://learnvimscriptthehardway.stevelosh.com/
+" }1
 
 
 " Space to put 'temporary' mappings that will survive closing vim. {1
