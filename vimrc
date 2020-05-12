@@ -58,6 +58,7 @@
 	set linespace=0                 " No extra spaces between rows
 	set number                      " Line numbers on
 	set relativenumber              " Obvious
+    set numberwidth=5
 	set showmatch                   " Show matching brackets/parenthesis
 	set incsearch                   " Find as you type search
 	set hlsearch                    " Highlight search terms
@@ -134,7 +135,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-scripts/sessionman.vim'
 Plugin 'vim-syntastic/syntastic.git'
 
@@ -190,64 +191,26 @@ packadd! matchit
 
 " Visual Setup {1
 set termguicolors
-source ~/.vim/personal/pick_scheme.vim
 
-" A few colorscheme options {2
-let g:badwolf_tabline=3
-colorscheme badwolf
-hi Comment cterm=italic
-hi Normal guibg=black guifg=white
-hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
-
-" {3
-"let g:jellybeans_use_term_italics = 1
-"let g:jellybeans_overrides = { 'background' : { 'guibg': '000000' }, }
-"color jellybeans
-
-"let g:space_vim_dark_background = 233
-"colorscheme space-vim-dark
-
-"let g:seoul256_background = 233
-"colorscheme seoul256
-
-"let ayucolor="mirage" " for mirage version of theme
-"let ayucolor=dark"   " for dark version of theme
-"colorscheme ayu
-
-"let g:gruvbox_material_background = 'hard'
-"let g:gruvbox_material_visual = 'reverse'
-"let g:gruvbox_material_palette = 'material'
-"colorscheme gruvbox-material
-
-"colorscheme solarized8_dark_high was my scheme before purging spf13
-" }3
-" }2
-
-" Change individual colors around {2
-" change identifier and DiffText to bright yellow
-
-"hi Identifier term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
-"hi DiffText   term=bold cterm=bold ctermfg=3 gui=bold guifg=#b58900
-"" change Visual to a green highlight
-"hi Visual term=bold ctermfg=2 ctermbg=0 guifg=#0000FF guibg=#00FF00
-
-"" a more readable red
-"hi DiffDelete term=standout cterm=bold ctermfg=9 gui=bold guifg=#cb4b16
-
-"" change to a readable darkblue
-"" most of these were a darker blue I couldn't read
-"hi vimHiLink          ctermfg=12 guifg=#839496
-"hi vimHiGroup         ctermfg=12 guifg=#839496
-"hi helpHyperTextJump  ctermfg=12 guifg=#839496
-"hi helpHyperTextJump  ctermfg=12 guifg=#839496
-"hi directory          ctermfg=12 guifg=#839496
-"hi MoreMsg            ctermfg=12 guifg=#839496
-"hi ModeMsg            ctermfg=12 guifg=#839496
-"hi directory          ctermfg=12 guifg=#839496
-"hi MoreMsg            ctermfg=12 guifg=#839496
-"hi ModeMsg            ctermfg=12 guifg=#839496
-
-" }2
+" Pick a scheme with my modifications
+" If pick_scheme exists use it to define the coloscheme.
+" Otherwise use badwolf, or fall back to torte as a last resort.
+if filereadable(expand("~/.vim/personal/pick_scheme.vim"))
+    source ~/.vim/personal/pick_scheme.vim
+    call Pickscheme("badwolf")
+else
+    if isdirectory(expand("~/.vim/bundle/badwolf"))
+        let g:badwolf_tabline=3
+        colorscheme badwolf
+        hi Comment cterm=italic
+        hi Normal guibg=black guifg=white
+        hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+    else
+        color torte
+        hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+        hi clear SignColumn      " SignColumn should match background
+    endif
+endif
 
 " Tab Colors {2
 " changer vertical split color
@@ -359,7 +322,8 @@ cmap w!! w !sudo tee % >/dev/null
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 map <leader>ew :e %%
 map <leader>es :sp %%
-map <leader>ev :vsp %%
+" <leader>vs used by 'edit vimrc'
+map <leader>evs :vsp %%
 map <leader>et :tabe %%
 
 " Adjust viewports to the same size
@@ -495,16 +459,19 @@ vnoremap <Esc> <Esc>gV
 
 " Abbreviations {1
     iabbrev @@ austin@burt.us.com
+    iabbrev shceme scheme
+    iabbrev colorshceme colorscheme
 " }1
 
 " Custom Leader Mappings {1
 " Map leader set in Mods
-nnoremap <leader>ev :Vimrc
+nnoremap <leader>ev :Vimrc<cr>
 nnoremap <leader>sv :so $MYVIMRC<cr>
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <esc>:w<cr>
  noremap <leader>q :q!<cr>
  noremap <leader>; q:
+nnoremap <leader>ps :call Pickscheme("?")<cr>:call Pickscheme("")<left><left>
 
 nnoremap <leader>H :bp<cr>
 nnoremap <leader>L :bn<cr>
