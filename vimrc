@@ -19,7 +19,7 @@
 	set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
 	set virtualedit=onemore             " Allow for cursor beyond last character
 	set history=1000                    " Store a ton of history (default is 20)
-	set spell                           " Spell checking on
+	set nospell                         " Spell checking
 	set hidden                          " Allow buffer switching without saving
 	set iskeyword-=.                    " '.' is an end of word designator
 	set iskeyword-=#                    " '#' is an end of word designator
@@ -189,10 +189,8 @@ packadd! matchit
 " }1
 
 " Visual Setup {1
-function Pickscheme(scheme)
-endfunction
-
 set termguicolors
+source ~/.vim/personal/pick_scheme.vim
 
 " A few colorscheme options {2
 let g:badwolf_tabline=3
@@ -270,6 +268,13 @@ hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0
 let mapleader = ","
 let maplocalleader = "\\"
 
+nnoremap <left> ,
+nnoremap <right> ;
+
+" to fix my habit of doing VJ which is very different {
+nnoremap <space> Vj
+vnoremap <space> }
+
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
@@ -277,6 +282,8 @@ map <C-H> <C-W>h
 
 noremap j gj
 noremap k gk
+
+inoremap kj <esc>
 
 " alt-h,alt-l in xterm
 map è gT
@@ -379,7 +386,6 @@ nnoremap _k kY``p
 "   :+5t.
 
 vnoremap <Esc> <Esc>gV
- noremap <leader>; q:
 " }2
 
 " }1
@@ -487,6 +493,10 @@ vnoremap <Esc> <Esc>gV
 
 " }1
 
+" Abbreviations {1
+    iabbrev @@ austin@burt.us.com
+" }1
+
 " Custom Leader Mappings {1
 " Map leader set in Mods
 nnoremap <leader>ev :Vimrc
@@ -494,6 +504,7 @@ nnoremap <leader>sv :so $MYVIMRC<cr>
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <esc>:w<cr>
  noremap <leader>q :q!<cr>
+ noremap <leader>; q:
 
 nnoremap <leader>H :bp<cr>
 nnoremap <leader>L :bn<cr>
@@ -650,13 +661,13 @@ endfunction
 " https://learnvimscriptthehardway.stevelosh.com/
 " }1
 
-
 " Space to put 'temporary' mappings that will survive closing vim. {1
 
 nnoremap <localleader>a za
 nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
+nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 
 "}1
 

@@ -7,7 +7,7 @@ if [[ $1 == "-D" ]]; then
     echo "::DEBUG MODE:: a test directory in \$HOME/test/.vimswap/ must exist"
     shift
 else
-    dir="$HOME/.vimswap"
+    dir="$HOME/.vim/artifacts/vimswap"
 fi
 
 # force it. don't ask just delete
@@ -19,11 +19,11 @@ fi
 files="$(ls $dir) all done"
 if [[ $(echo $files | wc -w | tr -d '[:blank:]') -eq 2 ]]
 then
-    echo "No files in ~/.vimswap"
+    echo "No files in $dir"
     exit 0
 fi
 
-PS3="what file(s) do you want to delete? "
+PS3="What file(s) do you want to delete? "
 echo "note: '$PROGRAM -f' removes all files with no extra action necassary"
 select file in $files
 do
