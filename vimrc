@@ -2,7 +2,7 @@
 " Austin Burt
 " austin@burt.us.com
 
-" General {
+" General {{
 
 	set background=dark         " Assume a dark background
 
@@ -76,9 +76,9 @@
 	set lazyredraw
 	runtime! ftplugin/man.vim
 
-" }
+" }}
 
-" Formatting {
+" Formatting {{
 
     set nowrap                      " Do not wrap long lines
     set autoindent                  " Indent at the same level of the previous line
@@ -92,7 +92,7 @@
     "set matchpairs+=<:>             " Match, to be used with %
     set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 
-    " filetype autocmds from spf13 {
+    " filetype autocmds from spf13 {{
 	autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
@@ -101,19 +101,19 @@
     autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
     autocmd FileType haskell,rust setlocal nospell
-    " }
+    " }}
 
-" }
+" }}
 
-" Vundle {1
-" Settings {2
+" Vundle {{1
+" Settings {{2
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim "}2
+set rtp+=~/.vim/bundle/Vundle.vim "}}2
 
-call vundle#begin() " {2
+call vundle#begin() " {{2
 Plugin 'VundleVim/Vundle.vim'
 
 " plugin on GitHub repo
@@ -171,9 +171,9 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 call vundle#end()            " required
-" }2
+" }}2
 
-" Vundle Notes {2
+" Vundle Notes {{2
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -186,12 +186,12 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-" }2
+" }}2
 
 packadd! matchit
-" }1
+" }}1
 
-" Visual Setup {1
+" Visual Setup {{1
 set termguicolors
 
 " Pick a scheme with my modifications
@@ -214,7 +214,7 @@ else
     endif
 endif
 
-" Tab Colors {2
+" Tab Colors {{2
 " changer vertical split color
 "highlight VertSplit guibg=Orange guifg=Black ctermbg=9 ctermfg=0
 "
@@ -226,19 +226,19 @@ endif
 "
 "" gray tab bar
 "hi tablinefill ctermfg=DarkGray ctermbg=White
-" }2
-" }1
+" }}2
+" }}1
 
-" Mods {1
+" Mods {{1
 let mapleader = ","
 let maplocalleader = "\\"
 
 nnoremap <left> ,
 nnoremap <right> ;
 
-" to fix my habit of doing VJ which is very different {
+" to fix my habit of doing VJ which is very different {{
 nnoremap <space> Vj
-vnoremap <space> }
+vnoremap <space> }}
 
 map <C-J> <C-W>j
 map <C-K> <C-W>k
@@ -254,7 +254,7 @@ inoremap kj <esc>
 map è gT
 map ì gt
 
-" Wrap Relative Motion {2
+" Wrap Relative Motion {{2
         function! WrapRelativeMotion(key, ...)
             let vis_sel=""
             if a:0
@@ -284,9 +284,9 @@ map ì gt
         vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
         vnoremap <Home> :<C-U>call WrapRelativeMotion("0", 1)<CR>
         vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
-" }2
+" }}2
 
-" foldlevel mappings{2
+" foldlevel mappings{{2
 nmap <leader>f0 :set foldlevel=0<CR>
 nmap <leader>f1 :set foldlevel=1<CR>
 nmap <leader>f2 :set foldlevel=2<CR>
@@ -297,15 +297,15 @@ nmap <leader>f6 :set foldlevel=6<CR>
 nmap <leader>f7 :set foldlevel=7<CR>
 nmap <leader>f8 :set foldlevel=8<CR>
 nmap <leader>f9 :set foldlevel=9<CR>
-"}2
+"}}2
 
 " Find merge conflict markers
-" this line does weird folding {3
+" this line does weird folding {{3
 map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
-" }3
+" }}3
 
 
-" Shortcuts {2
+" Shortcuts {{2
 " Change Working Directory to that of the current file
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
@@ -352,13 +352,13 @@ nnoremap _k kY``p
 "   :+5t.
 
 vnoremap <Esc> <Esc>gV
-" }2
+" }}2
 
-" }1
+" }}1
 
-" Plugin key-remapping{1
+" Plugin key-remapping{{1
 
-    " Tabularize {2
+    " Tabularize {{2
         if isdirectory(expand("~/.vim/bundle/tabular"))
             nmap <Leader>a& :Tabularize /&<CR>
             vmap <Leader>a& :Tabularize /&<CR>
@@ -377,18 +377,18 @@ vnoremap <Esc> <Esc>gV
             nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
             vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
         endif
-    " }2
+    " }}2
 
-    " Session List {2
+    " Session List {{2
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
         if isdirectory(expand("~/.vim/bundle/sessionman.vim/"))
             nmap <leader>sl :SessionList<CR>
             nmap <leader>ss :SessionSave<CR>
             nmap <leader>sc :SessionClose<CR>
         endif
-    " }2
+    " }}2
 
-    " Fugitive {2
+    " Fugitive {{2
         if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
             nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -403,17 +403,17 @@ vnoremap <Esc> <Esc>gV
             nnoremap <silent> <leader>gi :Git add -p %<CR>
             nnoremap <silent> <leader>gg :SignifyToggle<CR>
         endif
-    " }2
+    " }}2
 
-    " UndoTree {
+    " UndoTree {{
         if isdirectory(expand("~/.vim/bundle/undotree/"))
             nnoremap <Leader>u :UndotreeToggle<CR>
             " If undotree is opened, it is likely one wants to interact with it.
             let g:undotree_SetFocusWhenToggle=1
         endif
-    " }
+    " }}
 
-    " Goyo {2
+    " Goyo {{2
         nmap <localleader>g :Goyo<cr>
         function! s:goyo_enter()
             silent !tmux set status off
@@ -441,33 +441,33 @@ vnoremap <Esc> <Esc>gV
 
         autocmd! User GoyoEnter nested call <SID>goyo_enter()
         autocmd! User GoyoLeave nested call <SID>goyo_leave()
-    " }2
+    " }}2
 
-    " indent_guides {
+    " indent_guides {{
         if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
             let g:indent_guides_start_level = 2
             let g:indent_guides_guide_size = 1
             let g:indent_guides_enable_on_vim_startup = 1
             let g:indent_guides_color_change_percent = 3
         endif
-    " }
+    " }}
 
-    " JSON {2
+    " JSON {{2
         nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         let g:vim_json_syntax_conceal = 0
-    " }2
+    " }}2
 
-" }1
+" }}1
 
-" Abbreviations {1
+" Abbreviations {{1
     iabbrev @@ austin@burt.us.com
     iabbrev shceme scheme
     iabbrev colorshceme colorscheme
 
     cabbrev hlep help
-" }1
+" }}1
 
-" Custom Leader Mappings {1
+" Custom Leader Mappings {{1
 " Map leader set in Mods
 nnoremap <leader>ev :Vimrc<cr>
 nnoremap <leader>sv :so $MYVIMRC<cr>
@@ -498,28 +498,31 @@ nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
 nnoremap <leader>M :20messages<cr>
 nnoremap <leader>b :set filetype=sh
 
-" FileType {2
+" FileType {{2
 autocmd FileType html let @l = "<li>placeholder</li>"
 autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
-" }2
+" }}2
 
-" Local Leader {2
+" Local Leader {{2
 nnoremap <silent><localleader>o O<Esc>jo<Esc>k
-" }2
-" }1
+" }}2
+" }}1
 
-" Custom Commnads {1
+" Custom Commnads {{1
 command! Vimrc :vs $MYVIMRC
 command! Alias :vs ~/.config/aliases
 command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-" }1
+" }}1
 
-" Functions {1
+" Functions {{1
+" Sourced {{
 source ~/.vim/personal/redir_messages.vim
+" Pickscheme() sourced from Visual Setup
+" }}
 
-    " Set directories for backups, views, swaps, and undos {2
+    " Set directories for backups, views, swaps, and undos {{2
     " They will live under $HOME/.vim/artifacts/
     function! InitializeDirectories()
         let parent = $HOME . "/" . ".vim" . "/" . "artifacts"
@@ -549,9 +552,9 @@ source ~/.vim/personal/redir_messages.vim
         endfor
     endfunction
     call InitializeDirectories()
-    " }2
+    " }}2
 
-" Redraw The Cursor {2
+" Redraw The Cursor {{2
 " to have a line cursor in insert and a block cursor in normal: added 12/27/19
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
@@ -563,9 +566,9 @@ if has("autocmd")
 \ endif
 au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
-" }2
+" }}2
 
-" Inc() - Allow for Increasing numbers {2
+" Inc() - Allow for Increasing numbers {{2
 ""    :let i=1 | s/abc/\='xyz_'. Inc(5)/g
 " Add argument (can be negative, default 1) to global variable i.
 " Return value of i before the change.
@@ -574,9 +577,9 @@ function Inc(...)
   let g:i += a:0 > 0 ? a:1 : 1
   return result
 endfunction
-" }2
+" }}2
 
-    " Strip whitespace {
+    " Strip whitespace {{
     function! StripTrailingWhitespace()
         " Preparation: save last search, and cursor position.
         let _s=@/
@@ -588,9 +591,9 @@ endfunction
         let @/=_s
         call cursor(l, c)
     endfunction
-    " }
+    " }}
 
-    " Shell command {
+    " Shell command {{
     function! s:RunShellCommand(cmdline)
         botright new
 
@@ -611,18 +614,18 @@ endfunction
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-    " }
+    " }}
 
-    " ExpandFilenameAndExecute {2
+    " ExpandFilenameAndExecute {{2
     function! s:ExpandFilenameAndExecute(command, file)
         execute a:command . " " . expand(a:file, ":p")
     endfunction
-    " }2
+    " }}2
 
 
-" }1
+" }}1
 
-" Helpful Links I Have Used {1
+" Helpful Links I Have Used {{1
 " Much of this vimrc was borrowed from:
 "   https://github.com/spf13/spf13-vim
 
@@ -630,9 +633,9 @@ endfunction
 " https://www.hillelwayne.com/post/intermediate-vim/
 " http://vimcasts.org/
 " https://learnvimscriptthehardway.stevelosh.com/
-" }1
+" }}1
 
-" Space to put 'temporary' mappings that will survive closing vim. {1
+" Space to put 'temporary' mappings that will survive closing vim. {{1
 
 nnoremap <localleader>a za
 nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
@@ -640,7 +643,7 @@ nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 
-"}1
+"}}1
 
-" Modeline{
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}
+" Modeline{{
+" vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker:}}
