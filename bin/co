@@ -29,6 +29,10 @@ my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout -e $lineo
 # Get index of device not currently being used, and remove leading whitespace.
 next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')
 current_default=$(echo "$my_output_devices" | grep \* | sed 's/^ *\*[[:space:]]//g')
+
+# notification flags and icon
+notif_flags="-t 1000 -i $HOME/shared_drive/Pictures/Me/Matt-and-I-Ren-Fair.jpg"
+notif_title="Sound output changed"
 # }}}
 
 # Is there a progam to swap instead of everthing. {{{
@@ -59,7 +63,7 @@ then
     # Send notification of audio switch
     applicationName=$(echo "$appInfo" | sed -n -e 's/.*application.name[[:space:]]=[[:space:]]"\(.*\)"/\1/p' | head -n 1)
     outputDeviceName=$(pacmd list-sinks | grep -A 65 "index: $next_out" | sed -n -e 's/.*active[[:space:]]port:[[:space:]]<\(.*\)>/\1/p')
-    notify-send -i notification-audio-volume-high "Sound output for $applicationName switched to $outputDeviceName"
+    notify-send $notif_flags "$notif_title" "$applicationName => $outputDeviceName"
 
     exit 0
 fi # }}}
@@ -76,7 +80,8 @@ done
 
 # Send notification of audio switch
 outputDeviceName=$(pacmd list-sinks | grep -A 65 "index: $next_out" | sed -n -e 's/.*active[[:space:]]port:[[:space:]]<\(.*\)>/\1/p')
-notify-send -i notification-audio-volume-high "Sound output switched to $outputDeviceName"
+notify-send $notif_flags "$notif_title" "DEFAULT => $outputDeviceName"
+
 # }}}
 
 exit 0
