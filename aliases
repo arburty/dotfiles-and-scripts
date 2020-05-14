@@ -41,7 +41,7 @@ alias v='vim'
 alias vz='vim $HOME/.zshrc'
 alias vb='vim $HOME/.bashrc'
 alias vh='vim $HOME/.helpful_commands.md'
-alias vv='vim $HOME/.vimrc.local'
+alias vv='vim $HOME/.vimrc'
 alias va='vim $HOME/.config/aliases'
 alias vt='vim $HOME/todo'
 # function to open vim with Gitstatus open

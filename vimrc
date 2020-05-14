@@ -156,6 +156,8 @@ Plugin 'sainnhe/gruvbox-material'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sjl/badwolf'
 Plugin 'xero/sourcerer.vim'
+Plugin 'alirezabashyri/molokai-italic'
+Plugin 'yassinebridi/vim-purpura'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -461,6 +463,8 @@ vnoremap <Esc> <Esc>gV
     iabbrev @@ austin@burt.us.com
     iabbrev shceme scheme
     iabbrev colorshceme colorscheme
+
+    cabbrev hlep help
 " }1
 
 " Custom Leader Mappings {1
