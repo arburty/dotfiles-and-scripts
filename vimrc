@@ -13,7 +13,10 @@
 	scriptencoding utf-8
 	 
 	" Always switch to the current file directory
-	autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+    augroup switch_dir
+        autocmd!
+        autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+    augroup END
 
 	set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
 	set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
@@ -93,9 +96,12 @@
     set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 
     " filetype autocmds from spf13 {{
-	autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+    augroup strip_trailing_whitespace
+        autocmd!
+        autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+        autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+        autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+    augroup END
 
     " Workaround vim-commentary for Haskell
     autocmd FileType haskell setlocal commentstring=--\ %s
@@ -499,8 +505,11 @@ nnoremap <leader>M :20messages<cr>
 nnoremap <leader>b :set filetype=sh
 
 " FileType {{2
-autocmd FileType html let @l = "<li>placeholder</li>"
-autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
+augroup filetype_html
+    autocmd!
+    autocmd FileType html let @l = "<li>placeholder</li>"
+    autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
+augroup END
 " }}2
 
 " Local Leader {{2
@@ -554,19 +563,22 @@ source ~/.vim/personal/redir_messages.vim
     call InitializeDirectories()
     " }}2
 
-" Redraw The Cursor {{2
-" to have a line cursor in insert and a block cursor in normal: added 12/27/19
-if has("autocmd")
-  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
-  au InsertEnter,InsertChange *
-\ if v:insertmode == 'i' |
-\   silent execute '!echo -ne "\e[6 q"' | redraw! |
-\ elseif v:insertmode == 'r' |
-\   silent execute '!echo -ne "\e[4 q"' | redraw! |
-\ endif
-au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
-endif
-" }}2
+    " Redraw The Cursor {{2
+    " to have a line cursor in insert and a block cursor in normal: added 12/27/19
+    if has("autocmd")
+        augroup cursor_change
+            autocmd!
+            au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+            au InsertEnter,InsertChange *
+                        \ if v:insertmode == 'i' |
+                        \   silent execute '!echo -ne "\e[6 q"' | redraw! |
+                        \ elseif v:insertmode == 'r' |
+                        \   silent execute '!echo -ne "\e[4 q"' | redraw! |
+                        \ endif
+            au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+        augroup END
+    endif
+    " }}2
 
 " Inc() - Allow for Increasing numbers {{2
 ""    :let i=1 | s/abc/\='xyz_'. Inc(5)/g
