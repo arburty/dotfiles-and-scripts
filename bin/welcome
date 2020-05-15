@@ -30,7 +30,7 @@ then
 fi
 
 # give me my todo's
-cat $HOME/todo >> $tempFile
+cat $HOME/todo.html >> $tempFile
 
 # display the output
 markd $tempFile
