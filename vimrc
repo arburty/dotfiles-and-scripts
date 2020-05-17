@@ -254,37 +254,6 @@
     map è gT
     map ì gt
 
-    " omaps for 'inside/around next/last' (,),{,},[,] }}2
-        onoremap in( :<c-u>normal! f(vi(<cr>
-        onoremap in) :<c-u>normal! f)vi)<cr>
-        onoremap il( :<c-u>normal! F(vi(<cr>
-        onoremap il) :<c-u>normal! F)vi)<cr>
-
-        onoremap in{ :<c-u>normal! f{vi{<cr>
-        onoremap in} :<c-u>normal! f}vi}<cr>
-        onoremap il{ :<c-u>normal! F{vi{<cr>
-        onoremap il} :<c-u>normal! F}vi}<cr>
-
-        onoremap in[ :<c-u>normal! f[vi[<cr>
-        onoremap in] :<c-u>normal! f]vi]<cr>
-        onoremap il[ :<c-u>normal! F[vi[<cr>
-        onoremap il] :<c-u>normal! F]vi]<cr>
-
-        onoremap an( :<c-u>normal! f(vi(<cr>
-        onoremap an) :<c-u>normal! f)vi)<cr>
-        onoremap al( :<c-u>normal! F(vi(<cr>
-        onoremap al) :<c-u>normal! F)vi)<cr>
-
-        onoremap an{ :<c-u>normal! f{vi{<cr>
-        onoremap an} :<c-u>normal! f}vi}<cr>
-        onoremap al{ :<c-u>normal! F{vi{<cr>
-        onoremap al} :<c-u>normal! F}vi}<cr>
-
-        onoremap an[ :<c-u>normal! f[vi[<cr>
-        onoremap an] :<c-u>normal! f]vi]<cr>
-        onoremap al[ :<c-u>normal! F[vi[<cr>
-        onoremap al] :<c-u>normal! F]vi]<cr>
-    " }}2
 
     " Wrap Relative Motion {{2
         function! WrapRelativeMotion(key, ...)
@@ -386,6 +355,44 @@
         vnoremap <Esc> <Esc>gV
     " }}2
 
+" }}1
+
+" onoremaps {{1
+
+    onoremap if :<c-u>exe "norm! ]zkV[zj"<cr>
+    onoremap af :<c-u>exe "norm! ]zV[z"<cr>
+
+    " omaps for 'inside/around next/last (,),{,},[,]'}}2
+        onoremap in( :<c-u>normal! f(vi(<cr>
+        onoremap in) :<c-u>normal! f)vi)<cr>
+        onoremap il( :<c-u>normal! F(vi(<cr>
+        onoremap il) :<c-u>normal! F)vi)<cr>
+
+        onoremap in{ :<c-u>normal! f{vi{<cr>
+        onoremap in} :<c-u>normal! f}vi}<cr>
+        onoremap il{ :<c-u>normal! F{vi{<cr>
+        onoremap il} :<c-u>normal! F}vi}<cr>
+
+        onoremap in[ :<c-u>normal! f[vi[<cr>
+        onoremap in] :<c-u>normal! f]vi]<cr>
+        onoremap il[ :<c-u>normal! F[vi[<cr>
+        onoremap il] :<c-u>normal! F]vi]<cr>
+
+        onoremap an( :<c-u>normal! f(vi(<cr>
+        onoremap an) :<c-u>normal! f)vi)<cr>
+        onoremap al( :<c-u>normal! F(vi(<cr>
+        onoremap al) :<c-u>normal! F)vi)<cr>
+
+        onoremap an{ :<c-u>normal! f{vi{<cr>
+        onoremap an} :<c-u>normal! f}vi}<cr>
+        onoremap al{ :<c-u>normal! F{vi{<cr>
+        onoremap al} :<c-u>normal! F}vi}<cr>
+
+        onoremap an[ :<c-u>normal! f[vi[<cr>
+        onoremap an] :<c-u>normal! f]vi]<cr>
+        onoremap al[ :<c-u>normal! F[vi[<cr>
+        onoremap al] :<c-u>normal! F]vi]<cr>
+    " }}2
 " }}1
 
 " Plugin key-remapping{{1
