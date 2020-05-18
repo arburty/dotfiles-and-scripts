@@ -50,11 +50,8 @@
 
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
-    "set cursorline                  " Highlight current line
 
     highlight clear SignColumn      " SignColumn should match background
-    highlight clear LineNr          " Current line number row will have same background color in relative mode
-    "highlight clear CursorLineNr    " Remove highlight color from current line number
 
     set ruler                   " Show the ruler
     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
@@ -63,9 +60,6 @@
 
     set backspace=indent,eol,start  " Backspace for dummies
     set linespace=0                 " No extra spaces between rows
-    set number                      " Line numbers on
-    set relativenumber              " Obvious
-    set numberwidth=5
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
@@ -204,26 +198,35 @@
 " }}1
 
 " Visual Setup {{1
-    set termguicolors
+    set number                      " Line numbers on
+    set relativenumber              " Obvious
+    set numberwidth=5
+    highlight clear LineNr          " Current line number row will have same background color in relative mode
+    highlight clear CursorLineNr    " Remove highlight color from current line number
+    set cursorline                   " also set in pick_schemes sometimes
 
+    set termguicolors
     " Pick a scheme with my modifications
     " If pick_scheme exists use it to define the coloscheme.
     " Otherwise use badwolf, or fall back to torte as a last resort.
-    if filereadable(expand("~/.vim/personal/pick_scheme.vim"))
-        source ~/.vim/personal/pick_scheme.vim
-        call Pickscheme("badwolf")
-    else
-        if isdirectory(expand("~/.vim/bundle/badwolf")) let g:badwolf_tabline=3
-            colorscheme badwolf
-            hi Comment cterm=italic
-            hi Normal guibg=black guifg=white
-            hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+    function SetScheme(scheme)
+        if filereadable(expand("~/.vim/personal/pick_scheme.vim"))
+            source ~/.vim/personal/pick_scheme.vim
+            call Pickscheme(a:scheme)
         else
-            color torte
-            hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
-            hi clear SignColumn      " SignColumn should match background
+            if isdirectory(expand("~/.vim/bundle/badwolf")) let g:badwolf_tabline=3
+                colorscheme badwolf
+                hi Comment cterm=italic
+                hi Normal guibg=black guifg=white
+                hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+            else
+                color torte
+                hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+                hi clear SignColumn      " SignColumn should match background
+            endif
         endif
-    endif
+    endfunction
+    call SetScheme('badwolf')
 " }}1
 
 " Mods {{1
@@ -269,22 +272,22 @@
         endfunction
 
         " Map g* keys in Normal, Operator-pending, and Visual+select
-        noremap $ :call WrapRelativeMotion("$")<CR>
-        noremap <End> :call WrapRelativeMotion("$")<CR>
-        noremap 0 :call WrapRelativeMotion("0")<CR>
-        noremap <Home> :call WrapRelativeMotion("0")<CR>
-        noremap ^ :call WrapRelativeMotion("^")<CR>
+        noremap <silent> $ :call WrapRelativeMotion("$")<CR>
+        noremap <silent> <End> :call WrapRelativeMotion("$")<CR>
+        noremap <silent> 0 :call WrapRelativeMotion("0")<CR>
+        noremap <silent> <Home> :call WrapRelativeMotion("0")<CR>
+        noremap <silent> ^ :call WrapRelativeMotion("^")<CR>
         " Overwrite the operator pending $/<End> mappings from above
         " to force inclusive motion with :execute normal!
-        onoremap $ v:call WrapRelativeMotion("$")<CR>
-        onoremap <End> v:call WrapRelativeMotion("$")<CR>
+        onoremap <silent> $ v:call WrapRelativeMotion("$")<CR>
+        onoremap <silent> <End> v:call WrapRelativeMotion("$")<CR>
         " Overwrite the Visual+select mode mappings from above
         " to ensure the correct vis_sel flag is passed to function
-        vnoremap $ :<C-U>call WrapRelativeMotion("$", 1)<CR>
-        vnoremap <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
-        vnoremap 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
-        vnoremap <Home> :<C-U>call WrapRelativeMotion("0", 1)<CR>
-        vnoremap ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
+        vnoremap <silent> $ :<C-U>call WrapRelativeMotion("$", 1)<CR>
+        vnoremap <silent> <End> :<C-U>call WrapRelativeMotion("$", 1)<CR>
+        vnoremap <silent> 0 :<C-U>call WrapRelativeMotion("0", 1)<CR>
+        vnoremap <silent> <Home> :<C-U>call WrapRelativeMotion("0", 1)<CR>
+        vnoremap <silent> ^ :<C-U>call WrapRelativeMotion("^", 1)<CR>
     " }}2
 
     " foldlevel mappings{{2
@@ -459,11 +462,9 @@
             set noshowmode
             set noshowcmd
             set scrolloff=6
-            colorscheme pencil
-            hi Normal guibg=black guifg=white
-            hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
             set number
             set relativenumber
+            call SetScheme('pencil')
         endfunction
         function! s:goyo_leave()
             silent !tmux set status on
@@ -471,11 +472,7 @@
             set showmode
             set showcmd
             set scrolloff=3
-            let g:badwolf_tabline=3
-            colorscheme badwolf
-            hi Comment cterm=italic
-            hi Normal guibg=black guifg=white
-            hi Folded term=standout cterm=italic ctermfg=14 ctermbg=236 gui=italic guifg=#a0a8b0 guibg=#384048
+            call SetScheme('badwolf')
         endfunction
 
         autocmd! User GoyoEnter nested call <SID>goyo_enter()
