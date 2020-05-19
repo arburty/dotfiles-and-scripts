@@ -63,7 +63,8 @@
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
-    set winminheight=0              " Windows can be 0 line high
+    set winheight=8                 " Windows can be 0 line high
+    set winminheight=5              " Windows can be 0 line high
     set ignorecase                  " Case insensitive search
     set smartcase                   " Case sensitive when uc present
     set wildmenu                    " Show list instead of just completing
@@ -102,9 +103,11 @@
     augroup END
 
     " Workaround vim-commentary for Haskell
-    autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
-    autocmd FileType haskell,rust setlocal nospell
+    augroup haskell
+        autocmd FileType haskell setlocal commentstring=--\ %s
+        autocmd FileType haskell,rust setlocal nospell
+    augroup END
     " }}
 
 " }}
@@ -534,13 +537,6 @@
     nnoremap <leader>M :20messages<cr>
     nnoremap <leader>b :set filetype=sh
 
-    " FileType {{2
-        augroup filetype_html
-            autocmd!
-            autocmd FileType html let @l = "<li>placeholder</li>"
-            autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
-        augroup END
-    " }}2
 
     " Local Leader {{2
         nnoremap <silent><localleader>o O<Esc>jo<Esc>k
@@ -665,6 +661,19 @@
         endfunction
     " }}2
 
+" }}1
+
+" Custom Augroups/cmd's {{1
+    augroup filetype_html
+        autocmd!
+        autocmd FileType html let @l = "<li>placeholder</li>"
+        autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
+    augroup END
+
+    augroup vimsource
+        au!
+        au FileType vim nmap <buffer> <leader>z :w<cr>:source %%<c-r>%<cr>
+    augroup END
 " }}1
 
 " Helpful Links I Have Used {{1
