@@ -14,8 +14,8 @@
      
     " Always switch to the current file directory
     augroup auto_switch_dir
-        autocmd!
         autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+        autocmd!
     augroup END
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
@@ -27,6 +27,7 @@
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
     set iskeyword-=-                    " '-' is an end of word designator
+    set wildignore+=*/windows_home/*
 
     " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
     " Restore cursor to file position in previous editing session
@@ -146,6 +147,7 @@
         "Plugin 'Valloric/YouCompleteMe'
         Plugin 'vim-scripts/sessionman.vim'
         Plugin 'vim-syntastic/syntastic.git'
+        Plugin 'da-x/name-assign.vim'
 
         "Colorschemes {{3
             Plugin 'arcticicestudio/nord-vim'
@@ -166,6 +168,7 @@
             Plugin 'xero/sourcerer.vim'
             Plugin 'alirezabashyri/molokai-italic'
             Plugin 'yassinebridi/vim-purpura'
+            Plugin 'bignimbus/pop-punk.vim'
         " }}3
 
         " plugin from http://vim-scripts.org/vim/scripts.html
@@ -229,7 +232,7 @@
             endif
         endif
     endfunction
-    call SetScheme('badwolf')
+    call SetScheme('pop-punk')
 " }}1
 
 " Mods {{1
@@ -496,6 +499,20 @@
         let g:vim_json_syntax_conceal = 0
     " }}2
 
+    " CommandT {{2
+        nmap <silent> <Leader>B <Plug>(CommandTBuffer)
+        nmap <silent> <Leader>h <Plug>(CommandTHelp)
+        nnoremap <Leader>ct :CommandT
+        let g:CommandTScanDotDirectories = 1
+
+        "nmap <silent> <Leader>t <Plug>(CommandT) "already a default
+        "nmap <silent> <Leader>j <Plug>(CommandTJump) "already a default
+    "}}2
+
+    " name-assign {{2
+        let g:name_assign_mode_maps = { "up" : ["k"],  "down" : ["j"] }
+    " }}2
+
 " }}1
 
 " Abbreviations {{1
@@ -515,6 +532,7 @@
      noremap <leader>q :q!<cr>
      noremap <leader>; q:
     nnoremap <leader>ps :call Pickscheme("?")<cr>:call Pickscheme("")<left><left>
+    nnoremap <silent> <leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
@@ -667,7 +685,7 @@
     augroup filetype_html
         autocmd!
         autocmd FileType html let @l = "<li>placeholder</li>"
-        autocmd FileType html nnoremap <leader>l o<esc>"lp==cit
+        autocmd FileType html nnoremap <buffer> <leader>l o<esc>"lp==cit
     augroup END
 
     augroup vimsource
