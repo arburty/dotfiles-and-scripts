@@ -504,6 +504,11 @@
         nmap <silent> <Leader>h <Plug>(CommandTHelp)
         nnoremap <Leader>ct :CommandT
         let g:CommandTScanDotDirectories = 1
+        let g:CommandTSuppressMaxFilesWarning = 1
+        let g:CommandTWildIgnore=&wildignore . ",*/*.pdf"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*/*.odt"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*/*.jpg"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*/*.png"
 
         "nmap <silent> <Leader>t <Plug>(CommandT) "already a default
         "nmap <silent> <Leader>j <Plug>(CommandTJump) "already a default
@@ -711,6 +716,7 @@ nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
+nnoremap <leader>d dddd
 
 "}}1
 
