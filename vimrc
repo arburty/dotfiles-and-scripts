@@ -215,7 +215,7 @@
     " Pick a scheme with my modifications
     " If pick_scheme exists use it to define the coloscheme.
     " Otherwise use badwolf, or fall back to torte as a last resort.
-    function SetScheme(scheme)
+    function SetScheme(scheme = "pop-punk")
         if filereadable(expand("~/.vim/personal/pick_scheme.vim"))
             source ~/.vim/personal/pick_scheme.vim
             call Pickscheme(a:scheme)
@@ -232,13 +232,14 @@
             endif
         endif
     endfunction
-    call SetScheme('pop-punk')
+    call SetScheme()
 " }}1
 
 " Mods {{1
     let mapleader = ","
     let maplocalleader = "\\"
 
+    nnoremap / /\v
     nnoremap <left> ,
     nnoremap <right> ;
     " could be better but fine for now
@@ -263,6 +264,10 @@
     map è gT
     map ì gt
 
+    " All text after column 80 is highlighted
+    highlight rightMargin term=bold ctermfg=blue guifg=orange
+    nnoremap <localleader>h :match rightMargin /.\%>81v/
+    nnoremap <localleader>H :match none<cr>
 
     " Wrap Relative Motion {{2
         function! WrapRelativeMotion(key, ...)
@@ -500,16 +505,22 @@
     " }}2
 
     " CommandT {{2
+        let g:CommandTScanDotDirectories = 1
+        let g:CommandTSuppressMaxFilesWarning = 1
+        let g:CommandTWildIgnore=&wildignore        . ",*.pdf"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.odt"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.odg"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.xcf"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.jpg"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.jpeg"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.png"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.mp4"
+        let g:CommandTWildIgnore=CommandTWildIgnore . ",*.webm"
+
         nmap <silent> <Leader>B <Plug>(CommandTBuffer)
         nmap <silent> <Leader>h <Plug>(CommandTHelp)
         nnoremap <Leader>ct :CommandT
-        let g:CommandTScanDotDirectories = 1
-        let g:CommandTSuppressMaxFilesWarning = 1
-        let g:CommandTWildIgnore=&wildignore . ",*/*.pdf"
-        let g:CommandTWildIgnore=CommandTWildIgnore . ",*/*.odt"
-        let g:CommandTWildIgnore=CommandTWildIgnore . ",*/*.jpg"
-        let g:CommandTWildIgnore=CommandTWildIgnore . ",*/*.png"
-
+        nmap <silent> <Leader>t<space> <Plug>(CommandT)
         "nmap <silent> <Leader>t <Plug>(CommandT) "already a default
         "nmap <silent> <Leader>j <Plug>(CommandTJump) "already a default
     "}}2
@@ -537,7 +548,8 @@
      noremap <leader>q :q!<cr>
      noremap <leader>; q:
     nnoremap <leader>ps :call Pickscheme("?")<cr>:call Pickscheme("")<left><left>
-    nnoremap <silent> <leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
+    nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
+    nnoremap <leader>d. :call DeleteFileAndCloseBuffer()
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
@@ -684,6 +696,17 @@
         endfunction
     " }}2
 
+    " DeleteFileAndCloseBuffer {{2 Expands filename and confirms you want to
+    " delete it.
+    " https://stackoverflow.com/questions/16678661/how-can-i-delete-the-current-file-in-vim
+    " By: joelostblom. 
+    " Modified to say the filename and use 'bd!' instead of 'q!'
+    fun! DeleteFileAndCloseBuffer()
+        let file = expand('%:p')
+        let choice = confirm("Delete file " . file . " and close buffer?", "&Do it!\n&Nonono", 1)
+        if choice == 1 | call delete(file) | bd! | endif
+    endfun
+" }}2
 " }}1
 
 " Custom Augroups/cmd's {{1
