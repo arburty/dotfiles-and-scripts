@@ -478,7 +478,7 @@
             set showmode
             set showcmd
             set scrolloff=3
-            call SetScheme('badwolf')
+            call SetScheme() " use the default set in pick_schemes.vim
         endfunction
 
         autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -716,7 +716,6 @@ nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
-nnoremap <leader>d dddd
 
 "}}1
 

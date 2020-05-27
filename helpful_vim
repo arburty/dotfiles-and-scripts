@@ -5,9 +5,6 @@
 "
 " Vim Commands, Mappings, Notes, and Regexes I've Found Useful 
 
-" Modeline{{{
-" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
-
 From Useful Sites {{{1
     " VimCasts {{{2
         2: Tabs and Spaces {{{3}}}
@@ -21,6 +18,10 @@ From Useful Sites {{{1
         :let i=1 | g/abc/s//\='xyz_'.i/ | let i=i+1
         :let @a=1 | %s/abc/\='xyz_'.(@a+setreg('a',@a+1))/g
 " }}}2
+
+" Vim script for Python Developers {{{2
+    https://gist.github.com/yegappan/16d964a37ead0979b05e655aa036cad0
+"}}}2
 
 
 " Ranges: Examples {{{2
@@ -68,3 +69,6 @@ Helpful For Syntax Color Editing {{{
         the first buffer at the bottom and return to start, requires redir_messages.vim
 " }}}
 
+
+" Modeline{{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
