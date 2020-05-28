@@ -392,20 +392,20 @@
         onoremap il[ :<c-u>normal! F[vi[<cr>
         onoremap il] :<c-u>normal! F]vi]<cr>
 
-        onoremap an( :<c-u>normal! f(vi(<cr>
-        onoremap an) :<c-u>normal! f)vi)<cr>
-        onoremap al( :<c-u>normal! F(vi(<cr>
-        onoremap al) :<c-u>normal! F)vi)<cr>
+        onoremap an( :<c-u>normal! f(va(<cr>
+        onoremap an) :<c-u>normal! f)va)<cr>
+        onoremap al( :<c-u>normal! F(va(<cr>
+        onoremap al) :<c-u>normal! F)va)<cr>
 
-        onoremap an{ :<c-u>normal! f{vi{<cr>
-        onoremap an} :<c-u>normal! f}vi}<cr>
-        onoremap al{ :<c-u>normal! F{vi{<cr>
-        onoremap al} :<c-u>normal! F}vi}<cr>
+        onoremap an{ :<c-u>normal! f{va{<cr>
+        onoremap an} :<c-u>normal! f}va}<cr>
+        onoremap al{ :<c-u>normal! F{va{<cr>
+        onoremap al} :<c-u>normal! F}va}<cr>
 
-        onoremap an[ :<c-u>normal! f[vi[<cr>
-        onoremap an] :<c-u>normal! f]vi]<cr>
-        onoremap al[ :<c-u>normal! F[vi[<cr>
-        onoremap al] :<c-u>normal! F]vi]<cr>
+        onoremap an[ :<c-u>normal! f[va[<cr>
+        onoremap an] :<c-u>normal! f]va]<cr>
+        onoremap al[ :<c-u>normal! F[va[<cr>
+        onoremap al] :<c-u>normal! F]va]<cr>
     " }}2
 " }}1
 

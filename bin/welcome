@@ -11,6 +11,10 @@ markd () {
     pandoc $@ | lynx -vikeys -stdin
 }
 
+markdtest () {
+    pandoc $@ | vim -
+}
+
 tempFile='/tmp/welcomeScreen'
 
 # Say hello
