@@ -553,10 +553,6 @@
     nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
     nnoremap <leader>d. :call DeleteFileAndCloseBuffer()
 
-    " Made while doing 'Learn Vimscrpt The Hard Way'.  couldnt get the exclusion of
-    " dot files and directories to work.  Would prefer it that way.
-    nnoremap <leader>g :silent execute "grep! -r -I " . expand("<cWORD>")->shellescape() . " ."<cr>:copen<cr>
-
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
     nnoremap <silent><leader><space> :noh<cr>
