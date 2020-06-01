@@ -473,6 +473,8 @@
             set noshowmode
             set noshowcmd
             set scrolloff=6
+            let g:goyo_width=90
+            "let g:goyo_linenr=1
             set number
             set relativenumber
             call SetScheme('pencil')
@@ -551,14 +553,20 @@
     nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
     nnoremap <leader>d. :call DeleteFileAndCloseBuffer()
 
+    " Made while doing 'Learn Vimscrpt The Hard Way'.  couldnt get the exclusion of
+    " dot files and directories to work.  Would prefer it that way.
+    nnoremap <leader>g :silent execute "grep! -r -I " . expand("<cWORD>")->shellescape() . " ."<cr>:copen<cr>
+
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
     nnoremap <silent><leader><space> :noh<cr>
     nnoremap <silent> <c-\> :set hlsearch!<cr>
 
     " ,o doesn't work with [count] for some reason but ,O does
-    nnoremap <silent><leader>o :normal! o<esc>k
+    nnoremap <silent><leader>o :exe "normal! mmo\e`m'"<cr>
     nnoremap <silent><leader>O :normal! O<esc>j
+    nnoremap <silent><leader>O :exe "normal! mmO\e`m"<cr>
+    nnoremap <silent>_o :exe "normal! mmO\e`mo\e`m`"<cr>
     "nnoremap                _o new lines above and below -- under Local Leader
 
     nnoremap <leader>D oecho "" #DEBUG<esc>F"i
@@ -574,7 +582,7 @@
 
 
     " Local Leader {{2
-        nnoremap <silent><localleader>o O<Esc>jo<Esc>k
+        "nnoremap <silent><localleader>o O<Esc>jo<Esc>k
     " }}2
 " }}1
 
@@ -590,6 +598,9 @@
 
     " Sourced {{
         source ~/.vim/personal/redir_messages.vim
+        source ~/.vim/personal/grep-operator.vim
+            " maps v and n <leader>G
+
         " Pickscheme() sourced from Visual Setup
     " }}
 
@@ -718,7 +729,7 @@
 
     augroup vimsource
         au!
-        au FileType vim nmap <buffer> <leader>z :w<cr>:source %%<c-r>%<cr>
+        au FileType vim nmap <buffer> <leader>z :w<cr>:source <c-r>%<cr>
     augroup END
 " }}1
 
