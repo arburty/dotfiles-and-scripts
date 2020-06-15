@@ -6,23 +6,28 @@
 
     set background=dark         " Assume a dark background
 
+    " this will override other Settings. Best to be set asap.
+    set nocompatible              " be iMproved
+
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
     set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
     scriptencoding utf-8
-     
+
     " Always switch to the current file directory
     augroup auto_switch_dir
         autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
         autocmd!
     augroup END
 
-    set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
+    set shortmess=filmnrxoOtT           " Abbrev. of messages (avoids 'hit enter')
+    set shortmess+=c                    " don't show completion messages
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
     set nospell                         " Spell checking
+    set complete+=kspell                " autocomplete dictionary words when spell is on
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
@@ -115,14 +120,14 @@
 
 " Vundle {{1
     " Settings {{2
-        set nocompatible              " be iMproved, required
+        " requires 'set nocompatible'.  Set at top of vimrc
         filetype off                  " required
 
         " set the runtime path to include Vundle and initialize
         set rtp+=~/.vim/bundle/Vundle.vim
     "}}2
 
-    call vundle#begin()" {{2
+    call vundle#begin() " {{2
         Plugin 'VundleVim/Vundle.vim'
 
         " plugin on GitHub repo
@@ -148,6 +153,9 @@
         Plugin 'vim-scripts/sessionman.vim'
         Plugin 'vim-syntastic/syntastic.git'
         Plugin 'da-x/name-assign.vim'
+        Plugin 'vim-scripts/AutoComplPop'
+        Plugin 'wellle/context.vim'
+        Plugin 'romainl/vim-cool'
 
         "Colorschemes {{3
             Plugin 'arcticicestudio/nord-vim'
@@ -169,6 +177,7 @@
             Plugin 'alirezabashyri/molokai-italic'
             Plugin 'yassinebridi/vim-purpura'
             Plugin 'bignimbus/pop-punk.vim'
+            Plugin 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
         " }}3
 
         " plugin from http://vim-scripts.org/vim/scripts.html
@@ -375,6 +384,8 @@
 
     onoremap if :<c-u>exe "norm! ]zkV[zj"<cr>
     onoremap af :<c-u>exe "norm! ]zV[z"<cr>
+    onoremap Tf :<c-u>exe "norm! V[zj"<cr>
+    onoremap tf :<c-u>exe "norm! V]zk"<cr>
 
     " omaps for 'inside/around next/last (,),{,},[,]'}}2
         onoremap in( :<c-u>normal! f(vi(<cr>
@@ -392,6 +403,12 @@
         onoremap il[ :<c-u>normal! F[vi[<cr>
         onoremap il] :<c-u>normal! F]vi]<cr>
 
+        onoremap in' :<c-u>normal! f'vi'<cr>
+        onoremap il' :<c-u>normal! F'vi'<cr>
+
+        onoremap in" :<c-u>normal! f"vi"<cr>
+        onoremap il" :<c-u>normal! F"vi"<cr>
+
         onoremap an( :<c-u>normal! f(va(<cr>
         onoremap an) :<c-u>normal! f)va)<cr>
         onoremap al( :<c-u>normal! F(va(<cr>
@@ -406,6 +423,12 @@
         onoremap an] :<c-u>normal! f]va]<cr>
         onoremap al[ :<c-u>normal! F[va[<cr>
         onoremap al] :<c-u>normal! F]va]<cr>
+
+        onoremap an' :<c-u>normal! f'va'<cr>
+        onoremap al' :<c-u>normal! F'va'<cr>
+
+        onoremap an" :<c-u>normal! f"va"<cr>
+        onoremap al" :<c-u>normal! F"va"<cr>
     " }}2
 " }}1
 
@@ -531,6 +554,9 @@
         let g:name_assign_mode_maps = { "up" : ["k"],  "down" : ["j"] }
     " }}2
 
+    " Context {{2
+        "call ContextEnable()
+    " }}2
 " }}1
 
 " Abbreviations {{1
@@ -544,6 +570,7 @@
 " Custom Leader Mappings {{1
     " Map leader set in Mods
     nnoremap <leader>ev :Vimrc<cr>
+    nnoremap <leader>rv :Reddit<cr>
     nnoremap <leader>sv :so $MYVIMRC<cr>
     nnoremap <leader>s :w<cr>
     inoremap <leader>s <esc>:w<cr>
@@ -552,6 +579,8 @@
     nnoremap <leader>ps :call Pickscheme("?")<cr>:call Pickscheme("")<left><left>
     nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
     nnoremap <leader>d. :call DeleteFileAndCloseBuffer()
+    nnoremap <leader>F :call <SID>FoldColumnToggle()<cr>
+    nnoremap <leader>Q :call <SID>QuickfixToggle()<cr>
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
@@ -586,6 +615,7 @@
     command! Vimrc :vs $MYVIMRC
     command! Alias :vs ~/.config/aliases
     command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
+    command! Reddit :call system("firefox reddit.com/r/vim > /dev/null 2>&1 &")
 
     command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 " }}1
@@ -703,17 +733,58 @@
         endfunction
     " }}2
 
-    " DeleteFileAndCloseBuffer {{2 Expands filename and confirms you want to
-    " delete it.
+    " DeleteFileAndCloseBuffer {{2
+    " Expands filename and confirms you want to delete it.
     " https://stackoverflow.com/questions/16678661/how-can-i-delete-the-current-file-in-vim
     " By: joelostblom. 
     " Modified to say the filename and use 'bd!' instead of 'q!'
-    fun! DeleteFileAndCloseBuffer()
-        let file = expand('%:p')
-        let choice = confirm("Delete file " . file . " and close buffer?", "&Do it!\n&Nonono", 1)
-        if choice == 1 | call delete(file) | bd! | endif
-    endfun
-" }}2
+        fun! DeleteFileAndCloseBuffer()
+            let file = expand('%:p')
+            let choice = confirm("Delete file " . file . " and close buffer?", "&Do it!\n&Nonono", 1)
+            if choice == 1 | call delete(file) | bd! | endif
+        endfun
+    " }}2
+
+    " FoldColumnToggle {{2
+        function! s:FoldColumnToggle()
+            if &foldcolumn
+                setlocal foldcolumn=0
+            else
+                setlocal foldcolumn=4
+            endif
+        endfunction
+    " }}2
+
+    " QuickfixToggle {{2
+        let s:quickfix_is_open = 0
+        function! s:QuickfixToggle()
+            if s:quickfix_is_open
+                cclose
+                let s:quickfix_is_open = 0
+                execute s:quickfix_return_to_window . "wincmd w"
+            else
+                let s:quickfix_return_to_window = winnr()
+                copen
+                let s:quickfix_is_open = 1
+            endif
+        endfunction
+    " }}2
+
+    " SetPersonalHeader {{2
+        function! SetPersonalHeader()
+            "set 'z' mark, go to top and make a new line
+            norm! mzggO
+            read Templates/basic-header.txt
+            " delete top line since read goes below cursor, replace TITLE with filename
+            exe "norm! kddcw\<c-r>%"
+            exe "norm! /Date\e"
+            " call my date binding, delete the hour/minute, join lines
+            exe "norm ,d\e$dF xkJ"
+            " comment out lines, add space between comment and word, add two more commented lines
+            exe "norm jjVgg,c l\<c-v>3jI \e3j,o.`z"
+        endfunction
+    " }}2
+
 " }}1
 
 " Custom Augroups/cmd's {{1
