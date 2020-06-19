@@ -1,0 +1,9 @@
+#! /bin/bash
+
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 06/18/20
+
+mpv --loop-file=inf "https://radar.weather.gov/lite/N0V/FTG_loop.gif" >/dev/null 2>&1
+
+exit 0
