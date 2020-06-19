@@ -87,7 +87,7 @@ cd $dir_configs
 
 # make sure vim directories are set {
 vim=$homedir/.vim
-mkdir -pv $vim/personal $vim/artifacts $vim/bundle
+mkdir -pv $vim/{personal,artifacts.bundle}
 cd $vim/personal
 [[ ! -d ./git_scripts ]] && ln -sv $dir_git_vimscripts ./git_scripts
 # }
@@ -99,7 +99,40 @@ linkvimscriptsdir
 # }
 
 # Install Programs {
-sudo apt-get install -y fzf lynx pandoc ranger tmux tree xterm zathura
+sudo apt-get install -y ffmpegthumbnailer fzf lynx mpv pandoc ranger tmux tree w3m-img xterm vim-athena zathura zsh
+# }
+
+# install Oh-My-Zsh Setup and Plugins {
+[[ ! -d $HOME/.oh-my-zsh/ ]] && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+ZSH_CUSTOM_PLUGINS="$HOME/.oh-my-zsh/plugins/"
+mkdir -p $ZSH_CUSTOM_PLUGINS
+
+git clone https://github.com/zsh-users/zsh-autosuggestions.git \
+    $ZSH_CUSTOM_PLUGINS/zsh-autosuggestions 2>/dev/null
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    $ZSH_CUSTOM_PLUGINS/zsh-syntax-highlighting 2>/dev/null
+# }
+
+# Vundle for Vim plugins {
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2>/dev/null \
+    && vim +PluginInstall +qall
+
+# Command-t {2
+if [[ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/ext.so ]]
+then
+    # the executable is missing but command-t is installed so compile it
+    if [[ -d ~/.vim/bundle/command-t ]];then
+        echo "compiling: command-t, may need to get ruby-dev package."
+        cd ~/.vim/bundle/command-t/ruby/command-t/ext/command-t
+        ruby extconf.rb || sudo apt install -y ruby-dev && ruby extconf.rb
+        make
+        cd - >/dev/null
+    fi
+fi
+# }2
+
 # }
 
 exit 0

@@ -79,13 +79,11 @@ badSource() { # Used to send a message to std out in red if theres a problem wit
 }
 
 pL10k="$ZSH/custom/themes/powerlevel10k/powerlevel10k.zsh-theme"
-zshSynHighlight="$ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 [ -f $HOME/bin/colorValues ] && source $HOME/bin/colorValues         || badSource colorValues file
 [ -f $HOME/.config/aliases ] && . $HOME/.config/aliases              || badSource aliases file
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh                       || badSource fzf.zsh file
+# [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh                       || badSource fzf.zsh file
 [ -f $HOME/.config/zshvibindings ] && . $HOME/.config/zshvibindings  || badSource vi bindings for zsh
 [ -f $pL10k ] && . $pL10k                                            || badSource $pL10k
-[ -f $zshSynHighlight ] && . $zshSynHighlight                        || badSource $zshSynHighlight
 
 # TMUX is love. TMUX is life {{{3
 if [[ $(tmux ls 2&> /dev/null) ]]

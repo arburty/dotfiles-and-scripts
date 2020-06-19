@@ -4,13 +4,10 @@
 # Email: austin@burt.us.com
 # Date:5/23/19
 
-. ${BASH_SOURCE%/*}/bash-functions      # for and tempfile()
-
 # Setup for needed variables
 declare -r mybr=$(git mybr)
 declare -r branchnames="$HOME/git/branchnames"
-tempfile output
-#output=$(mktemp /tmp/$PROGRAM.XXX) # more portable
+output=$(mktemp /tmp/$PROGRAM.XXX) # more portable
 
 branches=$(git branch)
 

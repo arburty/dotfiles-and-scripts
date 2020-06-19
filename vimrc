@@ -248,7 +248,6 @@
     let mapleader = ","
     let maplocalleader = "\\"
 
-    nnoremap / /\v
     nnoremap <left> ,
     nnoremap <right> ;
     " could be better but fine for now
@@ -387,7 +386,7 @@
     onoremap Tf :<c-u>exe "norm! V[zj"<cr>
     onoremap tf :<c-u>exe "norm! V]zk"<cr>
 
-    " omaps for 'inside/around next/last (,),{,},[,]'}}2
+    " omaps for '(i)nside/(a)round (n)ext/(l)ast (,),{,},[,],'," }}2
         onoremap in( :<c-u>normal! f(vi(<cr>
         onoremap in) :<c-u>normal! f)vi)<cr>
         onoremap il( :<c-u>normal! F(vi(<cr>
@@ -604,6 +603,8 @@
     nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
     nnoremap <leader>M :20messages<cr>
     nnoremap <leader>b :set filetype=sh
+    nnoremap <leader>bh "_
+    vnoremap <leader>bh "_
 
 
     " Local Leader {{2
@@ -798,6 +799,13 @@
         au!
         au FileType vim nmap <buffer> <leader>z :w<cr>:source <c-r>%<cr>
     augroup END
+
+    augroup Xresources
+        au!
+        autocmd BufWritePost .Xresources echom "xrdb -merge ~/.Xresources"
+        autocmd BufWritePost .Xresources silent execute "!xrdb -merge ~/.Xresources"
+    augroup END
+
 " }}1
 
 " Helpful Links I Have Used {{1

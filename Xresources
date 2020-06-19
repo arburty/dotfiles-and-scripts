@@ -1,12 +1,14 @@
 ! run 'xrdb -merge ~/.Xresources' after altering this file
 ! run 'xrdb -query -all' to see current settings
+! http://www.futurile.net/2016/06/14/xterm-setup-and-truetype-font-configuration/
 
 !XTerm*Maximized: true
 !
-! Use a nice truetype font and size by default... 
+! Use a nice truetype font and size by default...
 ! xterm*faceName: DejaVu Sans Mono:style=Book
-xterm*faceName: DroidSansMono Nerd Font:style=Book
-xterm*faceSize: 10
+!xterm*faceName: DroidSansMono Nerd Font:style=Book
+xterm*faceName: MesloLGS NF:style=Regular
+xterm*faceSize: 13
 
 ! 9 Every shell is a login shell by default (for inclusion of all necessary environment variables)
 xterm*loginshell: true
