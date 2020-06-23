@@ -87,7 +87,7 @@ cd $dir_configs
 
 # make sure vim directories are set {
 vim=$homedir/.vim
-mkdir -pv $vim/{personal,artifacts.bundle}
+mkdir -pv $vim/{personal,artifacts,bundle}
 cd $vim/personal
 [[ ! -d ./git_scripts ]] && ln -sv $dir_git_vimscripts ./git_scripts
 # }
