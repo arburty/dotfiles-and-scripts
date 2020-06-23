@@ -69,6 +69,9 @@ bindkey -M vicmd O edit-command-line
 # printCustomPaths prints the custom paths ($HOME/bin, ./)
 # if not already set
 PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
+
+# yarn wanted these. out here causin me problems.
+[[ $(which yarn) ]] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
 # }}}2
 
 tabs -4
@@ -89,7 +92,7 @@ pL10k="$ZSH/custom/themes/powerlevel10k/powerlevel10k.zsh-theme"
 if [[ $(tmux ls 2&> /dev/null) ]]
 then # a tmux session exists
     if [[ -z $(tmux ls | grep -e "(attached)$") && -z "$TMUX" ]]
-    then # not attached to a session, and not an session being created
+    then # not attached to a session, and not a session being created
         echo "A TMUX server is running. Attaching"
         sleep 2
         tmux attach

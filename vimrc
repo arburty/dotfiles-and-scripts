@@ -224,7 +224,7 @@
     " Pick a scheme with my modifications
     " If pick_scheme exists use it to define the coloscheme.
     " Otherwise use badwolf, or fall back to torte as a last resort.
-    function SetScheme(scheme = "pop-punk")
+    function SetScheme(scheme)
         if filereadable(expand("~/.vim/personal/pick_scheme.vim"))
             source ~/.vim/personal/pick_scheme.vim
             call Pickscheme(a:scheme)
@@ -241,7 +241,7 @@
             endif
         endif
     endfunction
-    call SetScheme()
+    call SetScheme("pop-punk")
 " }}1
 
 " Mods {{1
@@ -507,7 +507,7 @@
             set showmode
             set showcmd
             set scrolloff=3
-            call SetScheme() " use the default set in pick_schemes.vim
+            call SetScheme("pop-punk")
         endfunction
 
         autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -775,7 +775,7 @@
         function! SetPersonalHeader()
             "set 'z' mark, go to top and make a new line
             norm! mzggO
-            read Templates/basic-header.txt
+            read ~/Templates/basic-header.txt
             " delete top line since read goes below cursor, replace TITLE with filename
             exe "norm! kddcw\<c-r>%"
             exe "norm! /Date\e"
@@ -806,6 +806,11 @@
         autocmd BufWritePost .Xresources silent execute "!xrdb -merge ~/.Xresources"
     augroup END
 
+    augroup java
+        au!
+        autocmd FileType java nnoremap <buffer> \z :execute "Shell java % " . g:java_args->join()->shellescape()<cr>
+    augroup END
+
 " }}1
 
 " Helpful Links I Have Used {{1
@@ -825,7 +830,6 @@ nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
-
 "}}1
 
 " Modeline{{
