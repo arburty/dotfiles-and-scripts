@@ -156,6 +156,7 @@
         Plugin 'vim-scripts/AutoComplPop'
         Plugin 'wellle/context.vim'
         Plugin 'romainl/vim-cool'
+        Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
         "Colorschemes {{3
             Plugin 'arcticicestudio/nord-vim'

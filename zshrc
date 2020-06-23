@@ -84,7 +84,7 @@ badSource() { # Used to send a message to std out in red if theres a problem wit
 pL10k="$ZSH/custom/themes/powerlevel10k/powerlevel10k.zsh-theme"
 [ -f $HOME/bin/colorValues ] && source $HOME/bin/colorValues         || badSource colorValues file
 [ -f $HOME/.config/aliases ] && . $HOME/.config/aliases              || badSource aliases file
-# [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh                       || badSource fzf.zsh file
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh                       || badSource fzf.zsh file
 [ -f $HOME/.config/zshvibindings ] && . $HOME/.config/zshvibindings  || badSource vi bindings for zsh
 [ -f $pL10k ] && . $pL10k                                            || badSource $pL10k
 
