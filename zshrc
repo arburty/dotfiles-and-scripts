@@ -8,6 +8,9 @@ export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+export JDK_HOME=/usr/lib/jvm/jdk-11.0.7/
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
 # ZSH_THEME
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"

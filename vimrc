@@ -153,7 +153,8 @@
         Plugin 'vim-scripts/sessionman.vim'
         Plugin 'vim-syntastic/syntastic.git'
         Plugin 'da-x/name-assign.vim'
-        Plugin 'vim-scripts/AutoComplPop'
+        " removed because of conflicts with coc
+        " Plugin 'vim-scripts/AutoComplPop'
         Plugin 'wellle/context.vim'
         Plugin 'romainl/vim-cool'
         Plugin 'neoclide/coc.nvim', {'branch': 'release'}
@@ -433,6 +434,25 @@
 " }}1
 
 " Plugin key-remapping{{1
+    " coc.vim {{2
+        " https://vimawesome.com/plugin/coc-snippets
+        " under Examples
+        " Use <C-l> for trigger snippet expand.
+        inoremap <C-l> <Plug>(coc-snippets-expand)
+
+        " Use <C-j> for select text for visual placeholder of snippet.
+        vnoremap <C-j> <Plug>(coc-snippets-select)
+        "
+        " Use <C-j> for jump to next placeholder, it's default of coc.nvim
+        let g:coc_snippet_next = '<c-j>'
+
+        " Use <C-k> for jump to previous placeholder, it's default of
+        " coc.nvim
+        let g:coc_snippet_prev = '<c-k>'
+
+        " Use <C-j> for both expand and jump (make expand higher priority.)
+        imap <C-j> <Plug>(coc-snippets-expand-jump)
+    " }}2
 
     " Tabularize {{2
         if isdirectory(expand("~/.vim/bundle/tabular"))
@@ -787,6 +807,22 @@
         endfunction
     " }}2
 
+    function Java_compile()
+        let s:main=expand("%:p:h:t:r") . "." . expand("%:t:r")
+        exe "cd " . expand("%:p:h") . "/.."
+
+        silent make
+        cwindow
+        let s:qf=empty(filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"'))
+
+        " the quickfix window is not opened e.g. no errors
+        if s:qf
+            exe "Shell java " . s:main
+        endif
+        redraw!
+
+    endfunction
+
 " }}1
 
 " Custom Augroups/cmd's {{1
@@ -809,7 +845,15 @@
 
     augroup java
         au!
-        autocmd FileType java nnoremap <buffer> \z :execute "Shell java % " . g:java_args->join()->shellescape()<cr>
+        " https://stackoverflow.com/questions/6411979/compiling-java-code-in-vim-more-efficiently/14727153#14727153
+        " source I pulled the next block from originally
+        autocmd Filetype java set makeprg=javac\ %
+        autocmd Filetype java set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+        autocmd Filetype java nnoremap <buffer> <F9> :make<cr>:copen<cr>
+        autocmd Filetype java nnoremap <buffer> <F10> :cprevious<cr>
+        autocmd Filetype java nnoremap <buffer> <F11> :cnext<cr>
+
+        autocmd FileType java nnoremap <buffer> \z :call Java_compile()<cr>
     augroup END
 
 " }}1
