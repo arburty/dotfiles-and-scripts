@@ -854,6 +854,12 @@
         autocmd Filetype java nnoremap <buffer> <F11> :cnext<cr>
 
         autocmd FileType java nnoremap <buffer> \z :call Java_compile()<cr>
+
+        " https://github.com/neoclide/coc.nvim
+        autocmd Filetype java nnoremap <silent> gd <Plug>(coc-definition)
+        autocmd Filetype java nnoremap <silent> gy <Plug>(coc-type-definition)
+        autocmd Filetype java nnoremap <silent> gi <Plug>(coc-implementation)
+        autocmd Filetype java nnoremap <silent> gr <Plug>(coc-references)
     augroup END
 
 " }}1
@@ -875,11 +881,6 @@ nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 "}}1
 
 " Modeline{{
