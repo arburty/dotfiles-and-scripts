@@ -14,6 +14,7 @@
 # used to change the root directory
 homedir=$HOME
 [[ $1 == '-D' ]] && homedir=$HOME/tmp && shift # for testing purposes
+[[ $homedir == $HOME/tmp && ! -d $homedir ]] && mkdir -pv $homedir
 
 dir_githome=$homedir/git
 dir_git_dotfiles=$dir_githome/dotfiles-and-scripts
@@ -103,16 +104,16 @@ sudo apt-get install -y ffmpegthumbnailer fzf lynx mpv pandoc ranger tmux tree w
 # }
 
 # install Oh-My-Zsh Setup and Plugins {
-[[ ! -d $HOME/.oh-my-zsh/ ]] && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+[[ ! -d $homedir/.oh-my-zsh/ ]] && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-ZSH_CUSTOM_PLUGINS="$HOME/.oh-my-zsh/plugins/"
-mkdir -p $ZSH_CUSTOM_PLUGINS
+ZSH_PLUGINS="$homedir/.oh-my-zsh/plugins/"
+mkdir -p $ZSH_PLUGINS
 
 git clone https://github.com/zsh-users/zsh-autosuggestions.git \
-    $ZSH_CUSTOM_PLUGINS/zsh-autosuggestions 2>/dev/null
+    $ZSH_PLUGINS/zsh-autosuggestions 2>/dev/null
 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    $ZSH_CUSTOM_PLUGINS/zsh-syntax-highlighting 2>/dev/null
+    $ZSH_PLUGINS/zsh-syntax-highlighting 2>/dev/null
 # }
 
 # Vundle for Vim plugins {
