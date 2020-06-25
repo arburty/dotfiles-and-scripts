@@ -856,6 +856,12 @@
         " settings that are all me
         autocmd Filetype java set foldmethod=syntax foldleve=1
         autocmd FileType java nnoremap <buffer> \z :call Java_compile()<cr>
+
+        " https://github.com/neoclide/coc.nvim
+        autocmd Filetype java nnoremap <silent> gd <Plug>(coc-definition)
+        autocmd Filetype java nnoremap <silent> gy <Plug>(coc-type-definition)
+        autocmd Filetype java nnoremap <silent> gi <Plug>(coc-implementation)
+        autocmd Filetype java nnoremap <silent> gr <Plug>(coc-references)
     augroup END
 
 " }}1
