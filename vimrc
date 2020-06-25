@@ -853,6 +853,8 @@
         autocmd Filetype java nnoremap <buffer> <F10> :cprevious<cr>
         autocmd Filetype java nnoremap <buffer> <F11> :cnext<cr>
 
+        " settings that are all me
+        autocmd Filetype java set foldmethod=syntax foldleve=1
         autocmd FileType java nnoremap <buffer> \z :call Java_compile()<cr>
     augroup END
 
