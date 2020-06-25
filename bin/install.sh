@@ -100,7 +100,7 @@ linkvimscriptsdir
 # }
 
 # Install Programs {
-sudo apt-get install -y ffmpegthumbnailer fzf lynx mpv pandoc ranger tmux tree w3m-img xterm vim-athena zathura zsh
+sudo apt-get install -y ffmpegthumbnailer fzf lynx mpv neovim pandoc ranger tmux tree w3m-img xterm vim-athena zathura zsh
 # }
 
 # install Oh-My-Zsh Setup and Plugins {
@@ -118,7 +118,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
 
 # Vundle for Vim plugins {
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2>/dev/null \
-    && vim +PluginInstall +qall
+    && sudo gem install neovim \
+    && vim +PluginInstall +'CocInstall coc-java coc-snippets' +qall
+
 
 # Command-t {2
 if [[ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/ext.so ]]
