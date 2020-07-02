@@ -35,6 +35,7 @@ alias pbcopy='xclip -selection clip' # what im used to
 alias rainclear="unclear | rainbow"
 alias wow="echo such color. much impress. very dork > /tmp/wowfile | say | rainbow /tmp/wowfile"
 alias lynx="lynx -accept_all_cookies -vikeys"
+alias nv='nordvpn'
 
 # Vim related alias's {{{2
 alias v='vim'

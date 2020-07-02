@@ -135,3 +135,12 @@ https://github.com/chubin/wttr.in
 `awk '{for (i=1;i<100/2;i++){b=100-i; print $i ". (" $i "+" $b") =",$i+$(100-i)}}' file`
 : Will print 1+99, 2+88 etc using a file with 1-99 on one line. Use an empty file to
 show what happens without data.
+
+```
+alphanum=( {a..z} {A..Z} {0..9})
+for ((i=0;i<=${#alphanum[@]};i++))
+do
+    printf '%s' "${alphanum[@]:$((RANDOM%255)):1}";
+done; echo
+```
+Generates new passwords

@@ -627,6 +627,16 @@
     nnoremap <leader>bh "_
     vnoremap <leader>bh "_
 
+    " terminal mappings {{2
+        if has("terminal")
+            augroup terminal
+                au!
+                autocmd FileType terminal tnoremap <buffer> <leader>q <C-W>N:bd!<cr>
+                autocmd FileType terminal tnoremap <buffer> <leader><Esc> <C-W>N
+            augroup END
+        endif
+    "}} 2
+
 
     " Local Leader {{2
         "nnoremap <silent><localleader>o O<Esc>jo<Esc>k
@@ -638,6 +648,7 @@
     command! Alias :vs ~/.config/aliases
     command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
     command! Reddit :call system("firefox reddit.com/r/vim > /dev/null 2>&1 &")
+    command! Markd :silent exe "!tmux split-window -h" | silent exe "!tmux send -t 1 'markd ". expand("%") ."' C-M"
 
     command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 " }}1
@@ -829,7 +840,9 @@
     augroup filetype_html
         autocmd!
         autocmd FileType html let @l = "<li>placeholder</li>"
-        autocmd FileType html nnoremap <buffer> <leader>l o<esc>"lp==cit
+        " make a new line, paste the li tag, justify, blackhole change in tag.
+        autocmd FileType html nnoremap <buffer> <leader>l o<esc>"lp=="_cit
+        autocmd Filetype html nnoremap <buffer> <localleader>z :Markd<cr>
     augroup END
 
     augroup vimsource
@@ -853,7 +866,7 @@
         autocmd Filetype java nnoremap <buffer> <F10> :cprevious<cr>
         autocmd Filetype java nnoremap <buffer> <F11> :cnext<cr>
 
-        autocmd FileType java nnoremap <buffer> \z :call Java_compile()<cr>
+        autocmd FileType java nnoremap <buffer> <localleader>z :call Java_compile()<cr>
 
         " https://github.com/neoclide/coc.nvim
         autocmd Filetype java nnoremap <silent> gd <Plug>(coc-definition)
@@ -861,6 +874,12 @@
         autocmd Filetype java nnoremap <silent> gi <Plug>(coc-implementation)
         autocmd Filetype java nnoremap <silent> gr <Plug>(coc-references)
     augroup END
+
+    augroup markdown
+        au!
+        autocmd Filetype markdown nnoremap <buffer> <localleader>z :Markd<cr>
+    augroup END
+
 
 " }}1
 
