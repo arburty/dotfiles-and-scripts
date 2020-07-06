@@ -604,7 +604,7 @@
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
-    nnoremap <silent><leader><space> :noh<cr>
+    nnoremap <silent><leader><space> a<esc>
     nnoremap <silent> <c-\> :set hlsearch!<cr>
 
     " ,o doesn't work with [count] for some reason but ,O does
