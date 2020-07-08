@@ -62,6 +62,13 @@ alias ffws="fireryfoxes -new-window -search"
 alias fft="fireryfoxes -new-tab"
 alias ffts="fireryfoxes -new-tab -search"
 alias ffp=" fireryfoxes -private-window"
+
+# qutebrowser {{{2
+callQutebrowser() {
+    ( qutebrowser "$@" > /dev/null 2>&1 & )
+}
+
+alias qb='callQutebrowser'
 # }}}2
 # }}}1
 
