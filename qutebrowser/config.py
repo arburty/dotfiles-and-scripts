@@ -1959,6 +1959,9 @@ config.bind('<Ctrl-e>', 'scroll-px 0 20')
 # config.bind('n', 'prompt-accept no', mode='yesno')
 # config.bind('y', 'prompt-accept yes', mode='yesno')
 
+# Load existing settings made via :set
+config.load_autoconfig()
+
 # config.set("colors.webpage.darkmode.enabled", True)
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""')
 config.bind(',r', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-reddit.com.css ""')
@@ -1971,3 +1974,12 @@ config.bind(',F', 'hint links spawn firefox {hint-url}')
 
 config.bind(',z', 'config-source')
 config.bind(',sv', 'config-source')
+import dracula.draw
+
+# Uncomment for the dracula theme.
+# dracula.draw.blood(c, {
+        # 'spacing': {
+                    # 'vertical': 6,
+                    # 'horizontal': 8
+                # }
+# })
