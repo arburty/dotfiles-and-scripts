@@ -9,8 +9,15 @@
 
 ## Aliases for commands. The keys of the given dictionary are the
 ## aliases, while the values are the commands they map to.
-## Type: Dict
-# c.aliases = {'w': 'session-save', 'q': 'close', 'qa': 'quit', 'wq': 'quit --save', 'wqa': 'quit --save'}
+## Type            : Dict
+c.aliases = {'w'   : 'session-save',
+             'q'   : 'close',
+             'qa'  : 'quit',
+             'wq'  : 'quit --save',
+             'wqa' : 'quit --save',
+             'yt'  : 'open youtube.com',
+             'yth' : 'open youtube.com/feed/history',
+             }
 
 ## Time interval (in milliseconds) between auto-saves of
 ## config/cookies/etc.
@@ -899,7 +906,7 @@
 ## `{line0}`: Same as `{line}`, but starting from index 0. * `{column0}`:
 ## Same as `{column}`, but starting from index 0.
 ## Type: ShellCommand
-# c.editor.command = ['gvim', '-f', '{file}', '-c', 'normal {line}G{column0}l']
+c.editor.command = ['gvim', '-f', '{file}'] #, '-c', 'normal {line}G{column0}l']
 
 ## Encoding to use for the editor.
 ## Type: Encoding
@@ -1963,17 +1970,28 @@ config.bind('<Ctrl-e>', 'scroll-px 0 20')
 config.load_autoconfig()
 
 # config.set("colors.webpage.darkmode.enabled", True)
+config.bind(',z', 'config-source')
+config.bind(',sv', 'config-source')
+
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""')
 config.bind(',r', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-reddit.com.css ""')
 
 config.bind(',m', 'spawn mpv {url}')
 config.bind(',M', 'hint links spawn mpv {hint-url}')
 
+config.bind(',d', 'spawn youtube-dl {url} --exec mpv')
+config.bind(',D', 'hint links spawn youtube-dl {hint-url} --exec mpv')
+
+config.bind(',y', 'spawn youtube-dl {url}')
+config.bind(',Y', 'hint links spawn youtube-dl {hint-url}')
+
 config.bind(',f', 'spawn firefox {url}')
 config.bind(',F', 'hint links spawn firefox {hint-url}')
 
-config.bind(',z', 'config-source')
-config.bind(',sv', 'config-source')
+config.bind(',to', 'tab-only')
+config.bind(',wo', 'window-only')
+
+
 import dracula.draw
 
 # Uncomment for the dracula theme.
