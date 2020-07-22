@@ -15,6 +15,7 @@ c.aliases = {'w'   : 'session-save',
              'qa'  : 'quit',
              'wq'  : 'quit --save',
              'wqa' : 'quit --save',
+             'gm' : 'open gmail.com',
              'yt'  : 'open youtube.com',
              'yth' : 'open youtube.com/feed/history',
              }

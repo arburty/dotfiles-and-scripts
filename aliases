@@ -19,6 +19,7 @@ markd() { pandoc ${@:-$HOME/.helpful_commands.md} | lynx -vikeys -stdin && clear
 
 # Alias's {{{1
 alias cl='clear'
+alias man='viman'
 alias bd='. bd -si'
 alias fortune='fortune | tee -a ~/.fortuneCookies && echo "" >> ~/.fortuneCookies'
 alias exer="exercism"
@@ -46,6 +47,7 @@ alias vv='vim $HOME/.vimrc'
 alias va='vim $HOME/.config/aliases'
 alias vt='vim $HOME/todo.html'
 alias vq='vim $HOME/.config/qutebrowser/config.py'
+alias cs='vim -c "let @*=@+|q"'
 # function to open vim with Gitstatus open
 vst()  { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
 vstd() { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
