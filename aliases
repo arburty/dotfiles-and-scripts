@@ -37,6 +37,8 @@ alias rainclear="unclear | rainbow"
 alias wow="echo such color. much impress. very dork > /tmp/wowfile | say | rainbow /tmp/wowfile"
 alias lynx="lynx -accept_all_cookies -vikeys"
 alias nv='nordvpn'
+alias mutt='neomutt'
+alias nmutt='neomutt'
 
 # Vim related alias's {{{2
 alias v='vim'
@@ -65,6 +67,7 @@ alias ffws="fireryfoxes -new-window -search"
 alias fft="fireryfoxes -new-tab"
 alias ffts="fireryfoxes -new-tab -search"
 alias ffp=" fireryfoxes -private-window"
+# }}2
 
 # qutebrowser {{{2
 callQutebrowser() {
