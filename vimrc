@@ -88,6 +88,7 @@
 
 " Formatting {{
 
+    set formatoptions=roqlj         " no auto-wrapping, comment friendly. Default:tcq
     set nowrap                      " Do not wrap long lines
     set autoindent                  " Indent at the same level of the previous line
     set shiftwidth=4                " Use indents of 4 spaces
@@ -97,7 +98,7 @@
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
-    "set matchpairs+=<:>             " Match, to be used with %
+    "set matchpairs+=<:>            " Match, to be used with %
     set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 
     " filetype autocmds from spf13 {{
@@ -158,6 +159,7 @@
         Plugin 'wellle/context.vim'
         Plugin 'romainl/vim-cool'
         Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+        Plugin 'justinmk/vim-sneak'
 
         "Colorschemes {{3
             Plugin 'arcticicestudio/nord-vim'
@@ -404,6 +406,11 @@
         onoremap il[ :<c-u>normal! F[vi[<cr>
         onoremap il] :<c-u>normal! F]vi]<cr>
 
+        onoremap in< :<c-u>normal! f<vi<<cr>
+        onoremap in> :<c-u>normal! f>vi><cr>
+        onoremap il< :<c-u>normal! F<vi<<cr>
+        onoremap il> :<c-u>normal! F>vi><cr>
+
         onoremap in' :<c-u>normal! f'vi'<cr>
         onoremap il' :<c-u>normal! F'vi'<cr>
 
@@ -424,6 +431,11 @@
         onoremap an] :<c-u>normal! f]va]<cr>
         onoremap al[ :<c-u>normal! F[va[<cr>
         onoremap al] :<c-u>normal! F]va]<cr>
+
+        onoremap an< :<c-u>normal! f<va<<cr>
+        onoremap an> :<c-u>normal! f>va><cr>
+        onoremap al< :<c-u>normal! F<va<<cr>
+        onoremap al> :<c-u>normal! F>va><cr>
 
         onoremap an' :<c-u>normal! f'va'<cr>
         onoremap al' :<c-u>normal! F'va'<cr>
@@ -604,7 +616,7 @@
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
-    nnoremap <silent><leader><space> a<esc>
+    nnoremap <silent><leader><space> :noh<cr>a<esc>
     nnoremap <silent> <c-\> :set hlsearch!<cr>
 
     " ,o doesn't work with [count] for some reason but ,O does
@@ -818,7 +830,8 @@
         endfunction
     " }}2
 
-    function Java_compile()
+    " Java_compile {{2
+    function! Java_compile()
         let s:main=expand("%:p:h:t:r") . "." . expand("%:t:r")
         exe "cd " . expand("%:p:h") . "/.."
 
@@ -831,8 +844,23 @@
             exe "Shell java " . s:main
         endif
         redraw!
+    endfunction 
+    " }}2
 
+    " Config_h_compile {{2
+    function! Config_h_compile()
+        exe 'cd ' . fnameescape(expand('%:h')).'/'
+
+        silent make
+        cwindow
+        let s:qf=empty(filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"'))
+        if s:qf && expand('%:p:h:t') == 'st'
+            silent !~/git/st/st
+        endif
+
+        redraw!
     endfunction
+    " }}2
 
 " }}1
 
@@ -854,6 +882,7 @@
         au!
         autocmd BufWritePost .Xresources echom "xrdb -merge ~/.Xresources"
         autocmd BufWritePost .Xresources silent execute "!xrdb -merge ~/.Xresources"
+        autocmd FileType c,cpp nnoremap <buffer> <localleader>z :call Config_h_compile()<cr>
     augroup END
 
     augroup java
@@ -881,8 +910,6 @@
         au!
         autocmd Filetype markdown nnoremap <buffer> <localleader>z :Markd<cr>
     augroup END
-
-
 " }}1
 
 " Helpful Links I Have Used {{1
