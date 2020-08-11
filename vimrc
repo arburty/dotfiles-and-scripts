@@ -126,7 +126,7 @@
 
         " set the runtime path to include Vundle and initialize
         set rtp+=~/.vim/bundle/Vundle.vim
-    "}}2
+    " }}2
 
     call vundle#begin() " {{2
         Plugin 'VundleVim/Vundle.vim'
@@ -855,7 +855,7 @@
         cwindow
         let s:qf=empty(filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"'))
         if s:qf && expand('%:p:h:t') == 'st'
-            silent !~/git/st/st
+            silent !~/git/st/st &
         endif
 
         redraw!
@@ -913,12 +913,15 @@
 " }}1
 
 " Helpful Links I Have Used {{1
-    " Much of this vimrc was borrowed from:
-    "   https://github.com/spf13/spf13-vim
+    " This vimrc was heavily changed using spf-13 as
+    " a starting point: 
+    " https://github.com/spf13/spf13-vim
 
     " https://sherif.io/2016/05/30/favorite-vim-plugins.html
     " https://www.hillelwayne.com/post/intermediate-vim/
     " http://vimcasts.org/
+    "
+    " An EXCELLENT resource for learning vimscript:
     " https://learnvimscriptthehardway.stevelosh.com/
 " }}1
 

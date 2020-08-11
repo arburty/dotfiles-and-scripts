@@ -10,7 +10,7 @@ from ranger.api.commands import Command
 class save_sorted_files_buffer(Command):
     """:save_sorted_files_buffer
 
-    Save the sorted file buffer to datadir/copy_buffer
+    Save the sorted file buffer to datadir/copy_sorted_files
     """
     copy_sorted_filename = 'copy_sorted_files'
 

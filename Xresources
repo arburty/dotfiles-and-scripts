@@ -8,7 +8,7 @@
 ! xterm*faceName: DejaVu Sans Mono:style=Book
 xterm*faceName: DroidSansMono Nerd Font:style=Book
 !xterm*faceName: MesloLGS NF:style=Regular
-xterm*faceSize: 11
+xterm*faceSize: 14
 
 ! 9 Every shell is a login shell by default (for inclusion of all necessary environment variables)
 xterm*loginshell: true
@@ -51,3 +51,10 @@ xterm*ScrollBar: false
 
 ! stop output to terminal from jumping down to bottom of scroll again
 xterm*scrollTtyOutput: false
+
+! these 4 came from https://github.com/muennich/sxiv/issues/353
+! to get sxiv to have a dark background
+!*foreground: rgb:e5/e5/e5
+!*background: rgb:00/00/00
+Sxiv.foreground: #bbbbbb
+Sxiv.background: #222222
