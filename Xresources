@@ -58,3 +58,7 @@ xterm*scrollTtyOutput: false
 !*background: rgb:00/00/00
 Sxiv.foreground: #bbbbbb
 Sxiv.background: #222222
+
+! Make c-insert the clipboard, S-Insert is still primary
+*VT100*translations:    #override \n\
+    Ctrl <KeyPress> Insert: insert-selection(CLIPBOARD)
