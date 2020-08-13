@@ -1,0 +1,55 @@
+#! /bin/bash
+
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 08/12/20
+#
+# helped with a couple ideas used
+# http://www.linuxandubuntu.com/home/how-to-automatically-change-gnome-background-in-intervals-using-bash
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+#[[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues;
+
+usage() { echo "$0 usage:" && grep " .)\ \#" $0; exit 0; exit; }
+
+die() {
+    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
+    exit 1
+}
+
+let minutes=30
+let seconds=0
+dir="$HOME/shared_drive/Pictures/wallpaper/"
+
+while getopts ":hd:s:m:" arg; do
+    case $arg in
+        d) # Set the directory of wallpapers
+            [ -d ${OPTARG} ] && dir=${OPTARG} || die "${OPTARG} is not a directory."
+            ;;
+        m) # change speed in minutes, default: 30
+            let minutes=${OPTARG}
+            ;;
+        s) # change speed in seconds, default: 0
+            let seconds=${OPTARG}
+            ;;
+        h | *) # print usage
+            usage ; exit ;;
+    esac
+done
+
+let speed=$((minutes * 60 + $seconds)) || die "speed is $speed"
+[[ $speed < 1 ]] && die "time has to be positive"
+
+dir=$(echo $dir | sed 's;/$;;g') # enforce no tailing slash
+wallpapers=(${dir}/{*.jpg,*.png,*.svg,*.jpeg})
+array_size=${#wallpapers[*]}
+
+while true
+do
+    let random=$(( RANDOM % $array_size ))
+    selected="${wallpapers[$random]}"
+    [ -f "${selected}" ] && cp "${selected}" ~/.local/share/eog-wallpaper.jpg || continue
+    sleep "$speed"
+done
+
+exit 0
