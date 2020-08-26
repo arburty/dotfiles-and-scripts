@@ -79,6 +79,10 @@ PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
 
 tabs -4
 
+[[ -z $START_WALLPAPER ]] && export START_WALLPAPER=1 \
+    && echo "start the show!" \
+    && ~/bin/wallpaper_slideshow -d ~/shared_drive/Pictures/wallpaper/ &
+
 # Custom Alias's Variables and Functions {{{2
 badSource() { # Used to send a message to std out in red if theres a problem with sourcing a file
     >&2 echo "${RED}Problem sourcing $*${NC}"
@@ -108,6 +112,7 @@ else # create new session
         tmux new-session -s workin
     fi
 fi
+
 
 # }}}3
 # }}}2

@@ -28,13 +28,13 @@ echo "$wttr" >> $tempFile
 # git ssb
 if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]
 then
-    echo -e "<pre>\n" >> $tempFile
+    echo -e "<body>\n<pre>\n" >> $tempFile
     git ssb 2> /dev/null | tee -a $tempFile
     echo "</pre>" >> $tempFile
 fi
 
 # give me my todo's
-cat $HOME/todo.html >> $tempFile
+cat $HOME/todo.html | grep -v "<body>" >> $tempFile
 
 # display the output
 markd $tempFile
