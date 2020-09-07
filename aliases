@@ -39,7 +39,7 @@ alias lynx="lynx -accept_all_cookies -vikeys"
 alias nv='nordvpn'
 alias mutt='neomutt'
 alias nmutt='neomutt'
-alias kill_wallp="ps -e | grep 'wallpaper_slide\|sleep' | awk '{print \$1}' | xargs kill -9"
+alias kill_wallp="ps -e | awk '/wallpaper|sleep/ {print \$1}' | xargs kill -9"
 wpss() { wallpaper_slideshow "$@" & }
 
 # Vim related alias's {{{2
