@@ -613,6 +613,7 @@
     nnoremap <leader>d. :call DeleteFileAndCloseBuffer()
     nnoremap <leader>F :call <SID>FoldColumnToggle()<cr>
     nnoremap <leader>Q :call <SID>QuickfixToggle()<cr>
+    nnoremap <localleader>S :set spell!<cr>
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
