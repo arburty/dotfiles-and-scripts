@@ -29,6 +29,9 @@ echo "$wttr" >> $tempFile
 if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]
 then
     echo -e "<body>\n<pre>\n" >> $tempFile
+    # show the vpn status.  the status line started with '-  -  ' for some reason. Taken out with sed
+    nordvpn status | grep 'Status\|Country\|City' | sed 's/^.*Status/Status/;s/:/:@/' | column -t -s'@'\
+        >> $tempFile && echo "" >> $tempFile
     git ssb 2> /dev/null | tee -a $tempFile
     echo "</pre>" >> $tempFile
 fi
