@@ -73,6 +73,10 @@ Helpful For Syntax Color Editing {{{
 " }}}
 
 
+vimTricks: {{{
+    https://vimtricks.substack.com/
+}}}
+
 " Plugins To Look At {{{1
     " Java Imports {{{2
         https://github.com/nicolascouvrat/javaimports
