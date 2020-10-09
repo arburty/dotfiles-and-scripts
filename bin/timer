@@ -1,0 +1,37 @@
+#! /bin/bash
+
+# Title: timer
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 09/01/20
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+[[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
+
+
+timesheet=/tmp/timesheet.txt
+
+#reset the timer
+[[ $1 == '-s' ]] && echo -n "" > $timesheet
+
+# save the time and send it to the timesheet
+time=$(date +"%I:%M:%S:%s" | tee -a $timesheet)
+
+startepoch=$(sed 1q $timesheet | awk -F: '{print $4}')
+# grab the second to last entry, the recentepoch
+[[ $(wc -l $timesheet | cut -d' ' -f1) -gt 1 ]] && recentepoch=$( awk -F: '{re=e;e=$4}END{print re}' $timesheet )
+recentepoch=${recentepoch:-1}
+epoch=$(echo $time | awk -F: '{print $4}')
+
+output=$(echo "Current time:@ "$time | sed -e 's/:[[:digit:]]\+$//')
+
+# There may not be a recent time to compare against
+[[ $recentepoch -gt 1 ]] && output+="\n"$(printf "Since recent:@ %05d:%02d\n" $(( (epoch-$recentepoch)/60 )) $(( (epoch-$recentepoch)%60 )))
+
+output+="\n"$(printf "Since start :@ %05d:%02d\n" $(( (epoch-$startepoch)/60 )) $(( (epoch-$startepoch)%60 )))
+
+# print the output so the values line up with column
+echo -e $output | column -t -s'@'
+
+
+exit 0

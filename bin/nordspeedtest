@@ -1,0 +1,69 @@
+#! /bin/bash
+
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 10/02/20 19:59
+
+
+runspeedtest() {
+    let speedtestsran=$speedtestsran+1
+    echo "starting speedtest #$speedtestsran/$totalruns"
+    echo "----running-speedtest-------"
+    #speedtest --simple
+}
+
+logvpn() {
+    echo "== $city"
+    echo "== $tech"
+}
+
+connect() {
+    # piping to cat to remove color
+    nordvpn set technology $tech | cat
+    nordvpn connect $city | cat
+    nordvpn status | sed -n -e 's/^C.*gy:/Tech:/p' -e '/City/p'
+}
+
+disconnect() {
+    nordvpn disconnect
+    nordvpn status
+}
+
+initiateTests() {
+    logvpn
+    [[ $city == "NONE" ]] && disconnect || connect
+
+    for (( i=0;i<$loop;i++ )); do
+        runspeedtest
+    done
+    
+}
+
+#[[ ! -z $1 && -n $1 ]] && loop=$1 || loop=4
+logfile="$HOME/tmp/speed_logfile.txt"
+let speedtestsran=0
+loop=4
+totalruns=$(( loop*5 ))
+
+main() {
+    city="NONE"
+    tech="NONE"
+    initiateTests
+
+    city="Denver"
+    tech="NordLynx"
+    initiateTests
+
+    city="Perth"
+    initiateTests
+
+    city="Denver"
+    tech="OpenVPN"
+    initiateTests
+
+    city="Perth"
+    initiateTests
+}
+
+[[ -f "$logfile" ]] || echo -n "" > "$logfile"
+main | tee -a "$logfile"
