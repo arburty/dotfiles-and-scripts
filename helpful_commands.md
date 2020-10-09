@@ -112,6 +112,10 @@ https://github.com/chubin/wttr.in
 `history | tac | awk '/gpg/ && !/history/ {$1=""; print $0;}' | less`
 : use awk to find recent 'gpg' commands and not the command(s) like above
 
+`ffmpeg -i VID_20200921_225850_LS.mp4 -vcodec libx265 -crf 30 RL-is-broken.mp4`
+: Compresses vidoes.  Change the `-crf 30` to different values for different compressed sizes.
+(larger # = smaller size) link in: `~/notes/helpful_Links`
+
 ## Came from HomeAdvisor/General Mac related
 `docker run -dt -p 80:80 -p 443:443 -e HOSTIP=host.docker.internal -v ~/apps/sm-content:/usr/local/sm-apache/htdocs --name apache apache:2.4.3 #HELPFUL`
 
@@ -144,3 +148,4 @@ do
 done; echo
 ```
 Generates new passwords
+
