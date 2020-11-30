@@ -87,5 +87,9 @@ vimTricks: {{{
     https://vi.stackexchange.com/questions/2350/how-to-map-alt-key
 " }}}1
 
+" Article on Vim Development and maintanence {{{1
+    https://github.com/LucHermitte/lh-vim-lib/blob/master/doc/design_notes.md
+" }}}1
+
 " Modeline{{{
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
