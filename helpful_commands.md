@@ -101,10 +101,19 @@ Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 : commands to change audio output
 
 ## Random
-`curl wttr.in/Denver`
-`curl wttr.in/Denver\?format="%l:+%C:+%t+%m"`
-: the command line way to get the weather.  A lot of option to modify the output. visit:
-https://github.com/chubin/wttr.in
+
+
+<dl>
+    <dt>
+        <pre>
+    <code>curl wttr.in/Denver</code></code>
+    <code>curl wttr.in/Denver\?format="%l:+%C:+%t+%m"</code>
+        </pre>
+    </dt>
+    <dd>The command line way to get the weather.  A lot of option to modify the output.<br>
+    Visit: [wttr.in](https://github.com/chubin/wttr.in)
+    </dd>
+</dl>
 
 `geth --datadir ./ --rpc --rpccorsdomain '\*'`
 : starts a private chain  
@@ -140,12 +149,37 @@ https://github.com/chubin/wttr.in
 : Will print 1+99, 2+88 etc using a file with 1-99 on one line. Use an empty file to
 show what happens without data.
 
-```
-alphanum=( {a..z} {A..Z} {0..9})
-for ((i=0;i<=${#alphanum[@]};i++))
-do
-    printf '%s' "${alphanum[@]:$((RANDOM%255)):1}";
-done; echo
-```
-Generates new passwords
+<dl>
+    <dt>
+        <pre>
+    <code>alphanum=( {a..z} {A..Z} {0..9})</code>
+    <code>for ((i=0;i<=${#alphanum[@]};i++))</code>
+    <code>do</code>
+    <code>    printf '%s' "${alphanum[@]:$((RANDOM%255)):1}";</code>
+    <code>done; echo</code>
+        </pre> 
+    </dt>
+    <dd>Generates new passwords
+    </dd>
+</dl>
 
+
+<dl>
+    <dt>
+        <pre>
+    <code>echo $PATH | awk -F ':' -vOFS='\n' '$1=$1'`</code></code>
+    <code>echo $PATH | awk -vFS=':' -vOFS='\n' '$1=$1'</code>
+    <code>echo $PATH | awk -vRS=':' '{print $1}'</code>
+    <code>echo $PATH | sed 's/:/\n/g'</code>
+    <code>echo ${PATH//:/\\n}</code>
+    <code>echo $PATH | tr ':' '\n'</code>
+    <code>tr ':' '\n' <<< $PATH</code>
+        </pre>
+    </dt>
+    <dd>
+    Pretty prints the PATH variable
+    </dd>
+</dl>
+
+`pandoc -s ./path/to/fakeResume.docx -o hi.txt && markd hi.txt`
+: Turn document (.docx, .odt, etc.) into markdown and open with lynx.
