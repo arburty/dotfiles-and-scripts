@@ -625,8 +625,7 @@
     nnoremap <localleader>S :set spell!<cr>
     "nnoremap <silent><leader>p :exe "norm 0dw\"+Pld2F "<cr>
     " needs work but a better version of the above.
-    nnoremap ,p :g/^\d\{3,9}_\(\d\+_\d\+\)\?.*\(\.\S\{3,4}$\)/exe "s//" . substitute(@+, " - \\a*\\.com", "","") . "_\1/"<cr>
-
+    nnoremap ,p :g/^\d\{3,9}p\?_/exe "s//" . substitute(@+, " - \\a*\\.com", "","") . "_/"<cr>
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>

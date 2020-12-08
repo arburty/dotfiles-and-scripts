@@ -183,3 +183,9 @@ show what happens without data.
 
 `pandoc -s ./path/to/fakeResume.docx -o hi.txt && markd hi.txt`
 : Turn document (.docx, .odt, etc.) into markdown and open with lynx.
+
+`ping google.com | awk '{split($8, a, "="); print a[1]":",a[2]}'`
+: Example to show the use of a split in awk.
+
+`for i in {1..84}; do tmux send -t mutt "d";done`
+: Scripts actions in mutt through tmux, deleting the next 84 emails in this case.

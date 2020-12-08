@@ -1995,7 +1995,7 @@ config.bind(',wo', 'window-only')
 config.bind(';lp', 'spawn --userscript qute-lastpass')
 
 
-import dracula.draw
+# import dracula.draw
 
 # Uncomment for the dracula theme.
 # dracula.draw.blood(c, {

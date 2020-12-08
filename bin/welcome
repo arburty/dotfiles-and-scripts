@@ -8,7 +8,7 @@
 [[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
 
 markd () {
-    pandoc $@ | lynx -vikeys -stdin
+    pandoc $@  2>/dev/null | lynx -vikeys -stdin
 }
 
 markdtest () {
