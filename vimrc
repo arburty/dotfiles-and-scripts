@@ -191,6 +191,7 @@
             Plugin 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
             Plugin 'edersonferreira/dalton-vim'
             Plugin 'ulwlu/elly.vim'
+            Plugin 'joshdick/onedark.vim'
         " }}3
 
         " plugin from http://vim-scripts.org/vim/scripts.html
@@ -283,7 +284,6 @@
     "map ì gt
     "nmap <A-p> gT
     "nmap <A-n> gt
-    
 
     " All text after column 80 is highlighted
     highlight rightMargin term=bold ctermfg=blue guifg=orange
@@ -795,7 +795,7 @@
     " DeleteFileAndCloseBuffer {{2
     " Expands filename and confirms you want to delete it.
     " https://stackoverflow.com/questions/16678661/how-can-i-delete-the-current-file-in-vim
-    " By: joelostblom. 
+    " By: joelostblom.
     " Modified to say the filename and use 'bd!' instead of 'q!'
         fun! DeleteFileAndCloseBuffer()
             let file = expand('%:p')
@@ -858,7 +858,7 @@
             exe "Shell java " . s:main
         endif
         redraw!
-    endfunction 
+    endfunction
     " }}2
 
     " Config_h_compile {{2
@@ -928,7 +928,7 @@
 
 " Helpful Links I Have Used {{1
     " This vimrc was heavily changed using spf-13 as
-    " a starting point: 
+    " a starting point:
     " https://github.com/spf13/spf13-vim
 
     " https://sherif.io/2016/05/30/favorite-vim-plugins.html

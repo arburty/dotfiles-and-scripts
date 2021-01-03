@@ -2,7 +2,7 @@
 
 ## Find commands
 `find / -name burtar* 2> >(grep -v 'Permission denied' >&2) #HELPFUL`
-: This command found all files burtar\* starting in the root directory and taking out 
+: This command found all files burtar\* starting in the root directory and taking out
 every instance of 'Permission denied".  There were a lot.
 
 `find / -name stopwatch* 2> >(grep -vie 'not permitted' -ve 'Permission denied' >&2)`
@@ -37,7 +37,7 @@ every instance of 'Permission denied".  There were a lot.
 : creates a file colorcoded with names
 
 `RedirMessages(hi Search, '')`
-: return the hilight values for 'Search'. 
+: return the hilight values for 'Search'.
 .vim/personal/redir_messages.vim
 
 `map <leader>h :call RedirMessages("hi " . expand("<cWORD>"),'b 4 \| exe "norm G"')<cr>:bm<cr>`\``
@@ -116,7 +116,7 @@ Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 </dl>
 
 `geth --datadir ./ --rpc --rpccorsdomain '\*'`
-: starts a private chain  
+: starts a private chain
 
 `history | tac | awk '/gpg/ && !/history/ {$1=""; print $0;}' | less`
 : use awk to find recent 'gpg' commands and not the command(s) like above
@@ -157,7 +157,7 @@ show what happens without data.
     <code>do</code>
     <code>    printf '%s' "${alphanum[@]:$((RANDOM%255)):1}";</code>
     <code>done; echo</code>
-        </pre> 
+        </pre>
     </dt>
     <dd>Generates new passwords
     </dd>
