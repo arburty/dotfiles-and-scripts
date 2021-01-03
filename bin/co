@@ -43,6 +43,7 @@ case $1 in
     -s ) swapProgram="[Ss]potifyd\?" ;;
     -m ) swapProgram="mpv Media Player" ;;
     -f ) swapProgram="Firefox" ;;
+    -q ) swapProgram="qutebrowser" ;;
 esac
 
 if [[ ! -z "$swapProgram" ]]
