@@ -846,6 +846,7 @@
 
     " Java_compile {{2
     function! Java_compile()
+        # Assuming structure is Projectroot/MyFile.java
         let s:main=expand("%:p:h:t:r") . "." . expand("%:t:r")
         exe "cd " . expand("%:p:h") . "/.."
 
@@ -910,7 +911,7 @@
         autocmd Filetype java nnoremap <buffer> <F11> :cnext<cr>
 
         " settings that are all me
-        autocmd Filetype java set foldmethod=syntax foldleve=1
+        autocmd Filetype java set foldmethod=syntax foldlevel=1
         autocmd FileType java nnoremap <buffer> <localleader>z :call Java_compile()<cr>
 
         " https://github.com/neoclide/coc.nvim

@@ -95,5 +95,24 @@ vimTricks: {{{
     https://github.com/LucHermitte/lh-vim-lib/blob/master/doc/design_notes.md
 " }}}1
 
+" The Bin Of Potential {{{1
+Commands that I used that could be scripted further
+
+    Used this after sorting a panda planner notes page '2021-01-12 ARK-funds notes-transcription-beta.txt'
+    to add "-sorted" to the title after creating a sorted version.  Could script it for future for easier addendums.
+    This create the file '2021-01-12 ARK-funds notes-transcription-beta-sorted.txt'
+        exe "w ".expand("%:p:r")."-sorted.txt"
+
+    This found ranges of notes for the different ARK funds in '2021-01-12 ARK-funds notes-transcription-beta.txt'
+    and after using ':g' to pull the values out and together I sorted them, then used this command to move the blocks
+    into the right order.  I would mark 'a' by hand and re-run the command to sort the notes by market price.
+    This create the file '2021-01-12 ARK-funds notes-transcription-beta-sorted.txt'
+        +?^A?;,/^A\|%/ m'a
+
+"}}}1
+
+
+
+
 " Modeline{{{
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
