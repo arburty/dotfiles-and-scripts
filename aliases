@@ -40,8 +40,12 @@ alias nv='nordvpn'
 alias mutt='neomutt'
 alias nmutt='neomutt'
 alias kill_wallp="ps -e | awk '/wallpaper|sleep/ {print \$1}' | xargs kill -9"
-alias mntgd='rclone mount GDrive: ~/Cloud_Storage/Google_Drive/'
-wpss() { wallpaper_slideshow "$@" & }
+alias mntgd='rclone mount GDrive: ~/cloud_storage/Google_Drive/'
+alias syncfromgd='rclone sync -P GDrive: ~/cloud_storage/Google_Drive-local/'
+alias syncfromRB='rclone sync -P GDrive:RocketBook/Panda_Planner/ ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/'
+alias synctoRB='rclone sync -P ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/ GDrive:RocketBook/Panda_Planner/'
+alias synctogd='rclone sync -P ~/cloud_storage/Google_Drive-local/ GDrive:'
+wpss() { killall wallpaper_slide 2>/dev/null; wallpaper_slideshow "$@" & }
 
 
 # Vim related alias's {{{2
@@ -83,5 +87,5 @@ alias qb='callQutebrowser'
 # }}}1
 
 # Modeline{{{
-# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker ft=sh:}}}
 return 0
