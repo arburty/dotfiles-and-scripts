@@ -1976,6 +1976,7 @@ config.bind(',sv', 'config-source')
 
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""')
 config.bind(',r', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-reddit.com.css ""')
+config.bind(',g', 'config-cycle content.user_stylesheets ~/.config/themes/solarized-everything-css/css/solarized-dark/solarized-dark-google.com.css ""')
 
 config.bind(',m', 'spawn mpv {url}')
 config.bind(',M', 'hint links spawn mpv {hint-url}')
