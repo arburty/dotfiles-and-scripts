@@ -45,8 +45,10 @@ alias syncfromgd='rclone sync -P GDrive: ~/cloud_storage/Google_Drive-local/'
 alias syncfromRB='rclone sync -P GDrive:RocketBook/Panda_Planner/ ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/'
 alias synctoRB='rclone sync -P ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/ GDrive:RocketBook/Panda_Planner/'
 alias synctogd='rclone sync -P ~/cloud_storage/Google_Drive-local/ GDrive:'
+alias urlviewLinks='urlview ~/cloud_storage/Google_Drive-local/Links.txt'
+alias muttrgx='less ~/notes/mutt_regex'
+alias tmkmutt='tmux kill-window -t mutt'
 wpss() { killall wallpaper_slide 2>/dev/null; wallpaper_slideshow "$@" & }
-
 
 # Vim related alias's {{{2
 alias v='vim'
