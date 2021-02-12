@@ -165,6 +165,7 @@
         Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
         Plugin 'junegunn/fzf.vim'
         Plugin 'AndrewRadev/sideways.vim'
+        Plugin 'davidhalter/jedi'
 
 
         "Colorschemes {{3
@@ -192,6 +193,8 @@
             Plugin 'edersonferreira/dalton-vim'
             Plugin 'ulwlu/elly.vim'
             Plugin 'joshdick/onedark.vim'
+            " TODO: tomorrow theme not showing up.  needs some attention.
+            Plugin 'chriskempson/tomorrow-theme', { 'name': 'tomorrow-night' }
         " }}3
 
         " plugin from http://vim-scripts.org/vim/scripts.html
@@ -394,12 +397,13 @@
 
 " onoremaps {{1
 
+    " 'inside', 'around' and 'to' fold markers
     onoremap if :<c-u>exe "norm! ]zkV[zj"<cr>
     onoremap af :<c-u>exe "norm! ]zV[z"<cr>
     onoremap Tf :<c-u>exe "norm! V[zj"<cr>
     onoremap tf :<c-u>exe "norm! V]zk"<cr>
 
-    " omaps for '(i)nside/(a)round (n)ext/(l)ast (,),{,},[,],'," }}2
+    " omaps for '(i)nside/(a)round (n)ext/(l)ast (,),{,},[,],'," {{2
         onoremap in( :<c-u>normal! f(vi(<cr>
         onoremap in) :<c-u>normal! f)vi)<cr>
         onoremap il( :<c-u>normal! F(vi(<cr>
@@ -615,7 +619,11 @@
     nnoremap <leader>sv :so $MYVIMRC<cr>
     nnoremap <leader>s :w<cr>
     inoremap <leader>s <esc>:w<cr>
-     noremap <leader>q :q!<cr>
+
+     "noremap <leader>q :q!<cr>
+     " Changed to call function that allows for leaving term pages and not exit
+     " vim.
+    nnoremap <leader>q :call <SID>Quit()<cr>
      noremap <leader>; q:
     nnoremap <leader>ps :call Pickscheme("?")<cr>:PickScheme<space>
     nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
@@ -642,8 +650,8 @@
     nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 
     " Capitalize First Letter of Words
-    nnoremap <silent><leader>C :s/\<./\u&/g<cr>:noh<cr>``
-    vnoremap <silent><leader>C :s/\%V\<./\u&/g<cr>:noh<cr>``
+    nnoremap <silent><leader>C :s/[^']\zs\<.\ze/\u&/g<cr>:noh<cr>``
+    vnoremap <silent><leader>C :s/\%V[^']\zs\<.\ze/\u&/g<cr>:noh<cr>``
 
     " Useful
     nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
@@ -828,6 +836,27 @@
             endif
         endfunction
     " }}2
+    
+    " Quit mapping {{2
+    " Used to quit buffers as usual. If buffer is a term window, then go to
+    " alternate buffer, and delete the term window.
+    " TODO: reset the alternate buffer.  currently after closing the term
+    " window there is no alternate buffer.
+    "   Probably have to get the current alt buff before opening the term
+    "   somehow.
+    function! s:Quit()
+        if !empty(expand('%')) && split(expand('%').":", ':')[0] ==# "term"
+            echom 'Closing Terminal'
+            " Switch to last buffer and delete the terminal.
+            b #
+            bd! #
+        else
+            " Normal quit.
+            q!
+        endif
+    endfunction
+    " }}2
+
 
     " SetPersonalHeader {{2
         function! SetPersonalHeader()
@@ -924,6 +953,12 @@
     augroup markdown
         au!
         autocmd Filetype markdown nnoremap <buffer> <localleader>z :Markd<cr>
+    augroup END
+
+    " TODO: move to a filetype file python.vim
+    augroup python
+        au!
+        autocmd Filetype python nnoremap <silent><buffer> <localleader>z :term python3 %<cr>
     augroup END
 " }}1
 
