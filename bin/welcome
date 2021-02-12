@@ -21,7 +21,9 @@ tempFile='/tmp/welcomeScreen'
 echo "<h1>Welcome Back Austin</h1>" > $tempFile
 
 # Give the weather
-wttr=$(curl wttr.in/Denver\?format="%l:+%C:+%t+%m" 2> /dev/null)
+# After getting the info, strip the '+' char between City names.
+wttr=$(curl wttr.in/Castle+Rock\?format="%l:+%C:+%t+%m" 2> /dev/null \
+    | sed 's/\([[:alpha:]]\)+\([[:alpha:]]\)/\1 \2/g')
 echo -n "Today's Weather in " >> $tempFile
 echo "$wttr" >> $tempFile
 
