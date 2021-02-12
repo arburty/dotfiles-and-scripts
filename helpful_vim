@@ -111,6 +111,10 @@ Commands that I used that could be scripted further
 
 "}}}1
 
+to print out the sequence:
+abcdefghijklmnopqrstuvwxyz
+I ran the expression:
+i_CTRL-R =join(map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)'),'')
 
 
 
