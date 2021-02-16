@@ -1,5 +1,10 @@
 #! /bin/bash
 
+# binaryFun.sh
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 02/13/20
+
 declare -r PROGRAM=$(basename $0)
 # declare arg for one line initialization of byteLength
 arg="$1"
