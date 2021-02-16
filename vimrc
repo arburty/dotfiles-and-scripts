@@ -604,6 +604,8 @@
     iabbrev @@ austin@burt.us.com
     iabbrev shceme scheme
     iabbrev colorshceme colorscheme
+    iabbrev Tnanks Thanks
+    iabbrev tnanks thanks
 
     cabbrev hlep help
 " }}1
