@@ -48,6 +48,7 @@ alias synctogd='rclone sync -P ~/cloud_storage/Google_Drive-local/ GDrive:'
 alias urlviewLinks='urlview ~/cloud_storage/Google_Drive-local/Links.txt'
 alias muttrgx='less ~/notes/mutt_regex'
 alias tmkmutt='tmux kill-window -t mutt'
+alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | espeak
 wpss() { killall wallpaper_slide 2>/dev/null; wallpaper_slideshow "$@" & }
 
 # Vim related alias's {{{2
