@@ -166,6 +166,7 @@
         Plugin 'junegunn/fzf.vim'
         Plugin 'AndrewRadev/sideways.vim'
         Plugin 'davidhalter/jedi'
+        Plugin 'SkyLeach/pudb.vim'
 
 
         "Colorschemes {{3
@@ -997,6 +998,17 @@ nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 "vnoremap <M-j> :m '>+1<CR>gv=gv
 "vnoremap <M-k> :m '<-2<CR>gv=gv
 "}}1
+
+if has('nvim')
+    let g:python_host_prog='~/.virtualenvs/neovim2/bin/python'
+    let g:python3_host_prog='/bin/python3'
+    " set the virtual env python used to launch the debugger
+    "let g:pudb_python='~/.virtualenvs/poweruser_tools/bin/python'
+    " set the entry point (script) to use for pudb
+    "let g:pudb_entry_point='~/src/poweruser_tools/test/test_templates.py'
+    " Unicode symbols work fine (nvim, iterm, tmux, nyovim tested)
+    let g:pudb_breakpoint_symbol='→'
+endif
 
 " Modeline{{
 " vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker:}}
