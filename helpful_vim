@@ -116,7 +116,10 @@ abcdefghijklmnopqrstuvwxyz
 I ran the expression:
 i_CTRL-R =join(map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)'),'')
 
-
+" Great tips for Ex commands {{{1
+" e.g. g/re/p, grevrep, and '!' commands/filtering.
+https://www.inkstonenews.com/society/big-archeology-find-home-chinas-terracotta-army/article/3122640
+" }}}1
 
 " Modeline{{{
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
