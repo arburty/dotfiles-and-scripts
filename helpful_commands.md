@@ -189,3 +189,6 @@ show what happens without data.
 
 `for i in {1..84}; do tmux send -t mutt "d";done`
 : Scripts actions in mutt through tmux, deleting the next 84 emails in this case.
+
+`cat ~/filesToWall.txt | xargs -i"{}" echo -e "{}.jpg" | sxiv -as f -`
+: print a file with image names (with no exension) and open them in sxiv.
