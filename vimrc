@@ -626,7 +626,7 @@
      "noremap <leader>q :q!<cr>
      " Changed to call function that allows for leaving term pages and not exit
      " vim.
-    nnoremap <leader>q :call <SID>Quit()<cr>
+    nnoremap <silent> <leader>q :call <SID>Quit()<cr>
      noremap <leader>; q:
     nnoremap <leader>ps :call Pickscheme("?")<cr>:PickScheme<space>
     nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
@@ -909,6 +909,19 @@
     endfunction
     " }}2
 
+    " OpenURLUnderCursor()
+    " Open URL's workaround
+    function! OpenURLUnderCursor()
+        let s:uri = expand('<cWORD>')
+        let s:uri = substitute(s:uri, '?', '\\?', '')
+        let s:uri = shellescape(s:uri, 1)
+        if s:uri != ''
+            silent exec "!gio open '".s:uri."' >/dev/null 2>1"
+            :redraw!
+        endif
+    endfunction
+    nnoremap gx :call OpenURLUnderCursor()<CR>
+
 " }}1
 
 " Custom Augroups/cmd's {{1
@@ -1008,6 +1021,8 @@ if has('nvim')
     "let g:pudb_entry_point='~/src/poweruser_tools/test/test_templates.py'
     " Unicode symbols work fine (nvim, iterm, tmux, nyovim tested)
     let g:pudb_breakpoint_symbol='→'
+    nmap <F9> :PUDBToggleBreakPoint<cr>
+    nmap <F10> :PUDBUpdateBreakPoints<cr>:PUDBLaunchDebuggerTab<cr><cr>
 endif
 
 " Modeline{{
