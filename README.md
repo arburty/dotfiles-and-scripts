@@ -2,7 +2,7 @@
 These are some of my dotfiles for my own reference, and anyone else
 who cares to look to see what I have.
 
-## If you're are me, and want your 'essentials'
+## If you are me, and want your 'essentials'
 `bash < <(curl -sL https://raw.githubusercontent.com/arburty/dotfiles-and-scripts/master/bin/install.sh)`
 : call my install script off of github
 

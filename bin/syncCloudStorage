@@ -1,0 +1,79 @@
+#! /bin/bash
+# syncGoogleCloud
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 01/26/21
+# 
+# No flags, this command uses dmenu to choose which storage option to sync
+# to/from.
+# 
+# Ideas: 
+# 1) Allow for flags (numerics?) to allow for aliasing through this script.
+#       Make dmenu stuff a function so it is used if no flag/value is given.
+#       A list and/or flag.
+
+# Create the list of options
+declare -r list="\
+1) Sync to Google Drive
+2) Sync to Google Drive CSU
+3) Sync from Google Drive
+4) Sync from Google Drive CSU
+5) Sync to Photos
+6) Sync to Photos CSU
+7) Sync from Photos
+8) Sync from Photos CSU
+9) Sync to Panda Planner
+10) Sync from Panda Planner\
+"
+
+# Use dmenu to select option, and return the number asshociated with it.
+chosen_command=$(echo "$list" | dmenu -p "What are we syncing today?" -i -l 15 | awk '{print $1}' | sed 's/)//')
+
+
+# cloud repos, needs a ':' when using them
+declare -r gd='GDrive'
+declare -r gp='GPhotos'
+declare -r gdcsu='GDriveCSU'
+declare -r gpcsu='GPhotosCSU'
+
+# Particular paths/files.
+declare -r pp="$gd:RocketBook/Panda_Planner/"
+
+
+# local directories.
+declare -r cs="$HOME/cloud_storage"
+declare -r gdl="$cs/Google_Drive-local/"
+declare -r gpl="$cs/Google_Photos-local/"
+declare -r gdcsul="$cs/Google_Drive_CSU/"
+declare -r gpcsul="$cs/Google_Photos_CSU/"
+
+# local paths/files.
+declare -r ppl="$cs/Google_Drive-local/RocketBook/Panda_Planner/"
+
+
+# define and call the rclone commands.
+declare -r sync='rclone sync'
+case "$chosen_command" in
+#   1) Sync to Google Drive
+        1)  $sync $gdl $gd: ;;
+#   2) Sync to Google Drive CSU
+        2)  $sync $gdcsul $gdcsu: ;;
+#   3) Sync from Google Drive
+        3)  $sync $gd: $gdl ;;
+#   4) Sync from Google Drive CSU
+        4)  $sync $gdcsu: $gdcsul ;;
+#   5) Sync to Photos
+        5)  $sync $gpl $gp: ;;
+#   6) Sync to Photos CSU
+        6)  $sync $gpcsul $gpcsu: ;;
+#   7) Sync from Photos
+        7)  $sync $gp: $gpl ;;
+#   8) Sync from Photos CSU
+        8)  $sync $gpcsu: $gpcsul ;;
+#   9) Sync to Panda Planner
+        9)  $sync $ppl $pp ;;
+#   10) Sync from Panda Planner\
+        10) $sync "$pp" "$ppl" ;;
+esac
+
+exit 0

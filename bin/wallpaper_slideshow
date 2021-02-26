@@ -24,13 +24,13 @@ dir="$HOME/shared_drive/Pictures/wallpaper/"
 while getopts ":hd:s:m:" arg; do
     case $arg in
         d) # Set the directory of wallpapers
-            [ -d ${OPTARG} ] && dir=${OPTARG} || die "${OPTARG} is not a directory."
+            [ -d "${OPTARG}" ] && dir="${OPTARG}" || die "${OPTARG} is not a directory."
             ;;
         m) # change speed in minutes, default: 30
-            let minutes=${OPTARG}
+            let minutes="${OPTARG}"
             ;;
         s) # change speed in seconds, default: 0
-            let seconds=${OPTARG}
+            let seconds="${OPTARG}"
             ;;
         h | *) # print usage
             usage ; exit ;;
@@ -40,8 +40,8 @@ done
 let speed=$((minutes * 60 + $seconds)) || die "speed is $speed"
 [[ $speed < 1 ]] && die "time has to be positive"
 
-dir=$(echo $dir | sed 's;/$;;g') # enforce no trailing slash
-wallpapers=(${dir}/{*.jpg,*.png,*.svg,*.jpeg})
+dir=$(echo "$dir" | sed 's;/$;;g') # enforce no trailing slash
+wallpapers=("${dir}"/{*.jpg,*.png,*.svg,*.jpeg})
 array_size=${#wallpapers[*]}
 
 while true

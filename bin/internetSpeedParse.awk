@@ -14,8 +14,7 @@ BEGIN {
 
 # Set the location and City
 /^== NONE/ { tech="none";city="none"} 
-#/^== Denver/ { city="denver"} 
-/^== Dallas/ { city="denver"} 
+/^== Denver/ { city="denver"} 
 /^== Perth/ { city="perth"} 
 /^== NordLynx/ { tech="nord"} 
 /^== OpenVPN/ { tech="open"} 

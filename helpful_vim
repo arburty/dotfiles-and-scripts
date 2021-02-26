@@ -17,6 +17,10 @@ From Useful Sites {{{1
         :put =map(range(1,150), 'printf(''%04d'', v:val)')
         :let i=1 | g/abc/s//\='xyz_'.i/ | let i=i+1
         :let @a=1 | %s/abc/\='xyz_'.(@a+setreg('a',@a+1))/g
+
+        A more complex version I used.  Turned each letter of 'Cheese Burger' into indidual variables.
+        :let @a=1 | s/./\='end'.(@a+setreg('a', @a+1))." = \"".submatch(0)."\" "/g 
+
 " }}}2
 
 " Vim script for Python Developers {{{2
@@ -85,6 +89,36 @@ vimTricks: {{{
 
 " Alt key stuff {{{1
     https://vi.stackexchange.com/questions/2350/how-to-map-alt-key
+" }}}1
+
+" Article on Vim Development and maintanence {{{1
+    https://github.com/LucHermitte/lh-vim-lib/blob/master/doc/design_notes.md
+" }}}1
+
+" The Bin Of Potential {{{1
+Commands that I used that could be scripted further
+
+    Used this after sorting a panda planner notes page '2021-01-12 ARK-funds notes-transcription-beta.txt'
+    to add "-sorted" to the title after creating a sorted version.  Could script it for future for easier addendums.
+    This create the file '2021-01-12 ARK-funds notes-transcription-beta-sorted.txt'
+        exe "w ".expand("%:p:r")."-sorted.txt"
+
+    This found ranges of notes for the different ARK funds in '2021-01-12 ARK-funds notes-transcription-beta.txt'
+    and after using ':g' to pull the values out and together I sorted them, then used this command to move the blocks
+    into the right order.  I would mark 'a' by hand and re-run the command to sort the notes by market price.
+    This create the file '2021-01-12 ARK-funds notes-transcription-beta-sorted.txt'
+        +?^A?;,/^A\|%/ m'a
+
+"}}}1
+
+to print out the sequence:
+abcdefghijklmnopqrstuvwxyz
+I ran the expression:
+i_CTRL-R =join(map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)'),'')
+
+" Great tips for Ex commands {{{1
+" e.g. g/re/p, grevrep, and '!' commands/filtering.
+https://www.inkstonenews.com/society/big-archeology-find-home-chinas-terracotta-army/article/3122640
 " }}}1
 
 " Modeline{{{

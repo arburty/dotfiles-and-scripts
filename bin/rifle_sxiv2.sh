@@ -29,7 +29,7 @@ then
         selected_files="$selected_files\n$1"
         shift
     done
-    echo $selected_files | sxiv -fas f -
+    echo $selected_files | sxiv -as f -
     exit 0
 fi
 
@@ -47,12 +47,12 @@ file_index="$((cursor_index+1))"
 cursor_filename=$(sed -n "$file_index p" "$sorted_files_path")
 
 #a file was selected, don't display everything, just the selected file.
-[ ! "$1" = "$cursor_filename" ] && sxiv -fas f "$1" \
+[ ! "$1" = "$cursor_filename" ] && sxiv -as f "$1" \
     && exit 0
 
 # No file is selected, show all.
 # All lines but the first are filenames, display them in sxiv, showing the
 # image the cursor is on, auto play gifs, start in fullscreen
-sed -n -e '2,$p' "$sorted_files_path" | sxiv -n $cursor_index -fas f -
+sed -n -e '2,$p' "$sorted_files_path" | sxiv -n $cursor_index -as f -
 
 exit 0

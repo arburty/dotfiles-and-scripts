@@ -32,6 +32,7 @@
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
     set iskeyword-=-                    " '-' is an end of word designator
+    set keywordprg=:Man
     set wildignore+=*/windows_home/*
 
     " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
@@ -160,11 +161,19 @@
         Plugin 'romainl/vim-cool'
         Plugin 'neoclide/coc.nvim', {'branch': 'release'}
         Plugin 'justinmk/vim-sneak'
+        Plugin 'zef/vim-cycle'
+        Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        Plugin 'junegunn/fzf.vim'
+        Plugin 'AndrewRadev/sideways.vim'
+        Plugin 'davidhalter/jedi'
+        Plugin 'SkyLeach/pudb.vim'
+
 
         "Colorschemes {{3
             Plugin 'arcticicestudio/nord-vim'
             Plugin 'ayu-theme/ayu-vim' " or other package manager
-            Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+            Plugin 'challenger-deep-theme/vim', { 'name': 'challenger-deep' }
+            Plugin 'embark-theme/vim', { 'name': 'embark' }
             Plugin 'crusoexia/vim-monokai'
             Plugin 'dracula/vim', { 'name': 'dracula' }
             "Plugin 'ethanschoonover/vim-solarized'
@@ -182,6 +191,11 @@
             Plugin 'yassinebridi/vim-purpura'
             Plugin 'bignimbus/pop-punk.vim'
             Plugin 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+            Plugin 'edersonferreira/dalton-vim'
+            Plugin 'ulwlu/elly.vim'
+            Plugin 'joshdick/onedark.vim'
+            " TODO: tomorrow theme not showing up.  needs some attention.
+            Plugin 'chriskempson/tomorrow-theme', { 'name': 'tomorrow-night' }
         " }}3
 
         " plugin from http://vim-scripts.org/vim/scripts.html
@@ -252,11 +266,8 @@
     let mapleader = ","
     let maplocalleader = "\\"
 
-    nnoremap <left> ,
-    nnoremap <right> ;
-    " could be better but fine for now
-    nnoremap <up> N
-    nnoremap <down> n
+    nnoremap <left> :SidewaysLeft<cr>
+    nnoremap <right> :SidewaysRight<cr>
 
     " to fix my habit of doing VJ which is very different
     nnoremap <space> Vj
@@ -273,8 +284,10 @@
     inoremap kj <esc>
 
     " alt-h,alt-l in xterm
-    map è gT
-    map ì gt
+    "map è gT
+    "map ì gt
+    "nmap <A-p> gT
+    "nmap <A-n> gt
 
     " All text after column 80 is highlighted
     highlight rightMargin term=bold ctermfg=blue guifg=orange
@@ -385,12 +398,13 @@
 
 " onoremaps {{1
 
+    " 'inside', 'around' and 'to' fold markers
     onoremap if :<c-u>exe "norm! ]zkV[zj"<cr>
     onoremap af :<c-u>exe "norm! ]zV[z"<cr>
     onoremap Tf :<c-u>exe "norm! V[zj"<cr>
     onoremap tf :<c-u>exe "norm! V]zk"<cr>
 
-    " omaps for '(i)nside/(a)round (n)ext/(l)ast (,),{,},[,],'," }}2
+    " omaps for '(i)nside/(a)round (n)ext/(l)ast (,),{,},[,],'," {{2
         onoremap in( :<c-u>normal! f(vi(<cr>
         onoremap in) :<c-u>normal! f)vi)<cr>
         onoremap il( :<c-u>normal! F(vi(<cr>
@@ -595,6 +609,8 @@
     iabbrev @@ austin@burt.us.com
     iabbrev shceme scheme
     iabbrev colorshceme colorscheme
+    iabbrev Tnanks Thanks
+    iabbrev tnanks thanks
 
     cabbrev hlep help
 " }}1
@@ -606,14 +622,21 @@
     nnoremap <leader>sv :so $MYVIMRC<cr>
     nnoremap <leader>s :w<cr>
     inoremap <leader>s <esc>:w<cr>
-     noremap <leader>q :q!<cr>
+
+     "noremap <leader>q :q!<cr>
+     " Changed to call function that allows for leaving term pages and not exit
+     " vim.
+    nnoremap <silent> <leader>q :call <SID>Quit()<cr>
      noremap <leader>; q:
-    nnoremap <leader>ps :call Pickscheme("?")<cr>:call Pickscheme("")<left><left>
+    nnoremap <leader>ps :call Pickscheme("?")<cr>:PickScheme<space>
     nnoremap <silent><leader>lb :execute "rightbelow vsplit " . bufname("#")<cr>
     nnoremap <leader>d. :call DeleteFileAndCloseBuffer()
     nnoremap <leader>F :call <SID>FoldColumnToggle()<cr>
     nnoremap <leader>Q :call <SID>QuickfixToggle()<cr>
     nnoremap <localleader>S :set spell!<cr>
+    "nnoremap <silent><leader>p :exe "norm 0dw\"+Pld2F "<cr>
+    " needs work but a better version of the above.
+    nnoremap ,p :g/^\d\{3,9}p\?_/exe "s//" . substitute(@+, " - \\a*\\.com", "","") . "_/"<cr>
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
@@ -630,8 +653,8 @@
     nnoremap <leader>D oecho "" #DEBUG<esc>F"i
 
     " Capitalize First Letter of Words
-    nnoremap <silent><leader>C :s/\<./\u&/g<cr>:noh<cr>``
-    vnoremap <silent><leader>C :s/\%V\<./\u&/g<cr>:noh<cr>``
+    nnoremap <silent><leader>C :s/[^']\zs\<.\ze/\u&/g<cr>:noh<cr>``
+    vnoremap <silent><leader>C :s/\%V[^']\zs\<.\ze/\u&/g<cr>:noh<cr>``
 
     " Useful
     nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
@@ -662,6 +685,7 @@
     command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
     command! Reddit :call system("firefox reddit.com/r/vim > /dev/null 2>&1 &")
     command! Markd :silent exe "!tmux split-window -h" | silent exe "!tmux send -t 1 'markd ". expand("%") ."' C-M"
+    command! -complete=color -nargs=1 PickScheme :call Pickscheme("<args>")
 
     command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 " }}1
@@ -782,7 +806,7 @@
     " DeleteFileAndCloseBuffer {{2
     " Expands filename and confirms you want to delete it.
     " https://stackoverflow.com/questions/16678661/how-can-i-delete-the-current-file-in-vim
-    " By: joelostblom. 
+    " By: joelostblom.
     " Modified to say the filename and use 'bd!' instead of 'q!'
         fun! DeleteFileAndCloseBuffer()
             let file = expand('%:p')
@@ -815,6 +839,27 @@
             endif
         endfunction
     " }}2
+    
+    " Quit mapping {{2
+    " Used to quit buffers as usual. If buffer is a term window, then go to
+    " alternate buffer, and delete the term window.
+    " TODO: reset the alternate buffer.  currently after closing the term
+    " window there is no alternate buffer.
+    "   Probably have to get the current alt buff before opening the term
+    "   somehow.
+    function! s:Quit()
+        if !empty(expand('%')) && split(expand('%').":", ':')[0] ==# "term"
+            echom 'Closing Terminal'
+            " Switch to last buffer and delete the terminal.
+            b #
+            bd! #
+        else
+            " Normal quit.
+            q!
+        endif
+    endfunction
+    " }}2
+
 
     " SetPersonalHeader {{2
         function! SetPersonalHeader()
@@ -833,6 +878,7 @@
 
     " Java_compile {{2
     function! Java_compile()
+        # Assuming structure is Projectroot/MyFile.java
         let s:main=expand("%:p:h:t:r") . "." . expand("%:t:r")
         exe "cd " . expand("%:p:h") . "/.."
 
@@ -845,7 +891,7 @@
             exe "Shell java " . s:main
         endif
         redraw!
-    endfunction 
+    endfunction
     " }}2
 
     " Config_h_compile {{2
@@ -862,6 +908,19 @@
         redraw!
     endfunction
     " }}2
+
+    " OpenURLUnderCursor()
+    " Open URL's workaround
+    function! OpenURLUnderCursor()
+        let s:uri = expand('<cWORD>')
+        let s:uri = substitute(s:uri, '?', '\\?', '')
+        let s:uri = shellescape(s:uri, 1)
+        if s:uri != ''
+            silent exec "!gio open '".s:uri."' >/dev/null 2>1"
+            :redraw!
+        endif
+    endfunction
+    nnoremap gx :call OpenURLUnderCursor()<CR>
 
 " }}1
 
@@ -897,7 +956,7 @@
         autocmd Filetype java nnoremap <buffer> <F11> :cnext<cr>
 
         " settings that are all me
-        autocmd Filetype java set foldmethod=syntax foldleve=1
+        autocmd Filetype java set foldmethod=syntax foldlevel=1
         autocmd FileType java nnoremap <buffer> <localleader>z :call Java_compile()<cr>
 
         " https://github.com/neoclide/coc.nvim
@@ -911,11 +970,17 @@
         au!
         autocmd Filetype markdown nnoremap <buffer> <localleader>z :Markd<cr>
     augroup END
+
+    " TODO: move to a filetype file python.vim
+    augroup python
+        au!
+        autocmd Filetype python nnoremap <silent><buffer> <localleader>z :term python3 %<cr>
+    augroup END
 " }}1
 
 " Helpful Links I Have Used {{1
     " This vimrc was heavily changed using spf-13 as
-    " a starting point: 
+    " a starting point:
     " https://github.com/spf13/spf13-vim
 
     " https://sherif.io/2016/05/30/favorite-vim-plugins.html
@@ -933,7 +998,32 @@ nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
+
+"execut "set <M-h>=\eh"
+"execut "set <M-l>=\el"
+"execut "set <M-j>=\ej"
+"execut "set <M-k>=\ek"
+
+"nnoremap <M-l> gt
+"nnoremap <M-h> gT
+"nnoremap <M-j> :m .+1<cr>==
+"nnoremap <M-k> :m .-2<cr>==
+"vnoremap <M-j> :m '>+1<CR>gv=gv
+"vnoremap <M-k> :m '<-2<CR>gv=gv
 "}}1
+
+if has('nvim')
+    let g:python_host_prog='~/.virtualenvs/neovim2/bin/python'
+    let g:python3_host_prog='/bin/python3'
+    " set the virtual env python used to launch the debugger
+    "let g:pudb_python='~/.virtualenvs/poweruser_tools/bin/python'
+    " set the entry point (script) to use for pudb
+    "let g:pudb_entry_point='~/src/poweruser_tools/test/test_templates.py'
+    " Unicode symbols work fine (nvim, iterm, tmux, nyovim tested)
+    let g:pudb_breakpoint_symbol='→'
+    nmap <F9> :PUDBToggleBreakPoint<cr>
+    nmap <F10> :PUDBUpdateBreakPoints<cr>:PUDBLaunchDebuggerTab<cr><cr>
+endif
 
 " Modeline{{
 " vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker:}}

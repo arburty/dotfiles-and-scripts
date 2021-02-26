@@ -21,7 +21,7 @@
 
 # Find the indexes of the output devices {{{
 # Grab the output indexes I want to use. My headphones and stereo.
-arctis="Arctis_Pro_Wireless-00.analog-stereo"
+arctis="SteelSeries_Arctis_Pro_Wireless-00.stereo-game"
 lineout="analog-surround-40" # AKA 'line out'
 lineout2="pci-0000_28_00.3.analog-stereo" # gnome and cinammon had different names. <- was the gnome version
 my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout -e $lineout2 | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
@@ -40,15 +40,16 @@ notif_title="Sound output changed"
 # -m flag only switches the mpv output device
 # -f flag only switches the firefox output device
 case $1 in
-    -s ) swapProgram="Spotify" ;;
+    -s ) swapProgram="[Ss]potifyd\?" ;;
     -m ) swapProgram="mpv Media Player" ;;
     -f ) swapProgram="Firefox" ;;
+    -q ) swapProgram="qutebrowser" ;;
 esac
 
 if [[ ! -z "$swapProgram" ]]
 then
     # just needs the program name from list-sink-input
-    appInfo=$(pacmd list-sink-inputs | grep -B 15 "$swapProgram")
+    appInfo=$(pacmd list-sink-inputs | grep -w -B 15 "$swapProgram")
     appIndex=$(echo "$appInfo" | sed -n -e 's/.*index:[[:space:]]\([[:digit:]]\)/\1/p')
     appSink=$(echo "$appInfo" | sed -n -e 's/[[:space:]]sink:[[:space:]]\([[:digit:]]\).*/\1/p' | head -n 1)
 

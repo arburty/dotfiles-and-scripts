@@ -35,12 +35,22 @@ alias copy='xclip -selection clip'   # shorter
 alias pbcopy='xclip -selection clip' # what im used to
 alias rainclear="unclear | rainbow"
 alias wow="echo such color. much impress. very dork > /tmp/wowfile | say | rainbow /tmp/wowfile"
+alias rr='mpv "https://youtu.be/dQw4w9WgXcQ"'
 alias lynx="lynx -accept_all_cookies -vikeys"
 alias nv='nordvpn'
 alias mutt='neomutt'
 alias nmutt='neomutt'
 alias kill_wallp="ps -e | awk '/wallpaper|sleep/ {print \$1}' | xargs kill -9"
-wpss() { wallpaper_slideshow "$@" & }
+alias mntgd='rclone mount GDrive: ~/cloud_storage/Google_Drive/'
+alias syncfromgd='rclone sync -P GDrive: ~/cloud_storage/Google_Drive-local/'
+alias syncfromRB='rclone sync -P GDrive:RocketBook/Panda_Planner/ ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/'
+alias synctoRB='rclone sync -P ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/ GDrive:RocketBook/Panda_Planner/'
+alias synctogd='rclone sync -P ~/cloud_storage/Google_Drive-local/ GDrive:'
+alias urlviewLinks='urlview ~/cloud_storage/Google_Drive-local/Links.txt'
+alias muttrgx='less ~/notes/mutt_regex'
+alias tmkmutt='tmux kill-window -t mutt'
+alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | espeak
+wpss() { killall wallpaper_slide 2>/dev/null; wallpaper_slideshow "$@" & }
 
 # Vim related alias's {{{2
 alias v='vim'
@@ -81,5 +91,5 @@ alias qb='callQutebrowser'
 # }}}1
 
 # Modeline{{{
-# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker ft=sh:}}}
 return 0
