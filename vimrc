@@ -640,7 +640,10 @@
 
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
+
+    " refresh the cursor, remove highlighting and stop visual selection
     nnoremap <silent><leader><space> :noh<cr>a<esc>
+        vmap <silent><leader><space> <esc>,<space>
     nnoremap <silent> <c-\> :set hlsearch!<cr>
 
     " ,o doesn't work with [count] for some reason but ,O does
