@@ -20,6 +20,8 @@
 # remove "--" if present
 [ "$1" = "--" ] && shift
 
+Flags='-bas f'
+
 # If there is more than one selected file then we want to show those files.
 if [ $# -gt 1 ]
 then
@@ -29,7 +31,7 @@ then
         selected_files="$selected_files\n$1"
         shift
     done
-    echo $selected_files | sxiv -as f -
+    echo $selected_files | sxiv $Flags -
     exit 0
 fi
 
@@ -47,12 +49,12 @@ file_index="$((cursor_index+1))"
 cursor_filename=$(sed -n "$file_index p" "$sorted_files_path")
 
 #a file was selected, don't display everything, just the selected file.
-[ ! "$1" = "$cursor_filename" ] && sxiv -as f "$1" \
+[ ! "$1" = "$cursor_filename" ] && sxiv $Flags "$1" \
     && exit 0
 
 # No file is selected, show all.
 # All lines but the first are filenames, display them in sxiv, showing the
 # image the cursor is on, auto play gifs, start in fullscreen
-sed -n -e '2,$p' "$sorted_files_path" | sxiv -n $cursor_index -as f -
+sed -n -e '2,$p' "$sorted_files_path" | sxiv -n $cursor_index $Flags -
 
 exit 0
