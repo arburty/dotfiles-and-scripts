@@ -638,6 +638,12 @@
     " needs work but a better version of the above.
     nnoremap ,p :g/^\d\{3,9}p\?_/exe "s//" . substitute(@+, " - \\a*\\.com", "","") . "_/"<cr>
 
+    " highlight the current line
+    nnoremap <leader>l :call matchadd('LineHighlight', '\%'.line('.').'l')<cr>
+    vnoremap <leader>l :<c-u>call HiglightVisualLines()<cr>
+    " clear all the highlighted lines
+    nnoremap <leader>c :call clearmatches()<cr>
+
     nnoremap <leader>H :bp<cr>
     nnoremap <leader>L :bn<cr>
 
@@ -912,7 +918,7 @@
     endfunction
     " }}2
 
-    " OpenURLUnderCursor()
+    " OpenURLUnderCursor() {{2
     " Open URL's workaround
     function! OpenURLUnderCursor()
         let s:uri = expand('<cWORD>')
@@ -924,6 +930,20 @@
         endif
     endfunction
     nnoremap gx :call OpenURLUnderCursor()<CR>
+    " 2}}
+
+    " HiglightVisualLines() {{2
+    " define line highlight color: a blue
+    highlight LineHighlight ctermbg=100 guibg=#374090
+
+    " loop throough visually selected lines and give them highlighting
+    function! HiglightVisualLines()
+        for i in range(line('v'),line("'>"))
+            call matchadd('LineHighlight', '\%'.i.'l')
+        endfor
+    endfunction
+    " 2}}
+
 
 " }}1
 
@@ -1013,6 +1033,7 @@ nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 "nnoremap <M-k> :m .-2<cr>==
 "vnoremap <M-j> :m '>+1<CR>gv=gv
 "vnoremap <M-k> :m '<-2<CR>gv=gv
+
 "}}1
 
 if has('nvim')
