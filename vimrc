@@ -167,6 +167,7 @@
         Plugin 'AndrewRadev/sideways.vim'
         Plugin 'davidhalter/jedi'
         Plugin 'SkyLeach/pudb.vim'
+        Plugin 'tpope/vim-unimpaired'
 
 
         "Colorschemes {{3
