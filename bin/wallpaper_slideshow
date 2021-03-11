@@ -10,7 +10,7 @@
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 #[[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues;
 
-usage() { echo "$0 usage:" && grep " .)\ \#" $0; exit 0; exit; }
+USAGE() { echo "$0 USAGE:" && grep " .)\ \#" $0; exit 0; exit; }
 
 die() {
     echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
@@ -33,7 +33,7 @@ while getopts ":hd:s:m:" arg; do
             let seconds="${OPTARG}"
             ;;
         h | *) # print usage
-            usage ; exit ;;
+            USAGE ; exit ;;
     esac
 done
 

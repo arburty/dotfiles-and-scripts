@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# wpss
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 03/11/21
+# 
+# Wrapper for killing previous wallpaper, and setting new one
+
+# If a wallpaper is going, kill it first
+# Then start a new one with all arguments given.
+[[ $(ps -e | grep "wallpaper_slide") ]] && killall wallpaper_slide 2>/dev/null
+
+wallpaper_slideshow "$@" &
