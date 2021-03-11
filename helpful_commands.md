@@ -100,6 +100,16 @@ Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 `pactl move-sink-input 8 2`
 : commands to change audio output
 
+## SSH & Friends
+
+`ssh admin@192.168.1.24 -p2222`
+: Normally ssh into phone
+
+`rsync -e ssh -p2222 --stats --progress -vr admin@192.168.1.24:/data/data/com.arachnoid.sshelper/files/home/SDCard/theChive /home/vladislav/shared_drive/laptop-backup/phone_transer_03.10.21`
+: SSH/File Transer from my phone: Using sshhelper 
+(seems like it won't work forever due to permission changes)
+
+
 ## Random
 
 
