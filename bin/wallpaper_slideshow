@@ -1,10 +1,11 @@
 #! /bin/bash
 
+# wallpaper_slideshow
 # Author : Austin Burt
 # Email  : austin@burt.us.com
 # Date   : 08/12/20
 #
-# helped with a couple ideas used
+# This link helped with a couple ideas used:
 # http://www.linuxandubuntu.com/home/how-to-automatically-change-gnome-background-in-intervals-using-bash
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
