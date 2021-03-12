@@ -18,28 +18,31 @@ markdtest () {
 tempFile='/tmp/welcomeScreen'
 
 # Say hello
-echo "<h1>Welcome Back Austin</h1>" > $tempFile
+echo "<h1> Welcome Back Austin</h1>" > $tempFile
 
 # Give the weather
 # After getting the info, strip the '+' char between City names.
 wttr=$(curl wttr.in/Castle+Rock\?format="%l:+%C:+%t+%m" 2> /dev/null \
     | sed 's/\([[:alpha:]]\)+\([[:alpha:]]\)/\1 \2/g')
-echo -n "Today's Weather in " >> $tempFile
-echo "$wttr" >> $tempFile
+
+echo -e "<body>\n<pre>\n" >> $tempFile
+echo -n " Today's Weather in " >> $tempFile
+echo -e "$wttr\n" >> $tempFile
+# show the vpn status.  the status line started with '-  -  ' for some reason. Taken out with sed
+nordvpn status | sed -ne 's/:/:@/; s/^.*\(Status\|City\|Country\)/ \1/p' | column -t -s'@'  \
+    >> $tempFile && echo "" >> $tempFile
 
 # git ssb
-if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]
-then
-    echo -e "<body>\n<pre>\n" >> $tempFile
-    # show the vpn status.  the status line started with '-  -  ' for some reason. Taken out with sed
-    nordvpn status | grep 'Status\|Country\|City' | sed 's/^.*Status/Status/;s/:/:@/' | column -t -s'@'\
-        >> $tempFile && echo "" >> $tempFile
-    git ssb 2> /dev/null | tee -a $tempFile
-    echo "</pre>" >> $tempFile
-fi
+[[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] \
+    && git ssb 2> /dev/null | tee -a $tempFile
 
-# give me my todo's
-cat $HOME/todo.html | grep -v "<body>" >> $tempFile
+echo "</pre>" >> $tempFile
+
+# Give me my todo's
+#   substitute headers for a markdown style. removing body tags.
+#   sending through pandoc helped cleanliness of display
+sed -e 's/<h1>/# /; s/<\/h1>//; /<\/\?body>/d' $HOME/todo.html \
+    | pandoc -t markdown >> $tempFile
 
 # display the output
 markd $tempFile
