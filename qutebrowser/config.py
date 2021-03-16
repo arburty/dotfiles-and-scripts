@@ -1971,6 +1971,8 @@ config.bind('<Ctrl-e>', 'scroll-px 0 20')
 config.load_autoconfig()
 
 # config.set("colors.webpage.darkmode.enabled", True)
+config.bind(',q', 'quit')
+
 config.bind(',z', 'config-source')
 config.bind(',sv', 'config-source')
 
@@ -1995,6 +1997,7 @@ config.bind(',wo', 'window-only')
 
 config.bind(';lp', 'spawn --userscript qute-lastpass')
 
+config.bind('gp', 'open -p')
 
 # import dracula.draw
 
