@@ -657,7 +657,10 @@
     nnoremap <silent><leader>o :exe "normal! mmo\e`m'"<cr>
     nnoremap <silent><leader>O :normal! O<esc>j
     nnoremap <silent><leader>O :exe "normal! mmO\e`m"<cr>
-    nnoremap <silent>_o :exe "normal! mmO\e`mo\e`m`"<cr>
+
+    " This uses tpope's unimpaired to help.
+    nmap _o :<c-u>norm <c-r>=v:count . "[ " . v:count . "] "<cr><cr>
+    vmap _o :<c-u>norm <c-r>="'<" . v:count . "[ '>" . v:count . "] "<cr><cr>
     "nnoremap                _o new lines above and below -- under Local Leader
 
     nnoremap <leader>D oecho "" #DEBUG<esc>F"i
