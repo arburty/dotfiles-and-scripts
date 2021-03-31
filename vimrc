@@ -147,8 +147,6 @@
         Plugin 'rhysd/conflict-marker.vim'
         Plugin 'scrooloose/nerdcommenter'
         Plugin 'tpope/vim-abolish'
-        Plugin 'tpope/vim-fugitive'
-        Plugin 'tpope/vim-pathogen'
         Plugin 'tpope/vim-repeat'
         Plugin 'tpope/vim-surround'
         "Plugin 'Valloric/YouCompleteMe'
@@ -157,7 +155,7 @@
         Plugin 'da-x/name-assign.vim'
         " removed because of conflicts with coc
         " Plugin 'vim-scripts/AutoComplPop'
-        Plugin 'wellle/context.vim'
+        "Plugin 'wellle/context.vim'
         Plugin 'romainl/vim-cool'
         Plugin 'neoclide/coc.nvim', {'branch': 'release'}
         Plugin 'justinmk/vim-sneak'
@@ -169,6 +167,14 @@
         Plugin 'SkyLeach/pudb.vim'
         Plugin 'tpope/vim-unimpaired'
 
+        " Fugitive and it's plugins. {{3
+            Plugin 'tpope/vim-fugitive'
+            Plugin 'idanarye/vim-merginal'
+            " Plugins for talking to different providers.
+            Plugin 'tpope/vim-rhubarb' " GitHub
+            "Plugin 'shumphrey/fugitive-gitlab.vim' " GitLab
+            "Plugin 'tommcdo/vim-fubitive' " BitBucket
+        " }}3
 
         "Colorschemes {{3
             Plugin 'arcticicestudio/nord-vim'
@@ -209,6 +215,7 @@
         " script is in a subdirectory of this repo called vim. Pass the path
         " to set the runtimepath properly.
         Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
 
         call vundle#end()            " required
     " }}2
@@ -495,6 +502,8 @@
             vmap <Leader>a:: :Tabularize /:\zs<CR>
             nmap <Leader>a, :Tabularize /,<CR>
             vmap <Leader>a, :Tabularize /,<CR>
+            nmap <Leader>a# :Tabularize /#<CR>
+            vmap <Leader>a# :Tabularize /#<CR>
             nmap <Leader>a,, :Tabularize /,\zs<CR>
             vmap <Leader>a,, :Tabularize /,\zs<CR>
             nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
@@ -525,6 +534,15 @@
             " Mnemonic _i_nteractive
             nnoremap <silent> <leader>gi :Git add -p %<CR>
             nnoremap <silent> <leader>gg :SignifyToggle<CR>
+            " Git Yank: Copy URL to current line(s)
+            nnoremap <silent> <leader>gy :.GBrowse!<cr>
+            xnoremap <silent> <leader>gy :'<,'>GBrowse!<cr>
+        endif
+    " }}2
+
+    " Merginal {{2
+        if isdirectory(expand("~/.vim/bundle/vim-merginal/"))
+            nnoremap <silent> <leader>gB :MerginalToggle<cr>
         endif
     " }}2
 
@@ -600,11 +618,6 @@
     " name-assign {{2
         let g:name_assign_mode_maps = { "up" : ["k"],  "down" : ["j"] }
     " }}2
-
-    " Context {{2
-        "call ContextEnable()
-    " }}2
-" }}1
 
 " Abbreviations {{1
     iabbrev @@ austin@burt.us.com
@@ -924,16 +937,17 @@
 
     " OpenURLUnderCursor() {{2
     " Open URL's workaround
-    function! OpenURLUnderCursor()
-        let s:uri = expand('<cWORD>')
-        let s:uri = substitute(s:uri, '?', '\\?', '')
-        let s:uri = shellescape(s:uri, 1)
-        if s:uri != ''
-            silent exec "!gio open '".s:uri."' >/dev/null 2>&1"
-            :redraw!
-        endif
-    endfunction
-    nnoremap gx :call OpenURLUnderCursor()<CR>
+        function! OpenURLUnderCursor()
+            let s:uri = expand('<cWORD>')
+            let s:uri = substitute(s:uri, '?', '\\?', '')
+            let s:uri = shellescape(s:uri, 1)
+            if s:uri != ''
+                silent exec "!gio open '".s:uri."' >/dev/null 2>&1"
+                :redraw!
+            endif
+        endfunction
+        let g:netrw_browsex_viewer= "gio open"
+        nnoremap gx :call OpenURLUnderCursor()<CR>
     " 2}}
 
     " HiglightVisualLines() {{2
@@ -1052,6 +1066,10 @@ if has('nvim')
     nmap <F9> :PUDBToggleBreakPoint<cr>
     nmap <F10> :PUDBUpdateBreakPoints<cr>:PUDBLaunchDebuggerTab<cr><cr>
 endif
+
+nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
+"nmap ,fig 2] <Plug>figletTitlekvip,c<space>
+nmap ,fig 2] j<Plug>figletTitlekVip,cl
 
 " Modeline{{
 " vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker:}}
