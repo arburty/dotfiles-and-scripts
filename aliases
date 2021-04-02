@@ -9,6 +9,9 @@ clmns() { columns.sh $COLUMNS;  }
 # kill port $1
 kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
     lsof -ti :$1 | xargs kill -9 && echo "${GREEN}Murderer!! You have killed port $1!${NC}"; fi; }
+sudothis() { echo "${GREEN}====== $* ======${NC}" && sudo $* && echo "${GREEN}====== $* SUCCESS ======${NC}" && return 0 || echo "${RED}====== $* NO SUCCESS =====${NC}" && return 1;  }
+autoupgradeos() {sudothis apt clean && sudothis apt update -m && sudothis dpkg --configure -a && sudothis apt install -f && sudothis apt dist-upgrade && sudothis apt autoremove --purge ;}
+
 
 # Markdown command {{{2
 #removeMD() { which md >>/dev/null;[[ $? -eq 0 ]] && echo true; }
