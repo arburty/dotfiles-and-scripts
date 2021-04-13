@@ -109,6 +109,11 @@ Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 : SSH/File Transer from my phone: Using sshhelper 
 (seems like it won't work forever due to permission changes)
 
+heredoc exmples:
+[https://www.howtogeek.com/719058/how-to-use-here-documents-in-bash-on-linux/]
+
+rsync examples:
+[https://www.tecmint.com/rsync-local-remote-file-synchronization-commands/]
 
 ## Random
 
