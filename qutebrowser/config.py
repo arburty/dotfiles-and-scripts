@@ -1518,7 +1518,8 @@ c.tabs.background = True
 ##   - bottom
 ##   - left
 ##   - right
-c.tabs.position = 'left'
+# c.tabs.position = 'left'
+c.tabs.position = 'bottom'
 
 ## Which tab to select when the focused tab is removed.
 ## Type: SelectOnRemove
@@ -1540,7 +1541,7 @@ c.tabs.show = 'switching'
 ## Duration (in milliseconds) to show the tab bar before hiding it when
 ## tabs.show is set to 'switching'.
 ## Type: Int
-c.tabs.show_switching_delay = 1600
+c.tabs.show_switching_delay = 3200
 
 ## Open a new window for every tab.
 ## Type: Bool
@@ -1637,7 +1638,8 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'rr' : 'https://reddit.com/r/{}',
                        'g': 'https://www.google.com/search?hl=en&q={}',
                        'so': 'https://www.stackoverflow.com/search?q={}',
-                       'gi': 'google.com#q={}&tbm=isch',}
+                       'gi': 'google.com#q={}&tbm=isch',
+                       }
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
