@@ -22,9 +22,9 @@
 # Find the indexes of the output devices {{{
 # Grab the output indexes I want to use. My headphones and stereo.
 arctis="SteelSeries_Arctis_Pro_Wireless-00.stereo-game"
-lineout="analog-surround-40" # AKA 'line out'
+lineout="analog-surround-[[:digit:]]\{2\}" # AKA 'line out'
 lineout2="pci-0000_28_00.3.analog-stereo" # gnome and cinammon had different names. <- was the gnome version
-my_output_devices=`pacmd list-sinks | grep -B 1 -e $arctis -e $lineout -e $lineout2 | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
+my_output_devices=`pacmd list-sinks | grep -B 1 -e "$arctis" -e "$lineout" -e "$lineout2" | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
 
 # Get index of device not currently being used, and remove leading whitespace.
 next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')

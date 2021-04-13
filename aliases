@@ -12,6 +12,21 @@ kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
 sudothis() { echo "${GREEN}====== $* ======${NC}" && sudo $* && echo "${GREEN}====== $* SUCCESS ======${NC}" && return 0 || echo "${RED}====== $* NO SUCCESS =====${NC}" && return 1;  }
 autoupgradeos() {sudothis apt clean && sudothis apt update -m && sudothis dpkg --configure -a && sudothis apt install -f && sudothis apt dist-upgrade && sudothis apt autoremove --purge ;}
 
+autoupgradeos() {
+    # Probably best to do the install manually.
+    # Can help when needed though, and can be used
+    # as documentation for possible steps.
+    sudothis apt clean &&
+    sudothis apt update -m &&
+    sudothis dpkg --configure -a &&
+    sudothis apt install -f &&
+    sudothis apt dist-upgrade &&
+    sudothis apt autoremove --purge &&
+    sudothis apt update &&
+    sudothis apt full-upgrade
+    # next line is deprecated I think
+    #sudothis pop-upgrade release upgrade
+}
 
 # Markdown command {{{2
 #removeMD() { which md >>/dev/null;[[ $? -eq 0 ]] && echo true; }
@@ -47,8 +62,10 @@ alias kill_wallp="ps -e | awk '/wallpaper|sleep/ {print \$1}' | xargs kill -9"
 alias mntgd='rclone mount GDrive: ~/cloud_storage/Google_Drive/'
 alias syncfromgd='rclone sync -P GDrive: ~/cloud_storage/Google_Drive-local/'
 alias syncfromRB='rclone sync -P GDrive:RocketBook/Panda_Planner/ ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/'
-alias synctoRB='rclone sync -P ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/ GDrive:RocketBook/Panda_Planner/'
-alias synctogd='rclone sync -P ~/cloud_storage/Google_Drive-local/ GDrive:'
+alias synctoRB='rclone sync -PL ~/cloud_storage/Google_Drive-local/RocketBook/Panda_Planner/ GDrive:RocketBook/Panda_Planner/'
+alias synctoPy='rclone sync -PL ~/python/ GDriveCSU:python/'
+alias syncfromPy='rclone sync -PL GDriveCSU:python/ ~/python/'
+alias synctogd='rclone sync -PL ~/cloud_storage/Google_Drive-local/ GDrive:'
 alias urlviewLinks='urlview ~/cloud_storage/Google_Drive-local/Links.txt'
 alias muttrgx='less ~/notes/mutt_regex'
 alias tmkmutt='tmux kill-window -t mutt'
