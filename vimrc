@@ -134,7 +134,6 @@
 
         " plugin on GitHub repo
         Plugin 'airblade/vim-gitgutter'
-        Plugin 'christoomey/vim-system-copy'
         Plugin 'ctrlpvim/ctrlp.vim'
         Plugin 'dhruvasagar/vim-table-mode'
         Plugin 'easymotion/vim-easymotion'
@@ -471,8 +470,6 @@
     " coc.vim {{2
         " https://vimawesome.com/plugin/coc-snippets
         " under Examples
-        " Use <C-l> for trigger snippet expand.
-        inoremap <C-l> <Plug>(coc-snippets-expand)
 
         " Use <C-j> for select text for visual placeholder of snippet.
         vnoremap <C-j> <Plug>(coc-snippets-select)
@@ -618,6 +615,7 @@
     " name-assign {{2
         let g:name_assign_mode_maps = { "up" : ["k"],  "down" : ["j"] }
     " }}2
+" }}1
 
 " Abbreviations {{1
     iabbrev @@ austin@burt.us.com
@@ -633,6 +631,7 @@
     " Map leader set in Mods
     nnoremap <leader>ev :Vimrc<cr>
     nnoremap <leader>rv :Reddit<cr>
+    nnoremap <leader>U :Udemy<cr>
     nnoremap <leader>sv :so $MYVIMRC<cr>
     nnoremap <leader>s :w<cr>
     inoremap <leader>s <esc>:w<cr>
@@ -710,6 +709,7 @@
     command! Alias :vs ~/.config/aliases
     command! Dotfiles :tabnew ~/git/dotfiles-and-scripts/ | Gstatus
     command! Reddit :call system("firefox reddit.com/r/vim > /dev/null 2>&1 &")
+    command! Udemy :call system("firefox udemy.com/course/python-the-complete-python-developer-course/learn/ > /dev/null 2>&1 &")
     command! Markd :silent exe "!tmux split-window -h" | silent exe "!tmux send -t 1 'markd ". expand("%") ."' C-M"
     command! -complete=color -nargs=1 PickScheme :call Pickscheme("<args>")
 
