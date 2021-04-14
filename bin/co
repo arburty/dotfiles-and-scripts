@@ -17,18 +17,49 @@
 # outputs (in a hacky broken fashion) to just toggling the two I care about.
 #
 # Vim modeline defined at bottom.
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+[[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
 # }}}1
 
+# Set up Debugging flags and function to print variables. {{{1
+[[ $1 == "-D" ]] && let DEBUG=0
+[[ $DEBUG ]] && shift && echo -e "${GREEN}app flag: ${YELLOW}$1${NC}"
+[[ $DEBUG ]] && echo -e "${GREEN}::: DEBUGGING MODE :::${NC}"
+
+debug() {
+    # Debug method to print variables more easily
+    # if first argument is '-n' use a new line before printing
+    # variable contents.
+    if [[ $DEBUG ]]
+    then
+        [[ $1 == '-n' ]] && le="\n" && shift || le=" "
+        echo -ne "${GREEN}${1}${NC}:$le"
+        echo -e "${YELLOW}${2}${NC}"
+    fi
+} # }}}1
+
+# Progam Begins here.
 # Find the indexes of the output devices {{{
 # Grab the output indexes I want to use. My headphones and stereo.
 arctis="SteelSeries_Arctis_Pro_Wireless-00.stereo-game"
 lineout="analog-surround-[[:digit:]]\{2\}" # AKA 'line out'
 lineout2="pci-0000_28_00.3.analog-stereo" # gnome and cinammon had different names. <- was the gnome version
-my_output_devices=`pacmd list-sinks | grep -B 1 -e "$arctis" -e "$lineout" -e "$lineout2" | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
+my_output_devices=`pacmd list-sinks | grep -B 1 -e "$arctis" -e "$lineout" -e "$lineout2" \
+    | sed -n -e 's/\index:[[:space:]]\([[:digit:]]\)/\1/p'`
 
 # Get index of device not currently being used, and remove leading whitespace.
 next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')
 current_default=$(echo "$my_output_devices" | grep \* | sed 's/^ *\*[[:space:]]//g')
+
+# Debug the variables.
+debug DEBUG $DEBUG
+debug arctis "$arctis"
+debug linout "$lineout"
+debug linout2 "$lineout2"
+debug -n "my_output_devices" "$my_output_devices"
+debug next_out "$next_out"
+debug current_default "$current_default"
 
 # notification flags and icon
 notif_flags="-t 1000 -i $HOME/shared_drive/Pictures/Me/Matt-and-I-Ren-Fair.jpg"
@@ -45,6 +76,7 @@ case $1 in
     -f ) swapProgram="Firefox" ;;
     -q ) swapProgram="qutebrowser" ;;
 esac
+debug swapProgram "$swapProgram"
 
 if [[ ! -z "$swapProgram" ]]
 then
@@ -52,6 +84,10 @@ then
     appInfo=$(pacmd list-sink-inputs | grep -w -B 15 "$swapProgram")
     appIndex=$(echo "$appInfo" | sed -n -e 's/.*index:[[:space:]]\([[:digit:]]\)/\1/p')
     appSink=$(echo "$appInfo" | sed -n -e 's/[[:space:]]sink:[[:space:]]\([[:digit:]]\).*/\1/p' | head -n 1)
+
+    debug appInfo "$appInfo"
+    debug appIndex "$appIndex"
+    debug appSink "$appSink"
 
     # if output is already switched from default, switch it back
     [[ $appSink == $next_out ]] && next_out=$current_default
