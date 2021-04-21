@@ -70,6 +70,7 @@ alias urlviewLinks='urlview ~/cloud_storage/Google_Drive-local/Links.txt'
 alias muttrgx='less ~/notes/mutt_regex'
 alias tmkmutt='tmux kill-window -t mutt'
 alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | espeak'
+alias sql='sqlite3'
 
 # Vim related alias's {{{2
 alias v='vim'

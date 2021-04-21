@@ -165,6 +165,8 @@
         Plugin 'davidhalter/jedi'
         Plugin 'SkyLeach/pudb.vim'
         Plugin 'tpope/vim-unimpaired'
+        Plugin 'tpope/vim-dadbod'
+        Plugin 'kristijanhusak/vim-dadbod-ui'
 
         " Fugitive and it's plugins. {{3
             Plugin 'tpope/vim-fugitive'
@@ -693,7 +695,7 @@
             augroup terminal
                 au!
                 autocmd FileType terminal tnoremap <buffer> <leader>q <C-W>N:bd!<cr>
-                autocmd FileType terminal tnoremap <buffer> <leader><Esc> <C-W>N
+                autocmd FileType terminal tnoremap <buffer> <leader><Esc> <C-\><C-n>
             augroup END
         endif
     "}} 2
@@ -962,6 +964,22 @@
     endfunction
     " 2}}
 
+    " {{2
+    " Used to translate the quickcix list to the args list
+    " to be able to operate on the files in the quickfix list
+    " through the args list.
+    " VimTricks: Copy from Quickfix to the Args list
+    command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+    function! QuickfixFilenames()
+        let buffer_numbers = {}
+        for quickfix_item in getqflist()
+            let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+        endfor
+        return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+    endfunction
+    " }}2
+
+
 
 " }}1
 
@@ -1015,6 +1033,7 @@
     " TODO: move to a filetype file python.vim
     augroup python
         au!
+        "autocmd Filetype python tnoremap <silent><buffer> <leader>q <c-\><c-n>,q
         autocmd Filetype python nnoremap <silent><buffer> <localleader>z :term python3 %<cr>
     augroup END
 " }}1
