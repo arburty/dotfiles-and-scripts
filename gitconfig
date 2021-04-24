@@ -15,18 +15,22 @@
     sb  = !git status && git branch
     ssb = !git status -s && git names
 
-    # add a command to your current branch
-    mybr   = "!f() { git branch | grep [*] | cut -d ' ' -f 2 | xargs $@; }; f"
+    # print the current directory, or add it to xargs command.
+    # ex. git mybr -I{} echo "this seems to be {}, but we'll see."
+    mybr   = "!f() { git branch | grep ^[*] | cut -d ' ' -f 2 | xargs $@; }; f"
+    # Without a new line char.
     mybrnn = "!f() { git mybr | tr -d '\n'; }; f"
+    # copy to clipboard
     mybrcp = "!f() { git mybrnn | pbcopy; }; f"
-    po     = !git branch | grep [*] | cut -d ' ' -f 2 | xargs git push origin
-    posu   = !git branch | grep [*] | cut -d ' ' -f 2 | xargs git push origin --set-upstream
+
+    po     = !git branch | grep ^[*] | cut -d ' ' -f 2 | xargs git push origin
+    posu   = !git branch | grep ^[*] | cut -d ' ' -f 2 | xargs git push origin --set-upstream
     names  = !gitBranchNames
     desc   = "!f() { desc "$@"; }; f"
 
     # new branch or merging fresh master back in
-    start   = "!f() { git co master && git up && git cob $1; }; f"
-    refresh = "!f() { me=$(git mybrnn); git co master && git up && git co $me && git merge master; }; f"
+    start   = "!f() { git co ${2-master} && git up && git cob $1; }; f"
+    refresh = "!f() { me=$(git mybrnn); git co ${1-master} && git up && git co $me && git merge ${1-master}; }; f"
 
     # Other
     difflastcm = diff HEAD^ HEAD
