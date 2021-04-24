@@ -41,7 +41,11 @@ debug() {
 
 # Helper Functions {{{1
 die() {
-    [[ $DEBUG ]] && echo -e "${RED}ERROR: $PROGRAM:${NC} Line $BASH_LINENO: $*" >&2
+    [[ $DEBUG ]] && echo -e "${LIGHT_RED}ERROR: $PROGRAM:${NC} Line $BASH_LINENO: $*" >&2
+    # Send a notification for using with mappings.  errorpic defined du to long image path.
+    errorpic="$HOME/shared_drive/Pictures/Me-Random/VladislavThePoker/mpv-shot-Vladislav-Profile-Pics-03.jpg"
+    notify-send -t 1000 -i $errorpic "ERROR: In $PROGRAM:" "$*"
+    #notify-send $notif_flags "$notif_title" "DEFAULT => $outputDeviceName"
     exit 1
 }
 
@@ -53,7 +57,7 @@ findDevice() {
 }
 # }}}1
 
-# Progam Begins here.
+# MAIN
 # Find the indexes of the output devices {{{
 # Start by defining a regex to find the device by name.
 arctis_stereo="SteelSeries_Arctis_Pro_Wireless-00.stereo-game"
@@ -98,10 +102,6 @@ debug current_default "$current_default"
 # Quick check to see we have 2 devices.
 # TODO: Could probably be removed now.
 [[ $(echo -e "$my_output_devices" | wc -l) < 2 ]] && die "not enough devices found"
-
-# notification flags and icon
-notif_flags="-t 1000 -i $HOME/shared_drive/Pictures/Me/Matt-and-I-Ren-Fair.jpg"
-notif_title="Sound output changed"
 # }}}
 
 # Is there a progam to swap instead of everthing. {{{
@@ -115,6 +115,10 @@ case $1 in
     -q ) swapProgram="qutebrowser" ;;
 esac
 debug swapProgram "$swapProgram"
+
+# notification flags and icon. Both sections need it.
+notif_flags="-t 1000 -i $HOME/shared_drive/Pictures/Me/Matt-and-I-Ren-Fair.jpg"
+notif_title="Sound output changed"
 
 if [[ ! -z "$swapProgram" ]]
 then
