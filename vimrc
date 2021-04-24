@@ -637,6 +637,8 @@
     nnoremap <leader>sv :so $MYVIMRC<cr>
     nnoremap <leader>s :w<cr>
     inoremap <leader>s <esc>:w<cr>
+    nnoremap <leader>tc :tag /
+    nnoremap <leader>tC :!ctags -R --exclude=.git<cr>
 
      "noremap <leader>q :q!<cr>
      " Changed to call function that allows for leaving term pages and not exit

@@ -59,3 +59,5 @@
     lucky  = "!f() { git branch | grep -i " $1 " | head -1 | xargs git checkout;  }; f"
 [push]
 	default = simple
+[init]
+	templatedir = ~/.git_template
