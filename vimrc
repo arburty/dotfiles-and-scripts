@@ -710,6 +710,9 @@
     nnoremap <leader>bh "_
     vnoremap <leader>bh "_
 
+    nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
+    nmap ,fig 2] j<Plug>figletTitlekVip,cl
+
     " terminal mappings {{2
         if has("terminal")
             augroup terminal
@@ -1092,24 +1095,6 @@ nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 "vnoremap <M-k> :m '<-2<CR>gv=gv
 
 "}}1
-
-" Needs cleanup {{1
-if has('nvim')
-    let g:python_host_prog='~/.virtualenvs/neovim2/bin/python'
-    let g:python3_host_prog='/bin/python3'
-    " set the virtual env python used to launch the debugger
-    "let g:pudb_python='~/.virtualenvs/poweruser_tools/bin/python'
-    " set the entry point (script) to use for pudb
-    "let g:pudb_entry_point='~/src/poweruser_tools/test/test_templates.py'
-    " Unicode symbols work fine (nvim, iterm, tmux, nyovim tested)
-    let g:pudb_breakpoint_symbol='→'
-    nmap <F9> :PUDBToggleBreakPoint<cr>
-    nmap <F10> :PUDBUpdateBreakPoints<cr>:PUDBLaunchDebuggerTab<cr><cr>
-endif
-
-nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
-"nmap ,fig 2] <Plug>figletTitlekvip,c<space>
-nmap ,fig 2] j<Plug>figletTitlekVip,cl
 " }}1
 
 " Modeline{{
