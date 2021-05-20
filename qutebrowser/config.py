@@ -443,10 +443,11 @@ c.aliases = {'w'   : 'session-save',
 ## color).
 ## Type: QtColor
 # c.colors.webpage.bg = 'white'
+c.colors.webpage.bg = 'darkseagreen'
 
 ## Force `prefers-color-scheme: dark` colors for websites.
 ## Type: Bool
-# c.colors.webpage.prefers_color_scheme_dark = False
+c.colors.webpage.prefers_color_scheme_dark = True
 
 ## Number of commands to save in the command history. 0: no history / -1:
 ## unlimited

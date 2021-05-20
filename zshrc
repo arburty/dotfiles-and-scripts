@@ -24,7 +24,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Preferred Vim editor for local and remote sessions
-export EDITOR='vim'
+export EDITOR='nvim'
 #if [[ -n $SSH_CONNECTION ]]; then
     #export EDITOR='vim'
 #else
@@ -75,6 +75,8 @@ PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
 
 # yarn wanted these. out here causin me problems.
 [[ $(which yarn) ]] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+
+export PATH=$PATH:/usr/local/go/bin
 # }}}2
 
 tabs -4

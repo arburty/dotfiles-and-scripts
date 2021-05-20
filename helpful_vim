@@ -116,6 +116,9 @@ abcdefghijklmnopqrstuvwxyz
 I ran the expression:
 i_CTRL-R =join(map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)'),'')
 
+This put a list of my_list = [a, b, c, d] -> my_list = ["a", "b", "c", "d"]
+:s/\(\a\)\(,\|]\)/"\1"\2/g
+
 " Great tips for Ex commands {{{1
 " e.g. g/re/p, grevrep, and '!' commands/filtering.
 https://www.inkstonenews.com/society/big-archeology-find-home-chinas-terracotta-army/article/3122640
