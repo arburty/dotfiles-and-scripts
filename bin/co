@@ -49,6 +49,15 @@ die() {
     exit 1
 }
 
+warn() {
+    [[ $DEBUG ]] && echo -e "${LIGHT_RED}WARN: $PROGRAM:${NC} Line $BASH_LINENO: $*" >&2
+    # Send a notification for using with mappings.  errorpic defined du to long image path.
+    warnpic="$HOME/shared_drive/Pictures/phone-wallpaper/20104316_6_600_1065.jpg"
+    notify-send -t 1000 -i $warnpic "WARN: In $PROGRAM:" "$*"
+    #notify-send $notif_flags "$notif_title" "DEFAULT => $outputDeviceName"
+    return 1
+}
+
 available_sinks=`pacmd list-sinks`
 findDevice() {
     #[[ ! -z $2 ]] && second="-e $2"
@@ -72,18 +81,24 @@ my_output_lineout=`findDevice "$lineout"`
 [[ -z "$my_output_lineout" ]] && my_output_lineout=`findDevice $lineout2`
 
 # Make sure we found a lineout device.
-[[ -z "$my_output_lineout" ]] && die "No lineout device found."
+#my_output_lineout=
+[[ -z "$my_output_lineout" ]] && nolineout=0 && warn "No lineout device found." 
 
 # Get the arctis stereo output if available, otherwise use the mono
 # Add one arctis device and the lineout device so only 2 outputs are in my_output_devices
 [[ ! -z "$my_output_arctis_stereo" ]] && my_output_arctis="$my_output_arctis_stereo"
 [[ -z "$my_output_arctis" ]] && [[ ! -z "$my_output_arctis_mono" ]] && my_output_arctis="$my_output_arctis_mono"
-[[ -z "$my_output_arctis" ]] && die "No device found for Arctis Pro Wireless Headset"
+[[ -z "$my_output_arctis" ]] && warn "No device found for Arctis Pro Wireless Headset"
+
+#my_output_arctis=
+
 my_output_devices=`echo -e "$my_output_arctis\n$my_output_lineout"`
 
 # Get index of device not currently being used, and remove leading whitespace.
 next_out=$(echo "$my_output_devices" | grep -v \* | head -n 1 | sed 's/^ *//g')
 current_default=$(echo "$my_output_devices" | grep \* | sed 's/^ *\*[[:space:]]//g')
+
+[[ -z $next_out ]] && next_out=$current_default
 
 # Debug the variables used so far.
 debug DEBUG $DEBUG
@@ -101,7 +116,7 @@ debug current_default "$current_default"
 
 # Quick check to see we have 2 devices.
 # TODO: Could probably be removed now.
-[[ $(echo -e "$my_output_devices" | wc -l) < 2 ]] && die "not enough devices found"
+#[[ $(echo -e "$my_output_devices" | wc -l) < 2 ]] && die "not enough devices found"
 # }}}
 
 # Is there a progam to swap instead of everthing. {{{
