@@ -167,6 +167,7 @@
         Plugin 'tpope/vim-unimpaired'
         Plugin 'tpope/vim-dadbod'
         Plugin 'kristijanhusak/vim-dadbod-ui'
+        Plugin 'fatih/vim-go'
 
         " Fugitive and it's plugins. {{3
             Plugin 'tpope/vim-fugitive'
@@ -470,6 +471,7 @@
 
 " Plugin key-remapping{{1
     " coc.vim {{2
+    if isdirectory("~/.vim/bundle/coc.nvim/")
         " https://vimawesome.com/plugin/coc-snippets
         " under Examples
 
@@ -485,7 +487,16 @@
 
         " Use <C-j> for both expand and jump (make expand higher priority.)
         imap <C-j> <Plug>(coc-snippets-expand-jump)
+    endif
     " }}2
+
+    "}}2
+
+    " vim-go{{2
+        if isdirectory('~/.vim/bundle/vim-go')
+            let g:go_term_enabled=1
+        endif
+    "}}2
 
     " Tabularize {{2
         if isdirectory(expand("~/.vim/bundle/tabular"))
@@ -617,6 +628,13 @@
     " name-assign {{2
         let g:name_assign_mode_maps = { "up" : ["k"],  "down" : ["j"] }
     " }}2
+
+    " Merginal {{2
+        if isdirectory("~/.vim/bundle/vim-merginal/")
+            nnoremap ,m :Merginal<cr>
+        endif
+    " }}
+
 " }}1
 
 " Abbreviations {{1
@@ -1075,6 +1093,7 @@ nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 
 "}}1
 
+" Needs cleanup {{1
 if has('nvim')
     let g:python_host_prog='~/.virtualenvs/neovim2/bin/python'
     let g:python3_host_prog='/bin/python3'
@@ -1091,6 +1110,7 @@ endif
 nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
 "nmap ,fig 2] <Plug>figletTitlekvip,c<space>
 nmap ,fig 2] j<Plug>figletTitlekVip,cl
+" }}1
 
 " Modeline{{
 " vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker:}}
