@@ -252,7 +252,7 @@
     " Pick a scheme with my modifications
     " If pick_scheme exists use it to define the coloscheme.
     " Otherwise use badwolf, or fall back to torte as a last resort.
-    function SetScheme(scheme)
+    function! SetScheme(scheme)
         if filereadable(expand("~/.vim/personal/pick_scheme.vim"))
             source ~/.vim/personal/pick_scheme.vim
             call Pickscheme(a:scheme)
@@ -804,7 +804,7 @@
     ""    :let i=1 | s/abc/\='xyz_'. Inc(5)/g
     " Add argument (can be negative, default 1) to global variable i.
     " Return value of i before the change.
-    function Inc(...)
+    function! Inc(...)
       let result = g:i
       let g:i += a:0 > 0 ? a:1 : 1
       return result
@@ -1095,7 +1095,6 @@ nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
 "vnoremap <M-k> :m '<-2<CR>gv=gv
 
 "}}1
-" }}1
 
 " Modeline{{
 " vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker:}}
