@@ -10,7 +10,7 @@ clmns() { columns.sh $COLUMNS;  }
 kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
     lsof -ti :$1 | xargs kill -9 && echo "${GREEN}Murderer!! You have killed port $1!${NC}"; fi; }
 sudothis() { echo "${GREEN}====== $* ======${NC}" && sudo $* && echo "${GREEN}====== $* SUCCESS ======${NC}" && return 0 || echo "${RED}====== $* NO SUCCESS =====${NC}" && return 1;  }
-autoupgradeos() {sudothis apt clean && sudothis apt update -m && sudothis dpkg --configure -a && sudothis apt install -f && sudothis apt dist-upgrade && sudothis apt autoremove --purge ;}
+autoupgradeos() { sudothis apt clean && sudothis apt update -m && sudothis dpkg --configure -a && sudothis apt install -f && sudothis apt dist-upgrade && sudothis apt autoremove --purge ;}
 
 autoupgradeos() {
     # Probably best to do the install manually.
@@ -74,18 +74,20 @@ alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | 
 alias sql='sqlite3'
 
 # Vim related alias's {{{2
-alias v='vim'
-alias vz='vim $HOME/.zshrc'
-alias vb='vim $HOME/.bashrc'
-alias vh='vim $HOME/.helpful_commands.md'
-alias vv='vim $HOME/.vimrc'
-alias va='vim $HOME/.config/aliases'
-alias vt='vim $HOME/todo.html'
-alias vq='vim $HOME/.config/qutebrowser/config.py'
-alias cs='vim -c "let @*=@+|q"'
+alias v='nvim'
+alias vz='nvim $HOME/.zshrc'
+alias vb='nvim $HOME/.bashrc'
+alias vh='nvim $HOME/.helpful_commands.md'
+alias vv='nvim $HOME/.vimrc'
+alias va='nvim $HOME/.config/aliases'
+alias vt='nvim $HOME/todo.html'
+alias vq='nvim $HOME/.config/qutebrowser/config.py'
+alias cs='nvim -c "let @*=@+|q"'
+alias vL='nvim $HOME/cloud_storage/Google_Drive-local/Links.txt'
 # function to open vim with Gitstatus open
-vst()  { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
-vstd() { vim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
+vst()  { nvim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
+vstd() { nvim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
+
 # }}}2
 
 # firefox {{{2
