@@ -168,6 +168,7 @@
         Plugin 'tpope/vim-dadbod'
         Plugin 'kristijanhusak/vim-dadbod-ui'
         Plugin 'fatih/vim-go'
+        Plugin 'JamshedVesuna/vim-markdown-preview'
 
         " Fugitive and it's plugins. {{3
             Plugin 'tpope/vim-fugitive'
@@ -630,10 +631,25 @@
     " }}2
 
     " Merginal {{2
-        if isdirectory("~/.vim/bundle/vim-merginal/")
+        if isdirectory(expand("~/.vim/bundle/vim-merginal/"))
             nnoremap ,m :Merginal<cr>
         endif
     " }}
+
+    " vim-markdown-preview {{2
+        if isdirectory(expand("~/.vim/bundle/vim-markdown-preview/"))
+            let vim_markdown_preview_toggle=0
+            let vim_markdown_preview_hotkey='<C-m>'
+            "let vim_markdown_preview_browser='Google Chrome'
+            "let vim_markdown_preview_browser='Qutebrowser'
+            " vim_markdown_preview_github uses grip
+            let vim_markdown_preview_github=1
+            " uses pandoc
+            "let vim_markdown_preview_pandoc=1
+            " Default is see, this makes it use xdg_open
+            "let vim_markdown_preview_use_xdg_open=1
+        endif
+    " }}2
 
 " }}1
 
@@ -910,7 +926,6 @@
         endif
     endfunction
     " }}2
-
 
     " SetPersonalHeader {{2
         function! SetPersonalHeader()

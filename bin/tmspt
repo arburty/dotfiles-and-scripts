@@ -1,0 +1,13 @@
+#! /bin/bash
+
+# tmsetup
+# Author: Austin Burt
+# Email: austin@burt.us.com
+# github: github.com/arburty/tmsetup-commnand
+# Date: 10/07/20
+
+tmux new-window -n spt
+tmux send-keys 'spt' C-m
+tmux split-window -d -v -l 5 'spotifyd'
+tmux resize-pane -Z
+tmux send-keys 'd'

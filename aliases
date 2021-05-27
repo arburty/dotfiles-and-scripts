@@ -74,19 +74,20 @@ alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | 
 alias sql='sqlite3'
 
 # Vim related alias's {{{2
-alias v='nvim'
-alias vz='nvim $HOME/.zshrc'
-alias vb='nvim $HOME/.bashrc'
-alias vh='nvim $HOME/.helpful_commands.md'
-alias vv='nvim $HOME/.vimrc'
-alias va='nvim $HOME/.config/aliases'
-alias vt='nvim $HOME/todo.html'
-alias vq='nvim $HOME/.config/qutebrowser/config.py'
-alias cs='nvim -c "let @*=@+|q"'
-alias vL='nvim $HOME/cloud_storage/Google_Drive-local/Links.txt'
+VEDITOR='nvim'
+alias v='$VEDITOR'
+alias vz='$VEDITOR $HOME/.zshrc'
+alias vb='$VEDITOR $HOME/.bashrc'
+alias vh='$VEDITOR $HOME/.helpful_commands.md'
+alias vv='$VEDITOR $HOME/.vimrc'
+alias va='$VEDITOR $HOME/.config/aliases'
+alias vt='$VEDITOR $HOME/todo.html'
+alias vq='$VEDITOR $HOME/.config/qutebrowser/config.py'
+alias cs='$VEDITOR -c "let @*=@+|q"'
+alias vL='$VEDITOR $HOME/cloud_storage/Google_Drive-local/Links.txt'
 # function to open vim with Gitstatus open
-vst()  { nvim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
-vstd() { nvim +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
+vst()  { $VEDITOR +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
+vstd() { $VEDITOR +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
 
 # }}}2
 
