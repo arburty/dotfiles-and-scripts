@@ -1066,6 +1066,7 @@
     augroup markdown
         au!
         autocmd Filetype markdown nnoremap <buffer> <localleader>z :Markd<cr>
+        autocmd Filetype markdown let g:markdown_fenced_languages = ['html', 'python', 'ruby', 'vim', 'java', 'awk', 'sed', 'bash']
     augroup END
 
     " TODO: move to a filetype file python.vim

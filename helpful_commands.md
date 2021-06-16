@@ -10,6 +10,9 @@ every instance of 'Permission denied".  There were a lot.
 
 `find / -iname '*spcm*' >> findspcm 2> /dev/null &`
 
+`find ./ -iname "*.crt" -exec echo "{}" \;  -exec openssl x509 -in {} -text \; | less`
+: helped to check if my new PEM certificates were valid.
+
 ## Normies
 `history | tac | less`
 
