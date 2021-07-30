@@ -1994,6 +1994,8 @@ config.bind(',Y', 'hint links spawn youtube-dl {hint-url}')
 
 config.bind(',f', 'spawn firefox {url}')
 config.bind(',F', 'hint links spawn firefox {hint-url}')
+config.bind('\\f', 'spawn firefox -private-window {url}')
+config.bind('\F', 'hint links spawn firefox -private-window {hint-url}')
 
 config.bind(',R', 'hint --rapid images tab-bg')
 

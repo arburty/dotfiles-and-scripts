@@ -294,6 +294,8 @@
 
     inoremap kj <esc>
 
+    cnoremap <C-G> <ESC>
+
     " alt-h,alt-l in xterm
     "map è gT
     "map ì gt
@@ -364,6 +366,9 @@
         " Visual shifting (does not exit Visual mode)
         vnoremap < <gv
         vnoremap > >gv
+
+        " Select pasted text
+        nnoremap gpv `[v`]
 
         " Allow using the repeat operator with a visual selection (!)
         " http://stackoverflow.com/a/8064607/127816

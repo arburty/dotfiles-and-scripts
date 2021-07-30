@@ -76,7 +76,8 @@ PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
 # yarn wanted these. out here causin me problems.
 [[ $(which yarn) ]] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
 
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+export GOPATH=$HOME/go/bin/
 # }}}2
 
 tabs -4
