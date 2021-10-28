@@ -2005,6 +2005,8 @@ config.bind(',wo', 'window-only')
 config.bind(';lp', 'spawn --userscript qute-lastpass')
 
 config.bind('gp', 'open -p')
+config.bind('gs', 'open https://open.spotify.com/')
+
 
 # import dracula.draw
 
