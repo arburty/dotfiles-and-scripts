@@ -707,7 +707,11 @@
     nnoremap <localleader>S :set spell!<cr>
     "nnoremap <silent><leader>p :exe "norm 0dw\"+Pld2F "<cr>
     " needs work but a better version of the above.
-    nnoremap ,p :g/^\d\{3,9}p\?_/exe "s//" . substitute(@+, " - \\a*\\.com", "","") . "_/"<cr>
+    "nnoremap <leader>p :g/^\d\{3,9}p\?_/exe "s//" . substitute(@+, " - \\a*\\.com", "","") . "_/"<cr>
+    "nnoremap <leader>pt :%s/\v\zs.*\ze[.-](mp4\|(\d{2,4}:))/\=substitute(@+, " \\(\\d\\{2}\\.\\)\\{2}\\d\\{2}$", "", "")/<cr>:silent noh<cr>
+    "nnoremap <leader>pt :CleanupTitles<cr>
+    " TODO: currently does the mapping creatioon in the script,
+    " should instead create plugs I map from vimrc
 
     " highlight the current line
     nnoremap <leader>l :call matchadd('LineHighlight', '\%'.line('.').'l')<cr>
@@ -781,8 +785,10 @@
 
     " Sourced {{
         source ~/.vim/personal/redir_messages.vim
+        " maps v and n <leader>G
         source ~/.vim/personal/grep-operator.vim
-            " maps v and n <leader>G
+        " maps <leader>p commands
+        source ~/.vim/personal/rename-torrents.vim
 
         " Pickscheme() sourced from Visual Setup
     " }}
