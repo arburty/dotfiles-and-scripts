@@ -206,6 +206,8 @@
             Plugin 'joshdick/onedark.vim'
             " TODO: tomorrow theme not showing up.  needs some attention.
             Plugin 'chriskempson/tomorrow-theme', { 'name': 'tomorrow-night' }
+            Plugin 'Pocco81/Catppuccino.nvim'
+
         " }}3
 
         " plugin from http://vim-scripts.org/vim/scripts.html
@@ -725,7 +727,7 @@
     vnoremap <silent><leader>C :s/\%V[^']\zs\<.\ze/\u&/g<cr>:noh<cr>``
 
     " Useful
-    nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"
+    nnoremap <leader>d :r !date "+\%m/\%d/\%y \%H:\%M"<cr>k:join<cr>$BB
     nnoremap <leader>M :20messages<cr>
     nnoremap <leader>b :set filetype=sh
     nnoremap <leader>bh "_
@@ -1102,6 +1104,14 @@ nnoremap <silent><localleader>v :vs /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><localleader>e :e /home/vladislav/tmp/vim.backup/bundle<CR>
 nnoremap <silent><leader>r :lcd %:p:h<cr>/readme<cr>:e <c-r><c-f><cr>
 nnoremap <localleader>s :so /home/vladislav/.vim/personal/pick_scheme.vim<cr>
+nnoremap <localleader>d :DronePhotoContest<CR>
+
+function! DronePhotoContestFunc() 
+    let var=substitute(@+, "\\(\"\\|”\\|“\\)", "", "g") 
+    s/-\d\{1,2}// 
+    exe "norm I=var\<cr>a-2021\<ESC>eaphotocontest"
+endfunction
+command! DronePhotoContest :call DronePhotoContestFunc()
 
 "execut "set <M-h>=\eh"
 "execut "set <M-l>=\el"
