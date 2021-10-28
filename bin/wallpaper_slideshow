@@ -42,7 +42,7 @@ let speed=$((minutes * 60 + $seconds)) || die "speed is $speed"
 [[ $speed < 1 ]] && die "time has to be positive"
 
 dir=$(echo "$dir" | sed 's;/$;;g') # enforce no trailing slash
-wallpapers=("${dir}"/{*.jpg,*.png,*.svg,*.jpeg})
+wallpapers=("${dir}"/{*.jpg,*.png,*.svg,*.jpeg,*.webp})
 array_size=${#wallpapers[*]}
 
 while true

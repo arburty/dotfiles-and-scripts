@@ -210,3 +210,6 @@ show what happens without data.
 
 `cat ~/filesToWall.txt | xargs -i"{}" echo -e "{}.jpg" | sxiv -as f -`
 : print a file with image names (with no exension) and open them in sxiv.
+
+`awk '/^Date/{$1=""; a=system("date -d \"" $0."\""); $0="test:" $a } {print $0}' emailtmp.txt`
+: Not perfect. Working on changing the date in Mutt, this is getting there but needs more to work.
