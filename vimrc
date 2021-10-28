@@ -294,6 +294,19 @@
     noremap j gj
     noremap k gk
 
+    " make the search pattern the current cursor column
+    " thought it was cool so I snagged it, not enabled though.
+    xnoremap \k ?\%<C-R>=virtcol(".")<CR>v\S<CR>
+    xnoremap \j /\%<C-R>=virtcol(".")<CR>v\S<CR>
+    nnoremap \k ?\%<C-R>=virtcol(".")<CR>v\S<CR>
+    nnoremap \j /\%<C-R>=virtcol(".")<CR>v\S<CR>
+    " \K was something I didn't recognize for :call <SNR>9_PreGetPage(0)<cr>
+    unmap \K
+    nmap \K \kN<C-v>{N
+    nmap \J \jN<C-v>}N
+    xmap \K \kN<C-v>{N
+    xmap \J \jN<C-v>}N
+
     inoremap kj <esc>
 
     cnoremap <C-G> <ESC>
