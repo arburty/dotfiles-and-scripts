@@ -34,6 +34,17 @@ From Useful Sites {{{1
 " Ranges: Examples {{{2
     https://vim.fandom.com/wiki/Ranges
 " }}}2
+
+" Vim-Galore {{{2
+    https://github.com/mhinz/vim-galore
+    * add '#saner-behavior-of-n-and-n' at end for specific tip that brought me to this link
+    * Great all around resource
+" }}} 2
+
+" Neovim Plugins {{{2
+    https://neovimcraft.com/
+" }}}2
+
 " }}}1
 
 For Using the Surround Plugin (straight from the README): {{{
@@ -79,6 +90,10 @@ Helpful For Syntax Color Editing {{{
 
 vimTricks: {{{
     https://vimtricks.substack.com/
+
+    Print Substitutions:
+        :g/light/#|s//heavy/g|#
+        " global search for light, print the lines, replace the search, and print the lines again
 }}}
 
 " Plugins To Look At {{{1
@@ -120,8 +135,21 @@ This put a list of my_list = [a, b, c, d] -> my_list = ["a", "b", "c", "d"]
 :s/\(\a\)\(,\|]\)/"\1"\2/g
 
 " Great tips for Ex commands {{{1
-" e.g. g/re/p, grevrep, and '!' commands/filtering.
-https://www.inkstonenews.com/society/big-archeology-find-home-chinas-terracotta-army/article/3122640
+    " e.g. g/re/p, grevrep, and '!' commands/filtering.
+    https://www.inkstonenews.com/society/big-archeology-find-home-chinas-terracotta-army/article/3122640
+" }}}1
+
+" Reference for replacing a name with clipboard and substituting. {{{1
+    " renames files named like drone-4.webp to the clipboard, removing all quotation.
+    " notice the second two in the regex are from the digraph.
+    "   drone-4.webp -> Name of Picture by John Smith-2021dronephotocontest.webp
+    nnoremap <localleader>d :DronePhotoContest<CR>
+    function! DronePhotoContestFunc() abort
+        let var=substitute(@+, "\\(\"\\|”\\|“\\)", "", "g")
+        s/-\d\{1,2}//
+        exe "norm I=var\<CR>a-2021\<ESC>eaphotocontest"
+    endfunction
+    command! DronePhotoContest :call DronePhotoContestFunc()
 " }}}1
 
 " Modeline{{{

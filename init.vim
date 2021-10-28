@@ -34,5 +34,7 @@ augroup Golang
     autocmd FileType go nnoremap <buffer> <localleader>z :term go run %<cr>
 augroup END
 
+" TODO: figure out catpuccino colorscheme
+
 " Modeline{
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}
