@@ -86,6 +86,14 @@ cd $dir_configs
 [[ ! -d ./df ]] && ln -sv $dir_git_dotfiles ./df
 # }
 
+# Set up .config directory {
+mkdir -p $dir_configs
+
+# create $homedir/.config/df for shorter sym links
+cd $dir_configs
+[[ ! -d ./df ]] && ln -sv $dir_git_dotfiles ./df
+# }
+
 # make sure vim directories are set {
 vim=$homedir/.vim
 mkdir -pv $vim/{personal,artifacts,bundle}
@@ -94,19 +102,22 @@ cd $vim/personal
 # }
 
 # link the config files to appropriate directory {
-linkconfdir aliases ranger mpv zathura zshvibindings
+linkconfdir aliases nvim ranger mpv zathura zshvibindings
 linkhomedir zshrc bashrc fortuneCookies gitconfig helpful_commands.md helpful_vim tmux.conf vimrc Xresources
 linkvimscriptsdir
 # }
 
 # Install Programs {
-sudo apt-get install -y ffmpegthumbnailer fzf lynx mpv neovim pandoc ranger tmux tree w3m-img xterm vim-athena zathura zsh
+sudo apt-get install -y dmenu espeak ffmpegthumbnailer fzf lastpass-cli lynx mpv neovim pandoc qutebrowser ranger tmux tree vim-athena w3m-img xterm zathura zsh
+
+
 # }
 
-# install NerdFonts
+# install NerdFonts {
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
     https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+# }
 
 # install Oh-My-Zsh Setup and Plugins {
 [[ ! -d $homedir/.oh-my-zsh/ ]] && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
