@@ -301,7 +301,7 @@
     nnoremap \k ?\%<C-R>=virtcol(".")<CR>v\S<CR>
     nnoremap \j /\%<C-R>=virtcol(".")<CR>v\S<CR>
     " \K was something I didn't recognize for :call <SNR>9_PreGetPage(0)<cr>
-    unmap \K
+    silent! unmap \K
     nmap \K \kN<C-v>{N
     nmap \J \jN<C-v>}N
     xmap \K \kN<C-v>{N
