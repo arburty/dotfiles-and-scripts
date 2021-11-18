@@ -24,6 +24,7 @@ dir_git_vimscripts=$dir_githome/vimscripts
 dir_vimscripts=$homedir/.vim/personal/
 gitrepo_vimscripts=https://github.com/arburty/vimscripts.git
 
+gitrepo_sxiv='https://github.com/muennich/sxiv'
 # Set Up Config Files
 dir_configs=$homedir/.config
 # }
@@ -108,22 +109,54 @@ linkvimscriptsdir
 # }
 
 # Install Programs {
-sudo apt-get install -y dmenu espeak ffmpegthumbnailer fzf lastpass-cli lynx mpv neovim pandoc qutebrowser ranger tmux tree vim-athena w3m-img xterm zathura zsh
+sudo apt-get install -y \
+dmenu \
+espeak \
+ffmpegthumbnailer \
+fzf \
+lastpass-cli \
+lynx \
+mpv \
+neovim \
+pandoc \
+qutebrowser \
+ranger \
+tmux \
+tree \
+vim-athena \
+w3m-img \
+xterm \
+zathura \
+zsh
 
+# Install dev packages {2
+sudo apt-get install -y \
+libimlib2-dev \
+libxft-dev \
+libexif-dev \
+ruby-dev
+# }2
 
 # }
 
 # install NerdFonts {
-mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
+mkdir -p $homedir/local/share/fonts
+cd $homedir/local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
     https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
 # }
 
 # install Oh-My-Zsh Setup and Plugins {
-[[ ! -d $homedir/.oh-my-zsh/ ]] && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+if [[ ! -d $homedir/.oh-my-zsh/ ]] ;then
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    rm $homedir/.zshrc
+    linkhomedir zshrc
+fi
 
 ZSH_PLUGINS="$homedir/.oh-my-zsh/plugins/"
 mkdir -p $ZSH_PLUGINS
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+    ${ZSH_CUSTOM:-$homedir/.oh-my-zsh/custom}/themes/powerlevel10k
 
 git clone https://github.com/zsh-users/zsh-autosuggestions.git \
     $ZSH_PLUGINS/zsh-autosuggestions 2>/dev/null
@@ -133,18 +166,18 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
 # }
 
 # Vundle for Vim plugins {
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 2>/dev/null \
+git clone https://github.com/VundleVim/Vundle.vim.git $homedir/vim/bundle/Vundle.vim 2>/dev/null \
     && sudo gem install neovim \
     && vim +PluginInstall +'CocInstall coc-java coc-snippets' +qall
 
 
 # Command-t {2
-if [[ ! -f ~/.vim/bundle/command-t/ruby/command-t/ext/command-t/ext.so ]]
+if [[ ! -f $homedir/vim/bundle/command-t/ruby/command-t/ext/command-t/ext.so ]]
 then
     # the executable is missing but command-t is installed so compile it
-    if [[ -d ~/.vim/bundle/command-t ]];then
+    if [[ -d $homedir/vim/bundle/command-t ]];then
         echo "compiling: command-t, may need to get ruby-dev package."
-        cd ~/.vim/bundle/command-t/ruby/command-t/ext/command-t
+        cd $homedir/vim/bundle/command-t/ruby/command-t/ext/command-t
         ruby extconf.rb || sudo apt install -y ruby-dev && ruby extconf.rb
         make
         cd - >/dev/null
@@ -153,6 +186,17 @@ fi
 # }2
 
 # }
+
+# Install sxiv {
+if [[ ! -d $dir_githome/sxiv ]] ; then
+    cd $dir_githome
+    git clone $gitrepo_sxiv 2>/dev/null
+    cd sxiv
+    make
+    sudo make install
+    cd $homedir
+fi
+# }1
 
 exit 0
 
