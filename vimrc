@@ -156,7 +156,7 @@
         " Plugin 'vim-scripts/AutoComplPop'
         "Plugin 'wellle/context.vim'
         Plugin 'romainl/vim-cool'
-        Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+        "Plugin 'neoclide/coc.nvim', {'branch': 'release'}
         Plugin 'justinmk/vim-sneak'
         Plugin 'zef/vim-cycle'
         Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -492,6 +492,7 @@
 
 " Plugin key-remapping{{1
     " coc.vim {{2
+    if 0 "disable coc
     if isdirectory("~/.vim/bundle/coc.nvim/")
         " https://vimawesome.com/plugin/coc-snippets
         " under Examples
@@ -508,6 +509,7 @@
 
         " Use <C-j> for both expand and jump (make expand higher priority.)
         imap <C-j> <Plug>(coc-snippets-expand-jump)
+    endif
     endif
     " }}2
 
@@ -788,7 +790,7 @@
         " maps v and n <leader>G
         source ~/.vim/personal/grep-operator.vim
         " maps <leader>p commands
-        source ~/.vim/personal/rename-torrents.vim
+        "source ~/.vim/personal/rename-torrents.vim
 
         " Pickscheme() sourced from Visual Setup
     " }}
