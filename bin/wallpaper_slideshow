@@ -22,6 +22,9 @@ let minutes=30
 let seconds=0
 dir="$HOME/shared_drive/Pictures/wallpaper/"
 
+# set the image file for gnome.
+gsettings set org.gnome.desktop.background picture-uri /home/vladislav/.local/share/eog-wallpaper.jpg
+
 while getopts ":hd:s:m:" arg; do
     case $arg in
         d) # Set the directory of wallpapers
