@@ -103,7 +103,7 @@ cd $vim/personal
 # }
 
 # link the config files to appropriate directory {
-linkconfdir aliases nvim ranger mpv zathura zshvibindings
+linkconfdir aliases nvim ranger mpv qutebrowser zathura zshvibindings
 linkhomedir zshrc bashrc fortuneCookies gitconfig helpful_commands.md helpful_vim tmux.conf vimrc Xresources
 linkvimscriptsdir
 # }
