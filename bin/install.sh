@@ -166,9 +166,10 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
 # }
 
 # Vundle for Vim plugins {
-git clone https://github.com/VundleVim/Vundle.vim.git $homedir/vim/bundle/Vundle.vim 2>/dev/null \
+git clone https://github.com/VundleVim/Vundle.vim.git $homedir/.vim/bundle/Vundle.vim 2>/dev/null \
     && sudo gem install neovim \
-    && vim +PluginInstall +'CocInstall coc-java coc-snippets' +qall
+    && vim +PluginInstall +qall
+    #&& vim +PluginInstall +'CocInstall coc-java coc-snippets' +qall
 
 
 # Command-t {2

@@ -752,6 +752,8 @@
     nnoremap <leader>bh "_
     vnoremap <leader>bh "_
 
+    nnoremap <leader>~ :s;/home/vladislav;\~;g<cr>
+
     nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
     nmap ,fig 2] j<Plug>figletTitlekVip,cl
 
