@@ -1,6 +1,8 @@
 # Commands That Helped Me Do Something I May Want Again.
 
 ## Find commands
+
+<a href="https://quickref.me/find">Find Command Cheat Sheet & Quick Reference</a>
 `find / -name burtar* 2> >(grep -v 'Permission denied' >&2) #HELPFUL`
 : This command found all files burtar\* starting in the root directory and taking out
 every instance of 'Permission denied".  There were a lot.
@@ -27,6 +29,9 @@ every instance of 'Permission denied".  There were a lot.
 
 `bash < <(curl -sL https://raw.githubusercontent.com/arburty/dotfiles-and-scripts/master/bin/install.sh)`
 : call my install script off of github
+
+`rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --backup --backup-dir=BACKUPDIR`
+: use rsync backup my mutt files, and backing up changes (only one backup)
 
 ## Tmux Related
 `echo -n 'tmux session: '; tmux ls | grep attached | cut -d ':' -f 1`

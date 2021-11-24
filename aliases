@@ -72,6 +72,7 @@ alias muttrgx='less ~/notes/mutt_regex'
 alias tmkmutt='tmux kill-window -t mutt'
 alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | espeak'
 alias sql='sqlite3'
+alias muttbackup='rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --backup --backup-dir=BACKUPDIR'
 
 # Vim related alias's {{{2
 VEDITOR='nvim'
