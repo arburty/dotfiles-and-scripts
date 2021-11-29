@@ -148,6 +148,20 @@ rsync examples:
 : Compresses vidoes.  Change the `-crf 30` to different values for different compressed sizes.
 (larger # = smaller size) link in: `~/notes/helpful_Links`
 
+## Exiv2 commands to add/modify metadata to images.
+
+`exiv2  -M"set Exif.Image.Artist John Smith" mypic.jpg`
+: set the Artist tag.
+
+`exiv2  -g Exif.Image.A mypic.jpg | awk '{$1=$2=$3="";print $0}' | sed -e "s/^[[:space:]]*//" -e "s/[[:space:]]*$//"`
+: grep for all Exif.Image tags.  i.e. Artist or ImageDesctprion.  then print just the answer, stripping whitespace.
+
+`exiv2  -K Exif.Image.ImageDescription mypic.jpg`
+: look for specific key
+
+`exiv2 -M"set Exif.Photo.UserComment charset=Ascii Comment made by arburty" mypic.jpg`
+: add a comment. this prints when using exiv2 with no flags.
+
 ## Came from HomeAdvisor/General Mac related
 `docker run -dt -p 80:80 -p 443:443 -e HOSTIP=host.docker.internal -v ~/apps/sm-content:/usr/local/sm-apache/htdocs --name apache apache:2.4.3 #HELPFUL`
 
