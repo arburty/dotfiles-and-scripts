@@ -12,3 +12,4 @@ map J zoom out
 map i recolor
 map p print
 # End of Luke Smith
+set recolor true
