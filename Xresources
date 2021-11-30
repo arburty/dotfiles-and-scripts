@@ -58,6 +58,10 @@ xterm*scrollTtyOutput: false
 !*background: rgb:00/00/00
 Sxiv.foreground: #bbbbbb
 Sxiv.background: #222222
+Sxiv.font:       Liberation Mono:size=16:style=bold
+! the below dont work yet
+!Sxiv.barForeground: #bbbbbb
+!Sxiv.barBackground: #252525
 
 ! Make c-insert the clipboard, S-Insert is still primary
 *VT100*translations:    #override \n\
