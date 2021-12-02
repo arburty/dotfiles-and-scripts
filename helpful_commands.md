@@ -176,7 +176,7 @@ rsync examples:
 N/25 for 25fps. Adjust the mod(n,300) number to take images where a
 smaller/larger number is faster/slower.
 
-`ffmpeg -ss 00:00:07 -to 00:00:52 -i thumbnail.mp4 -vf "select='not(mod(n,10))',setpts='N/(25*TB)'" -f image2 tn5-%03d.jpg`
+`ffmpeg -ss 00:00:07 -to 00:00:52 -i myVideo.mp4 -vf "select='not(mod(n,10))',setpts='N/(25*TB)'" -f image2 tn5-%03d.jpg`
 : This is the same as above, but specifying a time range. 7s into the video to 52 seconds.
 
 `ffprobe -show_entries format=duration myVideo.mp4 2>&1| grep "fps" | sed -e 's/^.*\, \([[:digit:]]\{2,\} fps\).*/\1/g'`
@@ -191,6 +191,7 @@ smaller/larger number is faster/slower.
 screenshot-001.jpg. (~5 min video / 1 screenshot per second = ~50 seconds for a 10x speed)
 
 ### ffmpeg Clipping
+
 `ffmpeg -i -ss 00:03:00 myVideo.mp4 -ss 00:00:53 -t 00:01:00 VideoClip6.mp4`
 : create a shorter clip: fast seek to 3:00, exact seek 53s more, and take a clip 1 minute long from 3:53.
 
