@@ -144,9 +144,62 @@ rsync examples:
 `history | tac | awk '/gpg/ && !/history/ {$1=""; print $0;}' | less`
 : use awk to find recent 'gpg' commands and not the command(s) like above
 
+## Using ffmpeg
+
+### ffmpeg Compress Video
+
 `ffmpeg -i VID_20200921_225850_LS.mp4 -vcodec libx265 -crf 30 RL-is-broken.mp4`
 : Compresses vidoes.  Change the `-crf 30` to different values for different compressed sizes.
 (larger # = smaller size) link in: `~/notes/helpful_Links`
+
+### ffmpeg Screenshots and Thumbnails
+
+[Thumbnails & Screenshots using FFmpeg - 3 Efficient Techniques - OTTVerse](https://ottverse.com/thumbnails-screenshots-using-ffmpeg/#ScreenshotThumbnail_every_10_seconds)
+
+`ffmpeg -i inputVideo.mp4 -ss 00:00:05.000 -frames:v 1 foobar.jpeg`
+: take a picture at the 5 second mark of the video and name it foobar.jpeg
+
+
+<dl>
+    <dt>
+        <pre>
+    <code>ffmpeg -i input1080p.mp4 -r 1 -s 1280x720 -f image2 screenshot-%03d.jpg</code>
+    <code>ffmpeg -i myVideo.mp4 -r 1 -f image2 screenshot-%03d.jpg</code>
+        </pre>
+    </dt>
+    <dd>Create screenshots every 1 second.
+    </dd>
+</dl>
+
+`ffmpeg -i inputvideo.mp4 -vf "select='not(mod(n,300))',setpts='N/(30*TB)'" -f image2 thumbnail-%03d.jpg`
+: create an image every 10 seconds. this is for a 30fps video. mod(n,250) and
+N/25 for 25fps. Adjust the mod(n,300) number to take images where a
+smaller/larger number is faster/slower.
+
+`ffmpeg -ss 00:00:07 -to 00:00:52 -i thumbnail.mp4 -vf "select='not(mod(n,10))',setpts='N/(25*TB)'" -f image2 tn5-%03d.jpg`
+: This is the same as above, but specifying a time range. 7s into the video to 52 seconds.
+
+`ffprobe -show_entries format=duration myVideo.mp4 2>&1| grep "fps" | sed -e 's/^.*\, \([[:digit:]]\{2,\} fps\).*/\1/g'`
+: helped me grab the FPS for the video.
+
+### ffmpeg Create GIF
+
+[How to Create a GIF from Images using FFmpeg? - OTTVerse](https://ottverse.com/how-to-create-gif-from-images-using-ffmpeg/)
+
+`ffmpeg -f image2 -framerate 10 -i screenshot-%03d.jpg -loop -1 GIF.gif`
+: Create a gif with 10 frames a second of a series of images named like
+screenshot-001.jpg. (~5 min video / 1 screenshot per second = ~50 seconds for a 10x speed)
+
+### ffmpeg Clipping
+`ffmpeg -i -ss 00:03:00 myVideo.mp4 -ss 00:00:53 -t 00:01:00 VideoClip6.mp4`
+: create a shorter clip: fast seek to 3:00, exact seek 53s more, and take a clip 1 minute long from 3:53.
+
+`ffmpeg -i myVideo.mp4 -ss 00:02:09 -to 00:03:00 VideoClipto1.mp4`
+: clip from 2:09 to 3:00 for a 51 second video.
+
+`ffmpeg -f concat -safe 0 -i listtocat.txt -c copy concatenated.mp4`
+: One way to concatenate 2 videos together. Where listtocat.txt contains lines
+like: `file '/path/to/file'`
 
 ## Exiv2 commands to add/modify metadata to images.
 
