@@ -42,10 +42,16 @@ class save_sorted_files_buffer(Command):
         fobj.close()
         return None
 
+class linktops(Command):
+    def execute(self):
+        os.system("notify-send 'starting linktops'")
+        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/research/linktops")
+
 class save_torrent(Command):
     def execute(self):
         os.system("~/shared_drive/laptop-backup/.sysctl/research/save_torrents "
                   + shell_escape(self.fm.thisdir.path))
+        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/research/linktops")
         newdir = self.fm.thisdir.basename
-        self.fm.tab_new("~/shared_drive/laptop-backup/.sysctl/Torrents/"
+        self.fm.tab_new("~/shared_drive/laptop-backup/.sysctl/Videos/Torrents/"
                         + newdir)
