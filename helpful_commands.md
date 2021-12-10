@@ -176,8 +176,8 @@ rsync examples:
 N/25 for 25fps. Adjust the mod(n,300) number to take images where a
 smaller/larger number is faster/slower.
 
-`ffmpeg -ss 00:00:07 -to 00:00:52 -i myVideo.mp4 -vf "select='not(mod(n,10))',setpts='N/(25*TB)'" -f image2 tn5-%03d.jpg`
-: This is the same as above, but specifying a time range. 7s into the video to 52 seconds.
+`ffmpeg -ss 00:00:00.000 -to 00:01:00.000 -i original.mp4 -vf "select='not(mod(n,5))',setpts='N/(30*TB)'" -f image2 01-%04d.jpg`
+: Specify time range to make a selection of screenshots.  This should do 6 images a second for a 30fps video.
 
 `ffprobe -show_entries format=duration myVideo.mp4 2>&1| grep "fps" | sed -e 's/^.*\, \([[:digit:]]\{2,\} fps\).*/\1/g'`
 : helped me grab the FPS for the video.
@@ -186,7 +186,7 @@ smaller/larger number is faster/slower.
 
 [How to Create a GIF from Images using FFmpeg? - OTTVerse](https://ottverse.com/how-to-create-gif-from-images-using-ffmpeg/)
 
-`ffmpeg -f image2 -framerate 10 -i screenshot-%03d.jpg -loop -1 GIF.gif`
+`ffmpeg -f image2 -framerate 10 -i 01-%04d.jpg -loop -1 01-10fps.gif`
 : Create a gif with 10 frames a second of a series of images named like
 screenshot-001.jpg. (~5 min video / 1 screenshot per second = ~50 seconds for a 10x speed)
 
