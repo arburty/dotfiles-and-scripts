@@ -8,8 +8,13 @@ export TERM="xterm-256color"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export JDK_HOME=/usr/lib/jvm/jdk-11.0.7/
+export JDK_HOME=/usr/lib/jvm/openjdk-11
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+# This block is for nvm, so that npm works.
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # ZSH_THEME
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -72,12 +77,16 @@ bindkey -M vicmd O edit-command-line
 # printCustomPaths prints the custom paths ($HOME/bin, ./)
 # if not already set
 PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
+[ -d $HOME/.local/bin/ ] && PATH="$PATH:$HOME/.local/bin/"
 
 # yarn wanted these. out here causin me problems.
-[[ $(which yarn) ]] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+#[[ $(which yarn) ]] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+[ -d $HOME/.yarn ] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
 
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-export GOPATH=$HOME/go/bin/
+[ -d /usr/local/go/bin ] && PATH=$PATH:/usr/local/go/bin
+[ -d $HOME/go/bin ] && PATH=$PATH:$HOME/go/bin
+[ -d $HOME/go/bin/ ] && export GOPATH=$HOME/go/bin/
+export PATH
 # }}}2
 
 tabs -4
