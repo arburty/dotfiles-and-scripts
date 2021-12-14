@@ -10,6 +10,24 @@
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 
+# Determind Mac, or Linux.
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo "This machine is a : ${machine}"
+
+case "${machine}" in
+    Linux)     packageInstall="apt-get install -y";;
+    Mac)       packageInstall="brew install";;
+    *)         echo "Script not designed for ${machine}" >&2 && exit 1;;
+esac
+#machine="Linux" #for testing on mac
+
 # Initialize Variables {
 # used to change the root directory
 homedir=$HOME
@@ -109,60 +127,106 @@ linkvimscriptsdir
 # }
 
 # Install Programs {
-sudo apt-get install -y \
-dmenu \
-espeak \
-ffmpegthumbnailer \
-fzf \
-lastpass-cli \
-lynx \
-mpv \
-neovim \
-pandoc \
-qutebrowser \
-ranger \
-tmux \
-tree \
-vim-athena \
-w3m-img \
-xterm \
-zathura \
-zsh
+add2Universal() {
+    [ $(command -v $1) ] && return
+    [ -z "$programsUniversal" ] && programsUniversal="$1"
+    programsUniversal="$programsUniversal $1"
+}
+add2Mac() {
+    [ $(command -v $1) ] && return
+    [ -z "$programsToBrew" ] && programsToBrew="$1"
+    programsToBrew="$programsToBrew $1"
+}
+add2Linux() {
+    [ $(command -v $1) ] && return
+    [ -z "$programsLinuxUbuntu" ] && programsLinuxUbuntu="$1"
+    programsLinuxUbuntu="$programsLinuxUbuntu $1"
+}
 
-# Install dev packages {2
-sudo apt-get install -y \
-libimlib2-dev \
-libxft-dev \
-libexif-dev \
-ruby-dev
-# }2
+
+programsUniversal=""
+programsToBrew=""
+programsLinuxUbuntu=""
+
+add2Universal tmux
+add2Universal bpytop
+add2Universal lynx
+add2Universal pandoc
+add2Universal tree
+add2Universal lastpass-cli
+add2Universal neovim
+add2Universal fzf
+
+echo "Using ${packageInstall} for Universal (none if empty):$programsUniversal"
+[ -n "$programsUniversal" ] && $packageInstall $programsUniversal
+
+if [[ $machine == "Mac" ]]
+then
+    echo "installs for $machine"
+    [ -z $(command -v brew) ] && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    [ -z $(command -v ranger) ] \
+        && ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 2> /dev/null \
+        && add2Mac ranger
+    [ ! -d /Applications/iTerm.app/ ] && add2Mac iterm2
+
+    # BREW INSTALL
+    echo "BREW INSTALL Mac Specific (none if empty):$programsToBrew"
+    [ -n "$programsToBrew" ] && $packageInstall $programsToBrew
+elif [[ $machine == "Linux" ]]
+then
+    echo "installs for $machine"
+	add2Linux dmenu
+	add2Linux espeak
+	add2Linux ffmpegthumbnailer
+	add2Linux mpv
+	add2Linux qutebrowser
+	add2Linux ranger
+	add2Linux vim-athena
+	add2Linux w3m-img
+	add2Linux xterm
+	add2Linux zathura
+	add2Linux zsh
+
+    # Install dev packages {2
+    add2Linux libimlib2-dev
+    add2Linux libxft-dev
+    add2Linux libexif-dev
+    add2Linux ruby-de
+    # }2
+
+    sudo $packageInstall $programsLinuxUbuntu
+fi
 
 # }
 
 # install NerdFonts {
-mkdir -p $homedir/local/share/fonts
-cd $homedir/local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
-    https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
-# }
+#ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 2> /dev/null
+
+#mkdir -p $homedir/.local/share/fonts
+#cd $homedir/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
+#   https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+
+#}
 
 # install Oh-My-Zsh Setup and Plugins {
 if [[ ! -d $homedir/.oh-my-zsh/ ]] ;then
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     rm $homedir/.zshrc
     linkhomedir zshrc
+
+    ZSH_PLUGINS="$homedir/.oh-my-zsh/plugins/"
+    mkdir -p $ZSH_PLUGINS
+
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+        ${ZSH_CUSTOM:-$homedir/.oh-my-zsh/custom}/themes/powerlevel10k
+
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git \
+        $ZSH_PLUGINS/zsh-autosuggestions 2>/dev/null
+
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+        $ZSH_PLUGINS/zsh-syntax-highlighting 2>/dev/null
 fi
 
-ZSH_PLUGINS="$homedir/.oh-my-zsh/plugins/"
-mkdir -p $ZSH_PLUGINS
-
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-    ${ZSH_CUSTOM:-$homedir/.oh-my-zsh/custom}/themes/powerlevel10k
-
-git clone https://github.com/zsh-users/zsh-autosuggestions.git \
-    $ZSH_PLUGINS/zsh-autosuggestions 2>/dev/null
-
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    $ZSH_PLUGINS/zsh-syntax-highlighting 2>/dev/null
 # }
 
 # Vundle for Vim plugins {
@@ -179,7 +243,7 @@ then
     if [[ -d $homedir/vim/bundle/command-t ]];then
         echo "compiling: command-t, may need to get ruby-dev package."
         cd $homedir/vim/bundle/command-t/ruby/command-t/ext/command-t
-        ruby extconf.rb || sudo apt install -y ruby-dev && ruby extconf.rb
+        #ruby extconf.rb || sudo apt install -y ruby-dev && ruby extconf.rb
         make
         cd - >/dev/null
     fi
@@ -189,7 +253,7 @@ fi
 # }
 
 # Install sxiv {
-if [[ ! -d $dir_githome/sxiv ]] ; then
+if [[ $machine == "Linux" && ! -d $dir_githome/sxiv ]] ; then
     cd $dir_githome
     git clone $gitrepo_sxiv 2>/dev/null
     cd sxiv
