@@ -145,3 +145,7 @@ website=https://github.com/arburty/website.git
 alias fortune='fortune | tee -a ~/.fortuneCookies && echo "" >> ~/.fortuneCookies'
 alias tmclose="tmux kill-session"
 gbye() { . gbye $@; }
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+

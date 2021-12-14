@@ -2,14 +2,31 @@
 # Austin Burt
 # austin@burt.us.com
 
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
 # General setup. Themes, Paths, and plugins. {{{1
 export TERM="xterm-256color"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export JDK_HOME=/usr/lib/jvm/openjdk-11
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+if [[ $machine == "Mac" ]]
+then
+    export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+    [ -d /usr/local/opt/tomcat@9/bin ] && PATH="$PATH:/usr/local/opt/tomcat@9/bin"
+elif [[ $machine == "Linux" ]]
+then
+    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+    export JDK_HOME=/usr/lib/jvm/openjdk-11
+fi
+
 
 # This block is for nvm, so that npm works.
 export NVM_DIR="$HOME/.nvm"
@@ -29,7 +46,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Preferred Vim editor for local and remote sessions
-export EDITOR='nvim'
+[ $(command -v nvim) ] && export EDITOR='nvim' || export EDITOR='vim'
 #if [[ -n $SSH_CONNECTION ]]; then
     #export EDITOR='vim'
 #else
@@ -76,17 +93,23 @@ bindkey -M vicmd O edit-command-line
 # Tmux sessions were appending several of these paths
 # printCustomPaths prints the custom paths ($HOME/bin, ./)
 # if not already set
-PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths)
-[ -d $HOME/.local/bin/ ] && PATH="$PATH:$HOME/.local/bin/"
+#[ -f $HOME/bin/printCustomPaths ] && PATH="$PATH"$(echo $PATH | $HOME/bin/printCustomPaths) || PATH="$PATH:$HOME/bin"
+[ -d $HOME/bin ] && PATH="$HOME/bin:$PATH"
+[ -d $HOME/.local/bin ] && PATH="$PATH:$HOME/.local/bin"
 
 # yarn wanted these. out here causin me problems.
+# using `npm install --global yarn` it went into ~/.nvm/versions/node/v17.2.0/bin/
+# ^this path was already in my PATH
 #[[ $(which yarn) ]] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
-[ -d $HOME/.yarn ] && export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+#[ -d $HOME/.yarn ] && PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
 
 [ -d /usr/local/go/bin ] && PATH=$PATH:/usr/local/go/bin
 [ -d $HOME/go/bin ] && PATH=$PATH:$HOME/go/bin
-[ -d $HOME/go/bin/ ] && export GOPATH=$HOME/go/bin/
-export PATH
+[ -d $HOME/go/bin/ ] && export GOPATH=$HOME/go/bin
+# This awk command removes duplicates for my sanity.
+#   https://www.linuxjournal.com/content/removing-duplicate-path-entries
+export PATH=$(echo -n $PATH | awk -v RS=: \
+    '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
 # }}}2
 
 tabs -4
@@ -129,3 +152,7 @@ fi
 # }}}3
 # }}}2
 # }}}1
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
