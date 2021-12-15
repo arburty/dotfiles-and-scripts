@@ -1,0 +1,74 @@
+#! /bin/bash
+
+# bash-expansion
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 12/14/21 20:31
+#
+# Reference for bash expansions
+
+var="     lynx      "
+var2="   2 3 4    5   6      "
+var3="    abc    "
+
+# remove leading whitespace characters
+var="${var2#"${var2%%[![:space:]]*}"}"
+printf '%s' "===$var==="
+echo ".$var."
+# remove trailing whitespace characters
+var="${var%"${var##*[![:space:]]}"}"   
+printf '%s' "===$var==="
+echo ".$var."
+
+trim() {
+    local var="$*"
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"   
+    printf '%s' "$var"
+}
+
+trim $var2
+trim $var3
+
+exit 0
+################################################
+#      Think of it like this                   #
+#                                              #
+### For Leading whitespace.                    #
+# I want var to be a string                    #
+#   var=""                                     #
+# using var                                    #
+#   var="${var}"                               #
+# trimming off the front, a new string.        #
+# what we put in this string gets stripped.    #
+#   var="${var#""}"                            #
+# that starts from var                         #
+#   var="${var#"${var}"}"                      #
+# but with everything that is not a space      #
+# stripped from the tail end (greedy match)    #
+#   var="${var#"${var%%[![:space:]]*}"}"       #
+#                                              #
+### For Trailing whitespace.                   #
+# Same as above, but switch the '%' and '#'    #
+# characters, to flip the leading/tailing      #
+# pattern expansion.                           #
+# Then move the glob to glob before the spaces #
+#                                              #
+#   var="${var#"${var%%[![:space:]]*}"}"       #
+#             |      ||                        #
+#   var="${var%"${var##[![:space:]]*}"}"       #
+#                      x<----------.           #
+#   var="${var%"${var##*[![:space:]]}"}"       #
+#                                              #
+### REFERENCES                                 #
+# man bash                                     #
+#   look for EXANSION and the section on       #
+#   patterns                                   #
+#                                              #
+#   see stackoverflow link below               #
+#                                              #
+################################################
+
+#   https://stackoverflow.com/questions/369758/how-to-trim-whitespace-from-a-bash-variable
