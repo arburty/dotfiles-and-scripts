@@ -127,20 +127,36 @@ linkvimscriptsdir
 # }
 
 # Install Programs {
+addPackage() {
+    newpackage=$2
+    commandName=${3:-`echo $newpackage`}
+    [ $(command -v $commandName) ] && return
+
+    case $1 in
+        "Universal") var2use="programsUniversal"    ;;
+        "Mac")       var2use="programsToBrew"       ;;
+        "Linux")     var2use="programsLinuxUbuntu"  ;;
+    esac
+
+
+    if [[ -z "${!var2use}" ]]
+    then
+        newValue="$newpackage"
+    else
+        newValue="${!var2use} $newpackage"
+    fi
+
+    read "$var2use" <<< "${newValue}"
+}
+
 add2Universal() {
-    [ $(command -v $1) ] && return
-    [ -z "$programsUniversal" ] && programsUniversal="$1"
-    programsUniversal="$programsUniversal $1"
+    addPackage "Universal" "$1" "$2"
 }
 add2Mac() {
-    [ $(command -v $1) ] && return
-    [ -z "$programsToBrew" ] && programsToBrew="$1"
-    programsToBrew="$programsToBrew $1"
+    addPackage "Mac" "$1" "$2"
 }
 add2Linux() {
-    [ $(command -v $1) ] && return
-    [ -z "$programsLinuxUbuntu" ] && programsLinuxUbuntu="$1"
-    programsLinuxUbuntu="$programsLinuxUbuntu $1"
+    addPackage "Linux" "$1" "$2"
 }
 
 
@@ -153,8 +169,8 @@ add2Universal bpytop
 add2Universal lynx
 add2Universal pandoc
 add2Universal tree
-add2Universal lastpass-cli
-add2Universal neovim
+add2Universal lastpass-cli lpass
+add2Universal neovim nvim
 add2Universal fzf
 
 echo "Using ${packageInstall} for Universal (none if empty):$programsUniversal"
@@ -162,7 +178,7 @@ echo "Using ${packageInstall} for Universal (none if empty):$programsUniversal"
 
 if [[ $machine == "Mac" ]]
 then
-    echo "installs for $machine"
+    echo "Adding packages for $machine"
     [ -z $(command -v brew) ] && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     [ -z $(command -v ranger) ] \
         && ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 2> /dev/null \
