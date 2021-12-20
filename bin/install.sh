@@ -10,7 +10,7 @@
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 
-# Determind Mac, or Linux.
+# Determind Mac, or Linux. {
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -24,9 +24,9 @@ echo "This machine is a : ${machine}"
 case "${machine}" in
     Linux)     packageInstall="apt-get install -y";;
     Mac)       packageInstall="brew install";;
-    *)         echo "Script not designed for ${machine}" >&2 && exit 1;;
+    *)         echo "$PROGRAM: Error: Script not designed for ${machine}" >&2 && exit 1;;
 esac
-#machine="Linux" #for testing on mac
+# }
 
 # Initialize Variables {
 # used to change the root directory
@@ -50,6 +50,7 @@ dir_configs=$homedir/.config
 # Create And Download Repositories If Needed {
 mkdir -vp $dir_githome
 cd $dir_githome
+echo "$PROGRAM: Info: Currently using https, you will want to set up ssh keys"
 [[ ! -d $dir_git_dotfiles ]] && git clone $gitrepo_dotfiles
 [[ ! -d $dir_git_vimscripts ]] && git clone $gitrepo_vimscripts
 # }
@@ -148,7 +149,6 @@ addPackage() {
 
     read "$var2use" <<< "${newValue}"
 }
-
 add2Universal() {
     addPackage "Universal" "$1" "$2"
 }
@@ -158,24 +158,31 @@ add2Mac() {
 add2Linux() {
     addPackage "Linux" "$1" "$2"
 }
-
-
+# associated variables {
 programsUniversal=""
 programsToBrew=""
 programsLinuxUbuntu=""
+# }
 
+# Universal packages {
+# alphabetical, but tmux first
 add2Universal tmux
 add2Universal bpytop
+add2Universal espeak
+add2Universal fzf
+add2Universal lastpass-cli lpass
 add2Universal lynx
+add2Universal neovim nvim
 add2Universal pandoc
 add2Universal tree
-add2Universal lastpass-cli lpass
-add2Universal neovim nvim
-add2Universal fzf
+# }
 
+# Install the universal packages {
 echo "Using ${packageInstall} for Universal (none if empty):$programsUniversal"
 [ -n "$programsUniversal" ] && $packageInstall $programsUniversal
+# }
 
+# Mac vs Linux {2
 if [[ $machine == "Mac" ]]
 then
     echo "Adding packages for $machine"
@@ -186,13 +193,12 @@ then
     [ ! -d /Applications/iTerm.app/ ] && add2Mac iterm2
 
     # BREW INSTALL
-    echo "BREW INSTALL Mac Specific (none if empty):$programsToBrew"
+    echo -e "$PROGRAM: Info: BREW INSTALL Mac Specific (none if empty):\n$programsToBrew"
     [ -n "$programsToBrew" ] && $packageInstall $programsToBrew
 elif [[ $machine == "Linux" ]]
 then
     echo "installs for $machine"
 	add2Linux dmenu
-	add2Linux espeak
 	add2Linux ffmpegthumbnailer
 	add2Linux mpv
 	add2Linux qutebrowser
@@ -200,18 +206,21 @@ then
 	add2Linux vim-athena
 	add2Linux w3m-img
 	add2Linux xterm
+    add2Linux youtube-dl
 	add2Linux zathura
 	add2Linux zsh
 
-    # Install dev packages {2
+    # Install dev packages {3
     add2Linux libimlib2-dev
     add2Linux libxft-dev
     add2Linux libexif-dev
     add2Linux ruby-de
-    # }2
+    # }3
 
-    sudo $packageInstall $programsLinuxUbuntu
+    echo -e "$PROGRAM: Info: APT-GET INSTALL Linux Specific (none if empty):\n$programsLinuxUbuntu"
+    [ -n "$programsLinuxUbuntu" ] && sudo $packageInstall $programsLinuxUbuntu
 fi
+# }2
 
 # }
 
@@ -273,9 +282,9 @@ if [[ $machine == "Linux" && ! -d $dir_githome/sxiv ]] ; then
     cd $dir_githome
     git clone $gitrepo_sxiv 2>/dev/null
     cd sxiv
-    make
-    sudo make install
+    make && sudo make install
     cd $homedir
+    [ -d $dir_git_dotfiles/sxiv ] && linkhomedir sxiv
 fi
 # }1
 
