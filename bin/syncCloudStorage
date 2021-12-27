@@ -42,8 +42,8 @@ declare -r pp="$gd:RocketBook/Panda_Planner/"
 
 # local directories.
 declare -r cs="$HOME/cloud_storage"
-declare -r gdl="$cs/Google_Drive-local/"
-declare -r gpl="$cs/Google_Photos-local/"
+declare -r gdl="$cs/Google_Drive/"
+declare -r gpl="$cs/Google_Photos/"
 declare -r gdcsul="$cs/Google_Drive_CSU/"
 declare -r gpcsul="$cs/Google_Photos_CSU/"
 
