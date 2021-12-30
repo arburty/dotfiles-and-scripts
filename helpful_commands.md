@@ -286,3 +286,14 @@ show what happens without data.
 
 `awk '/^Date/{$1=""; a=system("date -d \"" $0."\""); $0="test:" $a } {print $0}' emailtmp.txt`
 : Not perfect. Working on changing the date in Mutt, this is getting there but needs more to work.
+
+    echo "----- STEP 1 ----------" && \
+    sudo add-apt-repository ppa:neovim-ppa/unstable && \
+    echo "----- STEP 2 ----------" && \
+    sudo apt-get update && \
+    echo "----- STEP 3 ----------" && \
+    sudo apt-get install neovim && \
+    echo "----- STEP 4 ----------" && \
+    sudo apt-get install python3-dev python3-pip
+
+<dd>This will install the master version for neovim</dd>
