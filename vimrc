@@ -170,6 +170,10 @@
         Plugin 'fatih/vim-go'
         Plugin 'JamshedVesuna/vim-markdown-preview'
 
+        " Neovim LSP
+        " Maybe shouldn't go here?
+        Plugin 'neovim/nvim-lspconfig'
+
         " Fugitive and it's plugins. {{3
             Plugin 'tpope/vim-fugitive'
             Plugin 'idanarye/vim-merginal'
