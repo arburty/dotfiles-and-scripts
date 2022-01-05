@@ -72,3 +72,4 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 -- Leader Mappings --
 keymap("n", "<leader>;", "q:", term_opts)
 
+keymap("n", "<leader>sv", ":source ~/.config/nvim/init.lua<cr>", term_opts)
