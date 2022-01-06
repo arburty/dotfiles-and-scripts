@@ -1,3 +1,9 @@
+--telescope.lua
+--Author : Austin Burt
+--Email  : austin@burt.us.com
+--Date   : 01/05/2022
+
+
 local status_ok, telescope = pcall(require, "telescope")
 if not status_ok then
   return
@@ -16,11 +22,11 @@ telescope.setup {
 
     mappings = {
       i = {
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
+        ["<C-j>"] = actions.cycle_history_next,
+        ["<C-k>"] = actions.cycle_history_prev,
 
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-n>"] = actions.move_selection_next,
+        ["<C-p>"] = actions.move_selection_previous,
 
         ["<C-c>"] = actions.close,
 
@@ -102,3 +108,15 @@ telescope.setup {
     -- please take a look at the readme of the extension you want to configure
   },
 }
+
+
+--[[ funny inside of telescope help pages. ]]
+--To The Primeagen: ~
+
+--Cyrnfr ernq guvf uryc znahny orsber pnyyvat zr ng 3 NZ jvgu gryrfpbcr
+--rzretrapvrf. V xabj ynfg gvzr jr fnirq gur ragver fgernzvat vaqhfgel, ohg
+--V unir n lbhat fba jub xrrcf zr hc ng avtug nyy ol uvzfrys. OGJ, unir lbh
+--pbafvqrerq fraqvat culfvpny QIQf sbe znkvzhz dhnyvgl naq rneyl npprff gb arj
+--pbagrag? Vg frrzf yvxr vg pbhyq or n cerggl pbby vqrn.
+
+--#FunzryrffFrysCebzbgvba: uggcf://tvguho.pbz/fcbafbef/gwqrievrf

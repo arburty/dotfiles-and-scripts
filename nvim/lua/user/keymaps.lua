@@ -1,4 +1,16 @@
+--keymaps.lua
+--Author : Austin Burt
+--Email  : austin@burt.us.com
+--Date   : 01/05/2022
+
 local opts = { noremap = true, silent = true }
+
+vim.cmd [[
+  augroup source_keymaps
+    autocmd!
+    autocmd BufWritePost keymaps.lua source <afile>
+  augroup END
+]]
 
 local term_opts = { silent = true }
 
@@ -68,7 +80,14 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Telescope
-keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
+--keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
+keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+keymap("n", "<leader>fM", "<cmd>lua require('telescope.builtin').man_pages()<cr>", opts)
+keymap("n", "<leader>fH", "<cmd>lua require('telescope.builtin').command_history()<cr>", opts)
+
 --keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
 
@@ -85,3 +104,5 @@ keymap("n", "<leader>ew", ":e %%<cr>", term_opts)
 keymap("n", "<leader>evs", ":vsp %%<cr>", term_opts)
 keymap("n", "<leader>es", ":sp %%<cr>", term_opts)
 keymap("n", "<leader>et", ":tabe %%<cr>", term_opts)
+
+keymap("n", "<leader>lb", "<cmd>vs #<cr>", term_opts)
