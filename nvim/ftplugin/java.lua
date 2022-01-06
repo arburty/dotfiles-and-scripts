@@ -2,7 +2,7 @@
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local workspace_dir = '/home/vladislav/.cache/java_workspace/' .. project_name
+local workspace_dir = '~/.cache/java_workspace/' .. project_name
 
 local config = {
   -- The command that starts the language server
@@ -24,8 +24,8 @@ local config = {
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
     -- 💀
-    --'-jar', '/home/vladislav/.local/share/eclipse-server/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
-    '-jar', '/home/vladislav/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
+    --'-jar', '~/.local/share/eclipse-server/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
+    '-jar', '~/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
 
     -- 💀
     '-configuration', './config_linux/config.ini',
@@ -42,7 +42,7 @@ local config = {
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  --root_dir = require('jdtls.setup').find_root({'mvnw', '.git', 'gradlew'}),
+  root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -65,4 +65,9 @@ local config = {
 }
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
---require('jdtls').start_or_attach(config)
+
+require('jdtls').start_or_attach(config)
+--local status_ok, _ = pcall( require, ('jdtls').start_or_attach(config) )
+--if not status_ok then
+  --vim.api.nvim_notify("nvim/ftplugin/java.lua not sourced")
+--end

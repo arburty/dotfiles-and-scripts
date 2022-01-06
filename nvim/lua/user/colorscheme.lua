@@ -1,7 +1,13 @@
-local colorscheme = "darkplus"
+-- colorscheme.lua
+-- Author : Austin Burt
+-- Email  : austin@burt.us.com
+-- Date   :
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-  vim.notify("colorscheme " .. colorscheme .. " not found!")
-  return
-end
+vim.cmd [[
+try
+  colorscheme darkplus
+catch /^Vim\%((\a\+)\)\=:E185/
+  colorscheme torte
+  set background=dark
+endtry
+]]

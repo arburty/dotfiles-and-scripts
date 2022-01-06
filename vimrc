@@ -172,7 +172,7 @@
 
         " Neovim LSP
         " Maybe shouldn't go here?
-        Plugin 'neovim/nvim-lspconfig'
+        "Plugin 'neovim/nvim-lspconfig'
 
         " Fugitive and it's plugins. {{3
             Plugin 'tpope/vim-fugitive'
