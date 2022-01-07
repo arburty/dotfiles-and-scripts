@@ -106,3 +106,4 @@ keymap("n", "<leader>es", ":sp %%<cr>", term_opts)
 keymap("n", "<leader>et", ":tabe %%<cr>", term_opts)
 
 keymap("n", "<leader>lb", "<cmd>vs #<cr>", term_opts)
+keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", term_opts)
