@@ -67,7 +67,7 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-nvim-lua"
 
   -- Language specific
-  use 'mfussenegger/nvim-jdtls'
+  use "mfussenegger/nvim-jdtls"
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -83,7 +83,7 @@ return packer.startup(function(use)
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
-  use 'nvim-telescope/telescope-media-files.nvim'
+  use "nvim-telescope/telescope-media-files.nvim"
 
   -- Treesitter
   use {
@@ -92,20 +92,24 @@ return packer.startup(function(use)
   }
   use "p00f/nvim-ts-rainbow"
   use "nvim-treesitter/playground"
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Git
   use "lewis6991/gitsigns.nvim"
+  use "tpope/vim-fugitive"
+  use "idanarye/vim-merginal"
+  use "tpope/vim-rhubarb" -- GitHub
+  use "shumphrey/fugitive-gitlab.vim" -- GitLab
 
-  use 'mbbill/undotree'
+  use "mbbill/undotree"
   --use 'scrooloose/nerdcommenter'
-  use 'tpope/vim-abolish'
-  use 'tpope/vim-repeat'
-  use 'tpope/vim-surround'
-  use 'romainl/vim-cool'
-  use 'justinmk/vim-sneak'
-  use 'tpope/vim-unimpaired'
-  use 'JamshedVesuna/vim-markdown-preview'
+  use "tpope/vim-abolish"
+  use "tpope/vim-repeat"
+  use "tpope/vim-surround"
+  use "romainl/vim-cool"
+  use "justinmk/vim-sneak"
+  use "tpope/vim-unimpaired"
+  use "JamshedVesuna/vim-markdown-preview"
 
   -- }}}
 

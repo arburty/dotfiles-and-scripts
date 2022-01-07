@@ -5,7 +5,8 @@
 
 vim.cmd [[
 try
-  colorscheme darkplus
+  " colorscheme darkplus
+  colorscheme pop-punk
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme torte
   set background=dark
