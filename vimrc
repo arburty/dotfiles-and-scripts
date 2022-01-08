@@ -752,6 +752,11 @@
     nnoremap <leader>bh "_
     vnoremap <leader>bh "_
 
+    " Tmux clipping
+    vnoremap <leader>y "zy:<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>y :<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>Y :let @z=@" <bar> call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+
     nnoremap <leader>~ :s;/home/vladislav;\~;g<cr>
 
     nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
@@ -899,6 +904,14 @@
             execute a:command . " " . expand(a:file, ":p")
         endfunction
     " }}2
+
+" SaveSelectionToFileAndTmuxClip {{2
+" used to sync vim on wsl to the clipboard
+    function! s:SaveSelectionToFileAndTmuxClip()
+        silent! exe "!(~/bin/usetmuxtoclip.exe.sh " . trim(shellescape(getreg('z'), 1)). " &)"
+        redraw!
+    endfunction
+" }}2
 
     " DeleteFileAndCloseBuffer {{2
     " Expands filename and confirms you want to delete it.
