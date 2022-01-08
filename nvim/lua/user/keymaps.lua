@@ -86,8 +86,10 @@ keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr
 keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+keymap("n", "<leader>fd", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
 keymap("n", "<leader>fM", "<cmd>lua require('telescope.builtin').man_pages()<cr>", opts)
 keymap("n", "<leader>fH", "<cmd>lua require('telescope.builtin').command_history()<cr>", opts)
+keymap("n", "<leader>fC", "<cmd>lua require('telescope.builtin').commands()<cr>", opts)
 
 --keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
@@ -108,3 +110,6 @@ keymap("n", "<leader>et", ":tabe %%<cr>", term_opts)
 
 keymap("n", "<leader>lb", "<cmd>vs #<cr>", term_opts)
 keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", term_opts)
+
+keymap("n", "<leader>m", "<cmd>MerginalToggle<cr>", term_opts)
+keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)

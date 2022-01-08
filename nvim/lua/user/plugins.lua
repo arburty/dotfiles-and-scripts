@@ -103,6 +103,9 @@ return packer.startup(function(use)
   use "tpope/vim-rhubarb" -- GitHub
   use "shumphrey/fugitive-gitlab.vim" -- GitLab
 
+  -- Docs
+  use 'wsdjeg/luarefvim'
+
   use "mbbill/undotree"
   --use 'scrooloose/nerdcommenter'
   use "tpope/vim-abolish"
