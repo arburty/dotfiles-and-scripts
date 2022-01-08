@@ -23,8 +23,18 @@ echo -En "$content" > $tmuxbuffer
 tmux load-buffer -b clipped $tmuxbuffer
 
 # Store in system clipboard.
-# The real power here
-echo -En "$content" | clip.exe
+# The real powerhouse here
+if [[ $(command -v xclip) ]]
+ then
+   clipcommand="xclip -in -selection clipboard"
+ elif [[ $(command -v pbcopy) ]]
+ then
+   clip="pbcopy"
+ else
+   clipcommand="clip.exe"
+fi
+
+echo -En "$content" | $clipcommand
 
 
 
