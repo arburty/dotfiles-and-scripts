@@ -766,11 +766,6 @@
     nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
     nmap ,fig 2] j<Plug>figletTitlekVip,cl
 
-    " Tmux clipping
-    vnoremap <leader>y "zy:<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
-    nnoremap <leader>y :<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
-    nnoremap <leader>Y :let @z=@" <bar> call <SID>SaveSelectionToFileAndTmuxClip()<cr>
-
     " terminal mappings {{2
         if has("terminal")
             augroup terminal

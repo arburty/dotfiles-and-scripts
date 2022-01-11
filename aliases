@@ -2,6 +2,10 @@
 # Austin Burt
 # austin@burt.us.com
 
+exp() {
+    explorer.exe $(wslpath -w "$@")
+}
+
 # Functions {{{1
 gbye() { . gbye $@; }
 dif() { diff $1 $2 2>/dev/null; [[ $? -eq 2 ]] && git diff; }
@@ -75,7 +79,7 @@ alias sql='sqlite3'
 alias muttbackup='rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --backup --backup-dir=BACKUPDIR'
 
 # Vim related alias's {{{2
-VEDITOR='nvim'
+VEDITOR='vim'
 alias v='$VEDITOR'
 alias vz='$VEDITOR $HOME/.zshrc'
 alias vb='$VEDITOR $HOME/.bashrc'
