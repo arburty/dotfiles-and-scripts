@@ -2,7 +2,7 @@
 	name = arburty
 	email = austin@burt.us.com
 [core]
-	editor = vim
+	editor = nvim
 [alias]
 	# https://haacked.com/archive/2014/07/28/github-flow-aliases/
     # [ec - bdone] came from ^. use as a reference point
