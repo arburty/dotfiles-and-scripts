@@ -1,5 +1,19 @@
 #! /bin/zsh
 
+# Determind Mac, or Linux. {
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo "This machine is a : ${machine}"
+
+# Not working on Mac, so exit safely.
+[[ ${machine} == "Mac" ]] && return 0
+
 # ColorValues
 # Author : Austin Burt
 # Email  : austin@burt.us.com
