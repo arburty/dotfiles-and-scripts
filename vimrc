@@ -170,6 +170,10 @@
         Plugin 'fatih/vim-go'
         Plugin 'JamshedVesuna/vim-markdown-preview'
 
+        " Neovim LSP
+        " Maybe shouldn't go here?
+        "Plugin 'neovim/nvim-lspconfig'
+
         " Fugitive and it's plugins. {{3
             Plugin 'tpope/vim-fugitive'
             Plugin 'idanarye/vim-merginal'
@@ -752,10 +756,20 @@
     nnoremap <leader>bh "_
     vnoremap <leader>bh "_
 
+    " Tmux and clipboard clipping (for WSL)
+    vnoremap <leader>y "zy:<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>y :<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>Y :let @z=@" <bar> call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+
     nnoremap <leader>~ :s;/home/vladislav;\~;g<cr>
 
     nnoremap <Plug>figletTitle :exe "r! figlet " . expand('%:t')<cr>
     nmap ,fig 2] j<Plug>figletTitlekVip,cl
+
+    " Tmux clipping
+    vnoremap <leader>y "zy:<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>y :<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>Y :let @z=@" <bar> call <SID>SaveSelectionToFileAndTmuxClip()<cr>
 
     " terminal mappings {{2
         if has("terminal")
@@ -792,7 +806,7 @@
         " maps v and n <leader>G
         source ~/.vim/personal/grep-operator.vim
         " maps <leader>p commands
-        "source ~/.vim/personal/rename-torrents.vim
+        source ~/.vim/personal/rename-torrents.vim
 
         " Pickscheme() sourced from Visual Setup
     " }}
@@ -899,6 +913,14 @@
             execute a:command . " " . expand(a:file, ":p")
         endfunction
     " }}2
+
+" SaveSelectionToFileAndTmuxClip {{2
+" used to sync vim on wsl to the clipboard
+    function! s:SaveSelectionToFileAndTmuxClip()
+        silent! exe "!(~/bin/usetmuxtoclip.exe.sh " . trim(shellescape(getreg('z'), 1)). " &)"
+        redraw!
+    endfunction
+" }}2
 
     " DeleteFileAndCloseBuffer {{2
     " Expands filename and confirms you want to delete it.

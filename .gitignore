@@ -3,3 +3,4 @@ mpv/git/
 nvim/.netrwhist
 qutebrowser/autoconfig.yml
 qutebrowser/dracula
+nvim/plugin/packer_compiled.lua

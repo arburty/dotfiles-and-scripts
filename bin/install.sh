@@ -128,7 +128,7 @@ linkvimscriptsdir
 # }
 
 # Install Programs {
-addPackage() {
+addPackage() { # 1=machine 2=package 3?=commandname
     newpackage=$2
     commandName=${3:-`echo $newpackage`}
     [ $(command -v $commandName) ] && return
@@ -197,24 +197,25 @@ then
     [ -n "$programsToBrew" ] && $packageInstall $programsToBrew
 elif [[ $machine == "Linux" ]]
 then
+    # TODO: handle xterm and dev packages seperately
     echo "installs for $machine"
 	add2Linux dmenu
 	add2Linux ffmpegthumbnailer
 	add2Linux mpv
 	add2Linux qutebrowser
 	add2Linux ranger
-	add2Linux vim-athena
-	add2Linux w3m-img
+	#add2Linux vim-athena
+	#add2Linux w3m-img
 	add2Linux xterm
     add2Linux youtube-dl
 	add2Linux zathura
 	add2Linux zsh
 
     # Install dev packages {3
-    add2Linux libimlib2-dev
-    add2Linux libxft-dev
-    add2Linux libexif-dev
-    add2Linux ruby-de
+    #add2Linux libimlib2-dev
+    #add2Linux libxft-dev
+    #add2Linux libexif-dev
+    #add2Linux ruby-dev
     # }3
 
     echo -e "$PROGRAM: Info: APT-GET INSTALL Linux Specific (none if empty):\n$programsLinuxUbuntu"
@@ -278,7 +279,8 @@ fi
 # }
 
 # Install sxiv {
-if [[ $machine == "Linux" && ! -d $dir_githome/sxiv ]] ; then
+if [[ $machine == "Linux" && ! -d $dir_githome/sxiv && ! -z $DISPLAY ]] 
+then
     cd $dir_githome
     git clone $gitrepo_sxiv 2>/dev/null
     cd sxiv
