@@ -2,11 +2,11 @@
 
 echom "Here in wsl_clip!!!"
 " Tmux clipping
-vnoremap <leader>y "zy:<c-u>call SaveSelection<cr>
-nnoremap <leader>y :<c-u>call SaveSelection<cr>
-nnoremap <leader>Y :let @z=@" <bar> call SaveSelection<cr>
+vnoremap <leader>y "zy:<c-u>SaveSelection<cr>
+nnoremap <leader>y :<c-u>SaveSelection<cr>
+nnoremap <leader>Y :let @z=@" <bar> SaveSelection<cr>
 
-command SaveSelection call <SID>SaveSelectionToTmuxAndClip()<cr>
+command! SaveSelection call <SID>SaveSelectionToTmuxAndClip()
 
 " SaveSelectionToFileAndTmuxClip {{2
 " used to sync vim on wsl to the clipboard
