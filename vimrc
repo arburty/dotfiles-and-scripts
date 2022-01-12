@@ -756,9 +756,9 @@
     nnoremap <leader>bh "_
     vnoremap <leader>bh "_
 
-    " Tmux and clipboard clipping (for WSL)
+    " Tmux clipping
     vnoremap <leader>y "zy:<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
-    nnoremap <leader>y :<c-u>call <SID>SaveSelectionToFileAndTmuxClip()<cr>
+    nnoremap <leader>y :call <SID>SaveSelectionToFileAndTmuxClip()<cr>
     nnoremap <leader>Y :let @z=@" <bar> call <SID>SaveSelectionToFileAndTmuxClip()<cr>
 
     nnoremap <leader>~ :s;/home/vladislav;\~;g<cr>
