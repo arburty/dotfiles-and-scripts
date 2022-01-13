@@ -1,18 +1,9 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 local configs = require("nvim-treesitter.configs")
+--require("nvim-treesitter.install").prefer_git = true
+require("nvim-treesitter.install").command_extra_args = {
+  curl = { "-k" },
+}
 configs.setup {
   ensure_installed = "maintained",
   sync_install = false, 

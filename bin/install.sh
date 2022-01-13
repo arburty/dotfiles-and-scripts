@@ -237,7 +237,7 @@ cd -
 
 # install Oh-My-Zsh Setup and Plugins {
 #if [[ ! -d $homedir/.oh-my-zsh/ ]] ;then
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -kfsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     rm $homedir/.zshrc
     linkhomedir zshrc
 
@@ -248,10 +248,10 @@ cd -
         ${ZSH_CUSTOM:-$homedir/.oh-my-zsh/custom}/themes/powerlevel10k
 
     git clone https://github.com/zsh-users/zsh-autosuggestions.git \
-        $ZSH_PLUGINS/zsh-autosuggestions 2>/dev/null
+        $ZSH_PLUGINS/zsh-autosuggestions
 
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        $ZSH_PLUGINS/zsh-syntax-highlighting 2>/dev/null
+        $ZSH_PLUGINS/zsh-syntax-highlighting
 #fi
 
 # }

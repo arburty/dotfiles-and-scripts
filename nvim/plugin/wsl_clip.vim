@@ -1,6 +1,5 @@
 " wsl_clip.vim
 
-echom "Here in wsl_clip!!!"
 " Tmux clipping
 vnoremap <leader>y "zy:<c-u>SaveSelection<cr>
 nnoremap <leader>y :<c-u>SaveSelection<cr>
@@ -14,5 +13,3 @@ function! s:SaveSelectionToTmuxAndClip()
   silent! exe "!( ~/bin/saveArgsToTmuxAndClip.sh " . trim(shellescape(getreg('z'), 1)). " &)"
   " redraw!
 endfunction
-
-echom "Finished wsl_clip!!!"

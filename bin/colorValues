@@ -9,7 +9,7 @@ case "${unameOut}" in
     MINGW*)     machine=MinGw;;
     *)          machine="UNKNOWN:${unameOut}"
 esac
-echo "This machine is a : ${machine}"
+# echo "This machine is a : ${machine}" # DEBUG
 
 # Not working on Mac, so exit safely.
 [[ ${machine} == "Mac" ]] && return 0

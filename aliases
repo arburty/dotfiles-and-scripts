@@ -79,7 +79,7 @@ alias sql='sqlite3'
 alias muttbackup='rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --backup --backup-dir=BACKUPDIR'
 
 # Vim related alias's {{{2
-VEDITOR='vim'
+VEDITOR='nvim'
 alias v='$VEDITOR'
 alias vz='$VEDITOR $HOME/.zshrc'
 alias vb='$VEDITOR $HOME/.bashrc'
