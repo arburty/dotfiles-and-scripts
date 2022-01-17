@@ -15,7 +15,7 @@ unameNodeName="$(uname -n)"
 case "${unameNodeName}" in
   pop-os*)          localmachine=pop-os ;;
   Austins-MacBook*) localmachine=WorkMac ;;
-  BURTAR*)          localmachine=WSL ;;
+  *BURTAR*)          localmachine=WSL ;;
   *)                localmachine="UNKNOWN:${unameNodeName}"
 esac
 
