@@ -4,25 +4,13 @@
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local workspace_dir = '~/.cache/java_workspace/' .. project_name
 
-local config = {
-  -- The command that starts the language server
-  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
-  cmd = {
+-- localmachine set in zshrc
+local mymachine = vim.env.localmachine
 
-    -- 💀
-    'java', -- or '/path/to/java11_or_newer/bin/java'
-            -- depends on if `java` is in your $PATH env variable and if it points to the right version.
-
-    -- '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-    -- '-Dosgi.bundles.defaultStartLevel=4',
-    -- '-Declipse.product=org.eclipse.jdt.ls.core.product',
-    -- '-Dlog.protocol=true',
-    -- '-Dlog.level=ALL',
-    -- '-Xms1g',
-    -- '--add-modules=ALL-SYSTEM',
-    -- '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-    -- '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-
+local javaargs
+if mymachine == "WSL"
+then -- Invesco specific
+  javaargs = {
     '${jrebel_args}',
     '-Dcatalina.base="/mnt/c/projects/us-magnolia-sunset/.metadata/.plugins/org.eclipse.wst.server.core/tmp0"',
     '-Dcatalina.home="/mnt/c/usr/local/java/apache-tomcat-9.0.31"',
@@ -34,6 +22,32 @@ local config = {
     '--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED',
     '-Dinvesco.ad.access=Inve5co',
     '-Doauth.access=Invesco123',
+  }
+else -- default args
+  javaargs = {
+    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+    '-Dosgi.bundles.defaultStartLevel=4',
+    '-Declipse.product=org.eclipse.jdt.ls.core.product',
+    '-Dlog.protocol=true',
+    '-Dlog.level=ALL',
+    '-Xms1g',
+    '--add-modules=ALL-SYSTEM',
+    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+  }
+
+end
+
+local config = {
+  -- The command that starts the language server
+  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+  cmd = {
+
+    -- 💀
+    'java', -- or '/path/to/java11_or_newer/bin/java'
+            -- depends on if `java` is in your $PATH env variable and if it points to the right version.
+
+    javaargs,
 
     -- 💀
     --'-jar', '~/.local/share/eclipse-server/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',

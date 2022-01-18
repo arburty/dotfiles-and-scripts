@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# usetmuxtoclip.exe.sh
+# saveArgsToTmuxAndClip.sh
 # Author : Austin Burt
 # Email  : austin@burt.us.com
 # Date   : 01/07/22 15:58
