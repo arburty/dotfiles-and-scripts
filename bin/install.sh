@@ -228,15 +228,16 @@ fi
 # install NerdFonts {
 #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 2> /dev/null
 
-#mkdir -p $homedir/.local/share/fonts
-#cd $homedir/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
-#   https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+mkdir -p $homedir/.local/share/fonts
+cd $homedir/.local/share/fonts && curl -kfLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
+   https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+cd -
 
 #}
 
 # install Oh-My-Zsh Setup and Plugins {
-if [[ ! -d $homedir/.oh-my-zsh/ ]] ;then
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#if [[ ! -d $homedir/.oh-my-zsh/ ]] ;then
+    sh -c "$(curl -kfsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     rm $homedir/.zshrc
     linkhomedir zshrc
 
@@ -247,11 +248,11 @@ if [[ ! -d $homedir/.oh-my-zsh/ ]] ;then
         ${ZSH_CUSTOM:-$homedir/.oh-my-zsh/custom}/themes/powerlevel10k
 
     git clone https://github.com/zsh-users/zsh-autosuggestions.git \
-        $ZSH_PLUGINS/zsh-autosuggestions 2>/dev/null
+        $ZSH_PLUGINS/zsh-autosuggestions
 
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        $ZSH_PLUGINS/zsh-syntax-highlighting 2>/dev/null
-fi
+        $ZSH_PLUGINS/zsh-syntax-highlighting
+#fi
 
 # }
 

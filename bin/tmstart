@@ -10,7 +10,7 @@ declare -r PROGRAM=$(basename $0)
 startDir=$(pwd)
 
 die() {
-    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
+    echom "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
     exit 1
 }
 

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# usetmuxtoclip.exe.sh
+# saveArgsToTmuxAndClip.sh
 # Author : Austin Burt
 # Email  : austin@burt.us.com
 # Date   : 01/07/22 15:58
@@ -24,14 +24,15 @@ tmux load-buffer -b clipped $tmuxbuffer
 
 # Store in system clipboard.
 # The real powerhouse here
-if [[ $(command -v xclip) ]]
- then
-   clipcommand="xclip -in -selection clipboard"
- elif [[ $(command -v pbcopy) ]]
- then
-   clip="pbcopy"
- else
-   clipcommand="clip.exe"
+if [[ $(command -v clip.exe) ]]
+then
+  clipcommand="clip.exe"
+elif [[ $(command -v xclip) ]]
+then
+  clipcommand="xclip -in -selection clipboard"
+elif [[ $(command -v pbcopy) ]]
+then
+  clip="pbcopy"
 fi
 
 echo -En "$content" | $clipcommand

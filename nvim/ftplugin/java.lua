@@ -4,14 +4,37 @@
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local workspace_dir = '~/.cache/java_workspace/' .. project_name
 
-local config = {
-  -- The command that starts the language server
-  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
-  cmd = {
+-- localmachine set in zshrc
+local mymachine = vim.env.localmachine
+
+local javaargs
+if mymachine == "WSL"
+then -- Invesco specific
+  javaargs = {
+    'java', -- or '/path/to/java11_or_newer/bin/java'
+
+    '${jrebel_args}',
+    '-Dcatalina.base="/mnt/c/projects/us-magnolia-sunset/.metadata/.plugins/org.eclipse.wst.server.core/tmp0"',
+    '-Dcatalina.home="/mnt/c/usr/local/java/apache-tomcat-9.0.31"',
+    '-Dwtp.deploy="/mnt/c/projects/us-magnolia-sunset/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps"',
+    '--add-opens=java.base/java.lang=ALL-UNNAMED',
+    '--add-opens=java.base/java.io=ALL-UNNAMED',
+    '--add-opens=java.base/java.util=ALL-UNNAMED',
+    '--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
+    '--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED',
+    '-Dinvesco.ad.access=Inve5co',
+    '-Doauth.access=Invesco123',
 
     -- 💀
+    '-jar', '~/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
+    -- 💀
+    '-configuration', './config_linux/config.ini',
+    -- 💀
+    '-data', workspace_dir
+  }
+else -- default args
+  javaargs = {
     'java', -- or '/path/to/java11_or_newer/bin/java'
-            -- depends on if `java` is in your $PATH env variable and if it points to the right version.
 
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
@@ -24,20 +47,19 @@ local config = {
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
     -- 💀
-    --'-jar', '~/.local/share/eclipse-server/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
     '-jar', '~/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
-
     -- 💀
     '-configuration', './config_linux/config.ini',
-                    -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
-                    -- Must point to the                      Change to one of `linux`, `win` or `mac`
-                    -- eclipse.jdt.ls installation            Depending on your system.
-
-
     -- 💀
-    -- See `data directory configuration` section in the README
     '-data', workspace_dir
-  },
+  }
+
+end
+
+local config = {
+  -- The command that starts the language server
+  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+  cmd = javaargs,
 
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.

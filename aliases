@@ -33,6 +33,13 @@ autoupgradeos() {
 #[[ $SHELL == "/bin/zsh" ]] && [[ $(removeMD) == "true" ]] && unalias md
 markd() { pandoc ${@:-$HOME/.helpful_commands.md} | lynx -vikeys -stdin && clear; }
 # }}}2
+
+# WSL specific. Open file explorer at given path.
+# ex: exp ./
+exp() {
+    explorer.exe $(wslpath -w "$@")
+}
+
 # }}}1
 
 # Alias's {{{1
