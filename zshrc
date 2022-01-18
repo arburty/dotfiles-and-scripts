@@ -11,6 +11,17 @@ case "${unameOut}" in
     *)          machine="UNKNOWN:${unameOut}"
 esac
 
+unameNodeName="$(uname -n)"
+case "${unameNodeName}" in
+  pop-os*)          localmachine=pop-os ;;
+  Austins-MacBook*) localmachine=WorkMac ;;
+  *BURTAR*)          localmachine=WSL ;;
+  *)                localmachine="UNKNOWN:${unameNodeName}"
+esac
+
+export machine
+export localmachine
+
 # General setup. Themes, Paths, and plugins. {{{1
 export TERM="xterm-256color"
 

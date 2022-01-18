@@ -6,6 +6,7 @@
 vim.cmd [[
 try
   " colorscheme darkplus
+
   colorscheme pop-punk
   " a softer Visual Select. Defualt bright white
   hi Visual ctermfg=148 ctermbg=240 guifg=#afdf00 guibg=#585858
