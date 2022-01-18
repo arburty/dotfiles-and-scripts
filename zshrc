@@ -88,7 +88,14 @@ local user_symbol="$"
 if [[ $(print -P "%#") =~ "#" ]]; then
     user_symbol = "#"
 fi
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
+secondPrompt='black'
+
+case ${localmachine} in
+  "pop-os")   secondPrompt='red' ;;
+  "WorkMac")  secondPrompt='yellow' ;;
+  "WSL")      secondPrompt='magenta' ;;
+esac
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{${secondPrompt}}%} $user_symbol%{%b%f%k%F{${secondPrompt}}%} %{%f%}"
 
 # Enable 'O' in Vi mode to edit current command in Vim editor
 # source: https://nuclearsquid.com/writings/edit-long-commands/
