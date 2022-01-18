@@ -9,7 +9,7 @@
 # This is so much more efficient.
 
 # Paths
-path="~/.local/share/tmux"
+path="$HOME/.local/share/tmux"
 tmuxbuffer="$path/vim-selection.txt"
 
 # Strip newlines from end.
