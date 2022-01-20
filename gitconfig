@@ -55,7 +55,7 @@
     save   = !git add -A && git commit -m 'SAVEPOINT'
     wip    = commit -am "WIP"
     undo   = reset HEAD~1 --mixed
-    resetorigin = "!f() { git fetch origin && git reset --hard origin/master && git clean -f -d }; f"
+    resetorigin = "!f() { git fetch origin && git reset --hard origin/master && git clean -f -d; }; f"
     amend  = commit -a --amend
     #wipe  = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
     wipe   = "!f() { rev=$(git rev-parse ${1-HEAD}); git add -A && git commit --allow-empty -qm 'WIPE SAVEPOINT' && git reset $rev --hard; }; f"
