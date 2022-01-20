@@ -132,7 +132,7 @@ export PATH=$(echo -n $PATH | awk -v RS=: \
 
 tabs -4
 
-if [[ $machine == "Linux" ]]
+if [[ ${localmachine} == "pop-os" ]]
 then
     [[ ! $(ps -e | grep "wallpaper_slide") ]] \
         && echo "start the show!" \
