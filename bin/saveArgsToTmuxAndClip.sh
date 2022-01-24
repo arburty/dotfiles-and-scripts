@@ -32,7 +32,7 @@ then
   clipcommand="xclip -in -selection clipboard"
 elif [[ $(command -v pbcopy) ]]
 then
-  clip="pbcopy"
+  clipcommand="pbcopy"
 fi
 
 echo -En "$content" | $clipcommand
