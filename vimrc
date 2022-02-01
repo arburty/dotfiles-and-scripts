@@ -908,7 +908,7 @@
 " SaveSelectionToFileAndTmuxClip {{2
 " used to sync vim on wsl to the clipboard
     function! s:SaveSelectionToFileAndTmuxClip()
-        silent! exe "!(~/bin/usetmuxtoclip.exe.sh " . trim(shellescape(getreg('z'), 1)). " &)"
+        silent! exe "!( ~/bin/saveArgsToTmuxAndClip.sh " . trim(shellescape(getreg('z'), 1)). " &)"
         redraw!
     endfunction
 " }}2

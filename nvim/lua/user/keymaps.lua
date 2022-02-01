@@ -113,3 +113,6 @@ keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", term_opts)
 
 keymap("n", "<leader>m", "<cmd>MerginalToggle<cr>", term_opts)
 keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)
+
+-- create new lines above and below current line using Tpope's unimpaired
+keymap("n", "_o", "[<space>]<space>", {noremap = false, silent = true})
