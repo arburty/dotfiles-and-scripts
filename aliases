@@ -96,7 +96,6 @@ alias vL='$VEDITOR $HOME/cloud_storage/Google_Drive/Links.txt'
 # function to open vim with Gitstatus open
 vst()  { $VEDITOR +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $@ }
 vstd() { $VEDITOR +'exe "norm ,gs" | exe "norm \<c-w>L\<c-w>h"' $HOME/git/dotfiles-and-scripts/ }
-
 # }}}2
 
 # firefox {{{2
