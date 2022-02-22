@@ -1,0 +1,23 @@
+# WSL Aliases
+# Austin Burt
+# austin@burt.us.com
+# workaround aliases for WSL
+
+
+# Microsoft Edge {{{
+runmsedge() {
+    ( msedge.exe "$@" > /dev/null 2>&1 & )
+}
+alias ff="runmsedge"
+alias maps="runmsedge google.com/maps"
+alias mes="runmsedge -search"
+alias mew="runmsedge -new-window"
+alias mews="runmsedge -new-window -search"
+alias met="runmsedge -new-tab"
+alias mets="runmsedge -new-tab -search"
+alias mep=" runmsedge -inprivate"
+# }}}
+
+# Modeline{{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker ft=sh:}}}
+return 0
