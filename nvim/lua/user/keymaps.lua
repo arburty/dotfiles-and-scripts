@@ -118,3 +118,13 @@ keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)
 keymap("n", "_o", "[<space>]<space>", {noremap = false, silent = true})
 
 keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr>", opts)
+
+keymap("n", "[c", "<cmd>Gitsigns prev_hunk<cr>", opts)
+keymap("n", "]c", "<cmd>Gitsigns next_hunk<cr>", opts)
+keymap("n", "<leader>hs", "<cmd>Gitsigns preview_hunk<cr>", opts)
+keymap("n", "<leader>hs", "<cmd>Gitsigns stage_hunk<cr>", opts)
+keymap("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<cr>", opts)
+keymap("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<cr>", opts)
+keymap("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<cr>", opts)
+keymap("n", "<leader>hB", "<cmd>Gitsigns blame_line<cr>", opts)
+keymap("n", "<leader>hD", "<cmd>Gitsigns diffthis<cr>", opts)
