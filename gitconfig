@@ -3,12 +3,13 @@
 	email = austin@burt.us.com
 [core]
 	editor = nvim
+	autocrlf = input
 [alias]
 	# https://haacked.com/archive/2014/07/28/github-flow-aliases/
     # [ec - bdone] came from ^. use as a reference point
 
     # shorthand aliases
-	co  = checkout
+    co  = checkout
     br  = branch
     st  = status
     ss  = status -s
@@ -21,7 +22,7 @@
     # Without a new line char.
     mybrnn = "!f() { git mybr | tr -d '\n'; }; f"
     # copy to clipboard
-    mybrcp = "!f() { git mybrnn | pbcopy; }; f"
+    mybrcp = "!f() { br=$(git mybr); ~/bin/saveArgsToTmuxAndClip.sh ${br}; echo Copying: ${br}; }; f"
 
     po     = !git branch | grep ^[*] | cut -d ' ' -f 2 | xargs git push origin
     posu   = !git branch | grep ^[*] | cut -d ' ' -f 2 | xargs git push origin --set-upstream
@@ -55,7 +56,7 @@
     save   = !git add -A && git commit -m 'SAVEPOINT'
     wip    = commit -am "WIP"
     undo   = reset HEAD~1 --mixed
-    resetorigin = "!f() { git fetch origin && git reset --hard origin/master && git clean -f -d; }; f"
+    resetorigin = "!f() { git fetch origin && git reset --hard origin/$(git mybr) && git clean -f -d; }; f"
     amend  = commit -a --amend
     #wipe  = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
     wipe   = "!f() { rev=$(git rev-parse ${1-HEAD}); git add -A && git commit --allow-empty -qm 'WIPE SAVEPOINT' && git reset $rev --hard; }; f"

@@ -1,6 +1,10 @@
 --See https://github.com/mfussenegger/nvim-jdtls
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
+vim.bo.expandtab = false -- convert tabs to spaces
+vim.bo.tabstop = 4      -- insert 4 4paces for a tab
+vim.bo.shiftwidth = 0   -- the number of spaces inserted for each indentation
+
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local workspace_dir = '~/.cache/java_workspace/' .. project_name
 

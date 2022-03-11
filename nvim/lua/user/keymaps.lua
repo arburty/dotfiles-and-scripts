@@ -3,8 +3,6 @@
 --Email  : austin@burt.us.com
 --Date   : 01/05/2022
 
-local opts = { noremap = true, silent = true }
-
 vim.cmd [[
   augroup source_keymaps
     autocmd!
@@ -12,6 +10,7 @@ vim.cmd [[
   augroup END
 ]]
 
+local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
 -- Shorten function name
@@ -49,7 +48,7 @@ keymap("n", "<leader>L", ":bnext<CR>", opts)
 keymap("n", "<leader>H", ":bprevious<CR>", opts)
 
 -- Insert --
--- Press jk fast to enter
+-- Press kj fast to enter
 keymap("i", "kj", "<ESC>", opts)
 
 -- Save and quit
@@ -86,6 +85,7 @@ keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr
 keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+keymap("n", "<leader>fj", "<cmd>lua require('telescope.builtin').jumplist()<cr>", opts)
 keymap("n", "<leader>fd", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
 keymap("n", "<leader>fM", "<cmd>lua require('telescope.builtin').man_pages()<cr>", opts)
 keymap("n", "<leader>fH", "<cmd>lua require('telescope.builtin').command_history()<cr>", opts)
@@ -113,3 +113,24 @@ keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", term_opts)
 
 keymap("n", "<leader>m", "<cmd>MerginalToggle<cr>", term_opts)
 keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)
+
+-- create new lines above and below current line using Tpope's unimpaired
+keymap("n", "_o", "[<space>]<space>", {noremap = false, silent = true})
+
+keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr>", opts)
+
+keymap("n", "[c", "<cmd>Gitsigns prev_hunk<cr>", opts)
+keymap("n", "]c", "<cmd>Gitsigns next_hunk<cr>", opts)
+keymap("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<cr>", opts)
+keymap("n", "<leader>hs", "<cmd>Gitsigns stage_hunk<cr>", opts)
+keymap("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<cr>", opts)
+keymap("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<cr>", opts)
+keymap("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<cr>", opts)
+keymap("n", "<leader>hB", "<cmd>Gitsigns blame_line<cr>", opts)
+keymap("n", "<leader>hD", "<cmd>Gitsigns diffthis<cr>", opts)
+
+keymap("n", "<leader>sd", 
+  "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><c-[>", opts)
+
+-- fixing dumb issue with <c-o> jumping back 2 spots
+keymap("n", "<c-o>", "<c-o><c-i>", opts)

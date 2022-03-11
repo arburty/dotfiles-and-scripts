@@ -1,8 +1,11 @@
 #! /bin/bash
 
+# gitBranchNames
 # Author: Austin Burt
 # Email: austin@burt.us.com
 # Date:5/23/19
+#
+# Pretty print the descriptions made by desc next to the appropriate branch
 
 # Setup for needed variables
 declare -r mybr=$(git mybr)
