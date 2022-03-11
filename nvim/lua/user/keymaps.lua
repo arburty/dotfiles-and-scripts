@@ -121,10 +121,16 @@ keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr>", opts)
 
 keymap("n", "[c", "<cmd>Gitsigns prev_hunk<cr>", opts)
 keymap("n", "]c", "<cmd>Gitsigns next_hunk<cr>", opts)
-keymap("n", "<leader>hs", "<cmd>Gitsigns preview_hunk<cr>", opts)
+keymap("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<cr>", opts)
 keymap("n", "<leader>hs", "<cmd>Gitsigns stage_hunk<cr>", opts)
 keymap("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<cr>", opts)
 keymap("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<cr>", opts)
 keymap("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<cr>", opts)
 keymap("n", "<leader>hB", "<cmd>Gitsigns blame_line<cr>", opts)
 keymap("n", "<leader>hD", "<cmd>Gitsigns diffthis<cr>", opts)
+
+keymap("n", "<leader>sd", 
+  "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><c-[>", opts)
+
+-- fixing dumb issue with <c-o> jumping back 2 spots
+keymap("n", "<c-o>", "<c-o><c-i>", opts)
