@@ -10,7 +10,7 @@ declare -r PROGRAM=$(basename $0)
 startDir=$(pwd)
 
 die() {
-    echom "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
+    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
     exit 1
 }
 
@@ -86,7 +86,8 @@ do
 done # }
 
 # attach to primary session
-[[ $detach == false ]] && sleep 0.5 && tmux attach -t $primary
+# [[ $detach == false ]] && sleep 0.5 && tmux attach -t $primary
+[[ $detach == false ]] && tmux attach -t $primary
 
 # }
 
