@@ -20,7 +20,7 @@ markdtest () {
     pandoc $@ | vim -
 }
 
-tempFile='/tmp/welcomeScreen'
+tempFile=`mktemp /tmp/welcomeScreen.XXXXX`
 
 # Say hello
 echo "<h1> Welcome Back Austin</h1>" > $tempFile
