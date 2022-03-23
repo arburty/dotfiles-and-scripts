@@ -12,19 +12,19 @@ augroup remove_extra_whitespace_java
 augroup end
 
 " cases are:
-"   1. Remove trailing spaces 
+"   1. Remove trailing spaces  unless directly after a * (for comments)
 "   2. All empty lines before a closeing brace
 "   3. Leave one whitespace if followed by anything else
-"   4. Remove blank lines after an opening brace
+"   4. Remove blank lines beyond a single one after an opening brace
 "   5. Remove blank trailing lines in the file.
 func! RemoveWhitespaceJava() abort
   let cur = getpos(".")
   let save_search = @/
 
-  sil! %s/\s\+$//e
+  sil! %s/\v(^|[^*])\zs\s+$\ze//e
   sil! %s/\v\zs(^$\n)+\ze\s*\}//e
   sil! %s/\v\zs(^$\n){2,}\ze\s*[^}]//e
-  sil! %s/\v\{\n\zs(^$\n)+\ze//e
+  sil! %s/\v\{\n\zs(^$\n){2,}\ze//e
   sil! %s#\($\n\s*\)\+\%$##e
 
   call setpos('.', cur)

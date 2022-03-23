@@ -1,26 +1,32 @@
 --See https://github.com/mfussenegger/nvim-jdtls
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
+--vim.lsp.set_log_level("debug")
+
 vim.bo.expandtab = false -- convert tabs to spaces
 vim.bo.tabstop = 4      -- insert 4 4paces for a tab
 vim.bo.shiftwidth = 0   -- the number of spaces inserted for each indentation
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local workspace_dir = '~/.cache/java_workspace/' .. project_name
-
+local home = vim.env.HOME
+local workspace_dir = home .. '/.cache/java_workspace/' .. project_name
 -- localmachine set in zshrc
 local mymachine = vim.env.localmachine
 
 local javaargs
+
 if mymachine == "WSL"
 then -- Invesco specific
+  local catalina_base = '/mnt/c/projects/' .. project_name .. '/.metadata/.plugins/org.eclipse.wst.server.core/tmp1'
+  local deploy = catalina_base .. '/wtpwebapps'
+
   javaargs = {
     'java', -- or '/path/to/java11_or_newer/bin/java'
 
-    '${jrebel_args}',
-    '-Dcatalina.base="/mnt/c/projects/us-magnolia-sunset/.metadata/.plugins/org.eclipse.wst.server.core/tmp0"',
-    '-Dcatalina.home="/mnt/c/usr/local/java/apache-tomcat-9.0.31"',
-    '-Dwtp.deploy="/mnt/c/projects/us-magnolia-sunset/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps"',
+--    '${jrebel_args}',
+--    '-Dcatalina.base=' .. catalina_base,
+    '-Dcatalina.home=/mnt/c/usr/local/java/apache-tomcat-9.0.31',
+--    '-Dwtp.deploy=' .. deploy,
     '--add-opens=java.base/java.lang=ALL-UNNAMED',
     '--add-opens=java.base/java.io=ALL-UNNAMED',
     '--add-opens=java.base/java.util=ALL-UNNAMED',
@@ -30,7 +36,7 @@ then -- Invesco specific
     '-Doauth.access=Invesco123',
 
     -- 💀
-    '-jar', '~/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
+    '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
     -- 💀
     '-configuration', './config_linux/config.ini',
     -- 💀
@@ -51,7 +57,7 @@ else -- default args
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
     -- 💀
-    '-jar', '~/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
+    '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
     -- 💀
     '-configuration', './config_linux/config.ini',
     -- 💀
@@ -95,5 +101,5 @@ local config = {
 require('jdtls').start_or_attach(config)
 --local status_ok, _ = pcall( require, ('jdtls').start_or_attach(config) )
 --if not status_ok then
-  --vim.api.nvim_notify("nvim/ftplugin/java.lua not sourced")
+--  vim.api.nvim_notify("nvim/ftplugin/java.lua not sourced")
 --end
