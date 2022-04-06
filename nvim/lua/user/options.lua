@@ -35,6 +35,7 @@ vim.opt.scrolloff = 4                           -- is one of my fav
 vim.opt.sidescrolloff = 8
 vim.opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
 
+vim.opt.spelllang = { 'en_us' }                 -- need to set to use cmp spell.
 vim.opt.shortmess:append "c"
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
