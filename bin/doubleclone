@@ -1,0 +1,37 @@
+#! /bin/bash
+
+# doubleclone
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 1/31/22
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+die() {
+    echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
+    exit 5
+}
+
+[[ $(command -v jq) ]] || die "Required: jq is a dependency for $PROGRAM"
+[[ -z $1 ]] && die "Required: repository link"
+
+cloneindir() {
+  cd $1
+  echo "$PROGRAM: cloning into directory $1"
+  git clone "$repository"
+}
+
+username=burtar
+echo -n "Password: "
+read -s passwd
+echo -en "\n\n"
+
+# encode the password for a uri using jq
+passwd=$(printf %s "${passwd}" | jq -sRr @uri)
+
+repository=$(echo "$1" | sed 's/https:\/\//&'$username':'$passwd'@/')
+
+cloneindir $HOME/apps/
+echo
+cloneindir /mnt/c/Users/burtar/git/
+
+exit 0
