@@ -125,6 +125,12 @@ rsync examples:
 
 ## Random
 
+linux - Merge / convert multiple PDF files into one PDF - Stack Overflow
+[https://stackoverflow.com/questions/2507766/merge-convert-multiple-pdf-files-into-one-pdf]
+
+`pdfunite input1.pdf input2.pdf inputN.pdf lastIsOutputFile.pdf`
+: Combine multiple PDFs into one PDF.
+
 
 <dl>
     <dt>
