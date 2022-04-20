@@ -144,6 +144,23 @@ rsync examples:
 `history | tac | awk '/gpg/ && !/history/ {$1=""; print $0;}' | less`
 : use awk to find recent 'gpg' commands and not the command(s) like above
 
+## Script to take huge output and open in vim conveniently.
+
+<pre><code>
+logfile=gradle.log
+ddd=$(date +'[%F %H:%M:%S] STARTME' | tee -a $logfile)
+./gradlew --stacktrace \
+    --scan \
+    tasks \
+    -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts \
+    -Djavax.net.ssl.keyStore=/etc/ssl/certs/java/cacerts \
+    -Djavax.net.ssl.trustStorePassword=changeit \
+    -Djavax.net.ssl.keyStorePassword=changeit \
+    --no-daemon &>> $logfile
+vim $logfile +/"\V$ddd" -c "norm! G"
+</code></pre>
+
+
 ## Using ffmpeg
 
 ### ffmpeg Compress Video
