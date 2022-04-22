@@ -34,10 +34,14 @@ then
     [ -d /usr/local/opt/tomcat@9/bin ] && PATH="$PATH:/usr/local/opt/tomcat@9/bin"
 elif [[ $machine == "Linux" ]]
 then
-    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-    export JDK_HOME=/usr/lib/jvm/openjdk-11
+    # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+    export JAVA_HOME=/opt/jdk-17
+    export PATH="$PATH:$JAVA_HOME/bin"
+    # export JDK_HOME=/usr/lib/jvm/openjdk-11
 fi
 
+export GRADLE_HOME='/mnt/c/projects/.gradle'
+export GRADLE_USER_HOME=$GRADLE_HOME
 
 # This block is for nvm, so that npm works.
 export NVM_DIR="$HOME/.nvm"
