@@ -21,17 +21,27 @@ then -- Invesco specific
   local deploy = catalina_base .. '/wtpwebapps'
 
   javaargs = {
-    'java', -- or '/path/to/java11_or_newer/bin/java'
+    --'java', -- or '/path/to/java11_or_newer/bin/java'
+    '/opt/jdk-17/bin/java',
 
+
+-- ==== GRADLE =======
+    '-Xmx1024m',
+    '-Djasypt.encryptor.password=Invesco123',
+
+-- ==== MAGNOLIA =====
 --    '${jrebel_args}',
 --    '-Dcatalina.base=' .. catalina_base,
-    '-Dcatalina.home=/mnt/c/usr/local/java/apache-tomcat-9.0.31',
+    --'-Dcatalina.home=/mnt/c/usr/local/java/apache-tomcat-9.0.31',
 --    '-Dwtp.deploy=' .. deploy,
-    '--add-opens=java.base/java.lang=ALL-UNNAMED',
-    '--add-opens=java.base/java.io=ALL-UNNAMED',
-    '--add-opens=java.base/java.util=ALL-UNNAMED',
-    '--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
-    '--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED',
+    --'--add-opens=java.base/java.lang=ALL-UNNAMED',
+    --'--add-opens=java.base/java.io=ALL-UNNAMED',
+    --'--add-opens=java.base/java.util=ALL-UNNAMED',
+    --'--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
+    --'--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED',
+    --'--add-modules=ALL-SYSTEM',
+-- ===== END =========
+
     '-Dinvesco.ad.access=Inve5co',
     '-Doauth.access=Invesco123',
 
