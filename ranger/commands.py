@@ -45,13 +45,24 @@ class save_sorted_files_buffer(Command):
 class linktops(Command):
     def execute(self):
         os.system("notify-send 'starting linktops'")
-        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/research/linktops")
+        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/linktops")
+
 
 class save_torrent(Command):
     def execute(self):
-        os.system("~/shared_drive/laptop-backup/.sysctl/research/save_torrents "
+        os.system("~/shared_drive/laptop-backup/.sysctl/bin/save_torrents "
                   + shell_escape(self.fm.thisdir.path))
-        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/research/linktops")
+        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/linktops")
         newdir = self.fm.thisdir.basename
         self.fm.tab_new("~/shared_drive/laptop-backup/.sysctl/Videos/Torrents/"
                         + newdir)
+
+class deleteAmp(Command):
+    def execute(self):
+        if self.arg(1):
+            amp = self.rest(1)
+        else:
+            amp = self.fm.thisfile.path
+        self.fm.notify("running deleteAmp " + amp)
+        os.system("notify-send 'deleting Amp'")
+        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/deleteAmp " + amp)
