@@ -51,6 +51,11 @@ keymap("n", "<leader>H", ":bprevious<CR>", opts)
 -- Press kj fast to enter
 keymap("i", "kj", "<ESC>", opts)
 
+keymap("n", "_o", ":<c-u>norm <c-r>=v:count . \"[ \" . v:count . \"] \"<cr><cr>",
+    { noremap = false, silent = true })
+keymap("v", "_o", ":<c-u>norm <c-r>=\"'<\" . v:count . \"[ '>\" . v:count . \"] \"<cr><cr>",
+    { noremap = false, silent = true })
+
 -- Save and quit
 keymap("n", "<leader>s", "<cmd>w<cr>", opts)
 keymap("n", "<leader>q", "<cmd>q!<cr>", opts)
@@ -114,9 +119,6 @@ keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", term_opts)
 keymap("n", "<leader>m", "<cmd>MerginalToggle<cr>", term_opts)
 keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)
 
--- create new lines above and below current line using Tpope's unimpaired
-keymap("n", "_o", "[<space>]<space>", {noremap = false, silent = true})
-
 keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr>", opts)
 
 keymap("n", "[c", "<cmd>Gitsigns prev_hunk<cr>", opts)
@@ -129,8 +131,13 @@ keymap("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<cr>", opts)
 keymap("n", "<leader>hB", "<cmd>Gitsigns blame_line<cr>", opts)
 keymap("n", "<leader>hD", "<cmd>Gitsigns diffthis<cr>", opts)
 
+keymap("n", "<leader>gB", "<cmd>Git blame<cr>", opts)
+keymap("n", "<leader>gg", "<cmd>Git<cr>", opts)
+
 keymap("n", "<leader>sd", 
   "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><c-[>", opts)
 
 -- fixing dumb issue with <c-o> jumping back 2 spots
-keymap("n", "<c-o>", "<c-o><c-i>", opts)
+--keymap("n", "<c-o>", "<c-o><c-i>", opts)
+
+keymap("n", "gx", "<cmd>sil! exe  '!msedge.exe ' . shellescape('<cWORD>')<cr>", opts)

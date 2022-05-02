@@ -20,15 +20,26 @@ markdtest () {
     pandoc $@ | vim -
 }
 
-tempFile=`mktemp /tmp/welcomeScreen.XXXXX`
+tempPath='/tmp/welcomeScreen'
+tempFile=`mktemp $tempPath.XXXXX`
+tempWttrFile=$tempPath.wttr.txt # We won't clean this up for caching purposes
 
 # Say hello
 echo "<h1> Welcome Back Austin</h1>" > $tempFile
 
 # Give the weather
 # After getting the info, strip the '+' char between City names.
-wttr=$(curl wttr.in/Castle+Rock\?format="%l:+%C:+%t+%m" 2> /dev/null \
-    | sed 's/\([[:alpha:]]\)+\([[:alpha:]]\)/\1 \2/g')
+callWttr() {
+    date +'%s' > $tempWttrFile
+    curl wttr.in/Castle+Rock\?format="%l:+%C:+%t+%m" 2> /dev/null \
+      | sed 's/\([[:alpha:]]\)+\([[:alpha:]]\)/\1 \2/g' 1>> $tempWttrFile
+}
+
+# Call for the weather if the file doesn't exist or the data is older than 10 minutes.
+[ ! -s $tempWttrFile ] && callWttr
+[ $((`date +'%s'` - `head -1 $tempWttrFile`)) -gt 600 ] && callWttr
+
+wttr=$(tail -1 $tempWttrFile)
 
 echo -e "<body>\n<pre>\n" >> $tempFile
 echo -n " Today's Weather in " >> $tempFile

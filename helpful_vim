@@ -126,6 +126,7 @@ Commands that I used that could be scripted further
 
 "}}}1
 
+" Printing a-z {{{1
 to print out the sequence:
 abcdefghijklmnopqrstuvwxyz
 I ran the expression:
@@ -133,10 +134,22 @@ i_CTRL-R =join(map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)'),'')
 
 This put a list of my_list = [a, b, c, d] -> my_list = ["a", "b", "c", "d"]
 :s/\(\a\)\(,\|]\)/"\1"\2/g
+"}}}1
 
 " Great tips for Ex commands {{{1
-    " e.g. g/re/p, grevrep, and '!' commands/filtering.
-    https://www.inkstonenews.com/society/big-archeology-find-home-chinas-terracotta-army/article/3122640
+    Substituting and using a shell command.
+
+    This helped me to swap a list of windows paths to be linux paths. I used a
+    macro to go through each line, run this command and join.  this adds a new
+    line with the wslpath result. Ranges and global didn't work.
+
+      3,$ g/c:.*$/ s//\=execute('r!wslpath "' . submatch(0) . '"')/ | -1 join
+
+    example line:
+      rm -vrf c:\projects\.m2\repository\org\apache\logging\log4j\log4j-core\2.8.2
+    result line:
+      rm -vrf /mnt/c/projects/.m2/repository/org/apache/logging/log4j/log4j-core/2.8.2
+
 " }}}1
 
 " Reference for replacing a name with clipboard and substituting. {{{1
@@ -153,4 +166,4 @@ This put a list of my_list = [a, b, c, d] -> my_list = ["a", "b", "c", "d"]
 " }}}1
 
 " Modeline{{{
-" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker: ft=txt}}}
