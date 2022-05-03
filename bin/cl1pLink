@@ -1,14 +1,20 @@
 #! /bin/bash
 
+# cl1pLink
 # Author : Austin Burt
 # Email  : austin@burt.us.com
-# Date   :
+# Date   : 05-03-2022
+#
+# Easy to use, just call and the output is what is found at the link.
+#     cl1pLink [link]
+# e.g.
+#     $BROWSER $(cl1pLink link_to_use)
+
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 
-name="obnoxious"
-name=$(echo $name | sed 's/ //g')
+link_id=${1:-obnoxious}
 
-curl https://api.cl1p.net/$name 2>/dev/null
+curl https://api.cl1p.net/$link_id 2>/dev/null
 
 exit 0
