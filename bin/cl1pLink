@@ -1,0 +1,14 @@
+#! /bin/bash
+
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   :
+
+[[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
+
+name="obnoxious"
+name=$(echo $name | sed 's/ //g')
+
+curl https://api.cl1p.net/$name 2>/dev/null
+
+exit 0
