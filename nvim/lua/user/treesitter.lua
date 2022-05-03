@@ -4,9 +4,8 @@ local configs = require("nvim-treesitter.configs")
 require("nvim-treesitter.install").command_extra_args = {
   curl = { "-k" },
 }
-
 configs.setup {
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   sync_install = false, 
   ignore_install = { "" }, -- List of parsers to ignore installing
   highlight = {

@@ -103,6 +103,8 @@ return packer.startup(function(use)
   use "idanarye/vim-merginal"
   use "tpope/vim-rhubarb" -- GitHub
   use "shumphrey/fugitive-gitlab.vim" -- GitLab
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
 
   -- Docs
   use 'wsdjeg/luarefvim'
