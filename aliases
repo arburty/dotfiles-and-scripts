@@ -84,6 +84,7 @@ alias muttbackup='rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --ba
 # Vim related alias's {{{2
 VEDITOR='nvim'
 alias v='$VEDITOR'
+alias G='$VEDITOR +G'
 alias vz='$VEDITOR $HOME/.zshrc'
 alias vb='$VEDITOR $HOME/.bashrc'
 alias vh='$VEDITOR $HOME/.helpful_commands.md'
