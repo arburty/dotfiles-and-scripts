@@ -120,6 +120,9 @@ keymap("n", "<leader>m", "<cmd>MerginalToggle<cr>", term_opts)
 keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)
 
 keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr>", opts)
+keymap("n", "<leader>ek", "<cmd>tabnew ~/.config/nvim/lua/user/keymaps.lua<cr>", opts)
+
+keymap("n", "<leader>em", "<cmd>r ~/Templates/email_to_mehvish.txt<cr>", opts)
 
 keymap("n", "[c", "<cmd>Gitsigns prev_hunk<cr>", opts)
 keymap("n", "]c", "<cmd>Gitsigns next_hunk<cr>", opts)
