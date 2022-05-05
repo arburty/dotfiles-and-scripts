@@ -132,7 +132,7 @@ main() {
             remove "$@"
             ;;
         "-n" )
-            checkValidBranchAndGit
+            # checkValidBranchAndGit
             backup
             shift
             newName "$@"

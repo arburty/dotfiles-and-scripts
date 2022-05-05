@@ -1,21 +1,54 @@
-#! /bin/bash
+#! /bin/zsh
+# I chose zsh because of bash failing on default variable expansion
 
 # Author : Austin Burt
 # Email  : austin@burt.us.com
 # Date   : 02/10/22
+#
+# Opening and viewing notes for my stories.
+#
+# Arguments will be added as a new note ~/story_notes/{arg}/{arg}.md.
 
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 [[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
 
 STORYNOTES="$HOME/story_notes"
-STORY=$(git mybr 2>/dev/null)
-[[ -z "$STORY" ]] && STORY=NONE
+STORY=${$(git mybr 2>/dev/null):-NONE}
+NEWSTORIES=${@:-NONE}
+echo "NEWSTORIES - $NEWSTORIES"
 mystory="$STORYNOTES/$STORY"
 
-[[ -z $VEDITOR ]] && VEDITOR='nvim'
+die() {
+  echo "$PROGRAM: $@" >&2 
+  exit 1
+}
+
+VEDITOR=${$(command -v nvim):-$(command -v vim)}
+[[ -z $VEDITOR ]] && die "Something went wrong, no editor selected"
 
 cd $STORYNOTES
 
+# Create and open new files if available.
+if [[ ! "$NEWSTORIES" == "NONE" ]]
+then
+  files=
+  declare -a files
+  for new_story in $(echo $NEWSTORIES)
+  do
+    file="$new_story/$new_story.md"
+    echo "making new netes for: $new_story"
+    mkdir -pv $new_story
+    echo "$new_story" > "$file"
+    desc -l $new_story 2>/dev/null >> "$file"
+    files+="$file"
+  done
+
+  $VEDITOR -O ${files}
+  exit 0
+fi
+
+
+exit 0
 if [[ ! $STORY -eq "NONE" ]]
 then
   [[ ! -d $mystory ]] && mkdir $mystory
