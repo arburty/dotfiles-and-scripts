@@ -20,8 +20,8 @@ func! s:renameFromClipboard() abort
     let fromclip=@+
                                             "00 . 00 . 00(00)
     let fromclip=substitute(fromclip, "\\s\\?\\(\\d\\{2}\\.\\)\\{2}\\d\\{2,4}\\s\\?", "", "")
-    let fromclip=substitute(fromclip, "\\s\\?\\d\\{2,4}p$", "", "")
-    let fromclip=substitute(fromclip, "\\.(mkv|mp4|webm|avi|nfo)", "", "")
+    let fromclip=substitute(fromclip, "\\.\\(mkv\\|mp4\\|webm\\|avi\\|nfo\\)$", "", "")
+    let fromclip=substitute(fromclip, "\\s\\?\\d\\{2,4}p\\s*$", "", "")
     let fromclip=substitute(fromclip, "\\s*$", "", "")
 
     exec "sil %s/".pattern."/".fromclip."/"
