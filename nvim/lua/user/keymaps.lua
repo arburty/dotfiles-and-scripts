@@ -119,8 +119,8 @@ keymap("n", "<leader>u", "<cmd>UndotreeToggle<cr>", term_opts)
 keymap("n", "<leader>m", "<cmd>MerginalToggle<cr>", term_opts)
 keymap("n", "<leader>M", "<cmd>messages<cr>", term_opts)
 
-keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr>", opts)
-keymap("n", "<leader>ek", "<cmd>tabnew ~/.config/nvim/lua/user/keymaps.lua<cr>", opts)
+keymap("n", "<leader>ev", "<cmd>tabnew ~/.config/nvim/init.lua<cr><cmd>lcd ~/.config/nvim<cr>", opts)
+keymap("n", "<leader>ek", "<cmd>tabnew ~/.config/nvim/lua/user/keymaps.lua<cr><cmd>lcd ~/.config/nvim<cr>", opts)
 
 keymap("n", "<leader>em", "<cmd>r ~/Templates/email_to_mehvish.txt<cr>", opts)
 
@@ -137,8 +137,10 @@ keymap("n", "<leader>hD", "<cmd>Gitsigns diffthis<cr>", opts)
 keymap("n", "<leader>gB", "<cmd>Git blame<cr>", opts)
 keymap("n", "<leader>gg", "<cmd>Git<cr>", opts)
 
-keymap("n", "<leader>sd", 
-  "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><c-[>", opts)
+keymap("n", "g~", ":s;\\~;$HOME<cr>", opts)
+keymap("n", "gH", ":s/$HOME/\\~/<cr>", opts)
+
+keymap("n", "<leader>sd", "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><c-[>", opts)
 
 -- fixing dumb issue with <c-o> jumping back 2 spots
 --keymap("n", "<c-o>", "<c-o><c-i>", opts)
