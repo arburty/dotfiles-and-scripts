@@ -15,7 +15,6 @@
 STORYNOTES="$HOME/story_notes"
 STORY=${$(git mybr 2>/dev/null):-NONE}
 NEWSTORIES=${@:-NONE}
-echo "NEWSTORIES - $NEWSTORIES"
 mystory="$STORYNOTES/$STORY"
 
 die() {
@@ -29,7 +28,7 @@ VEDITOR=${$(command -v nvim):-$(command -v vim)}
 cd $STORYNOTES
 
 # Create and open new files if available.
-if [[ ! "$NEWSTORIES" == "NONE" ]]
+if [[ "$NEWSTORIES" != "NONE" ]]
 then
   files=
   declare -a files
@@ -38,8 +37,9 @@ then
     file="$new_story/$new_story.md"
     echo "making new netes for: $new_story"
     mkdir -pv $new_story
-    echo "$new_story" > "$file"
-    desc -l $new_story 2>/dev/null >> "$file"
+    [ ! -s $file ] \
+      && echo "$new_story" > "$file" \
+      && desc -l $new_story 2>/dev/null >> "$file"
     files+="$file"
   done
 
@@ -47,8 +47,6 @@ then
   exit 0
 fi
 
-
-exit 0
 if [[ ! $STORY -eq "NONE" ]]
 then
   [[ ! -d $mystory ]] && mkdir $mystory
