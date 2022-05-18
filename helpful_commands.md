@@ -258,6 +258,18 @@ like: `file '/path/to/file'`
 `nc towel.blinkenlights.nl 23 - Star wars movie`
 : Star Wars IV: A New Hope, remastered
 
+# Saved me | Troubleshooting
+
+`sudo apt-get purge bcmwl-kernel-source broadcom-sta-common broadcom-sta-dkms`
+: for whatever reason after the upgrade to 22.04 the wifi adapter broke, and
+this is what finally succeeded in uninstalling the packages and after a
+restart and `saiyd bcmwl-kernel-source` we were back.  May have been that the
+packages had been fixed in the intervening days.
+[Reddit_comments_w/me!](https://www.reddit.com/r/linux4noobs/comments/ujbcqy/bcmwlkernelsource_not_working_on_517/i8i2wuj/?%24deep_link=true&correlation_id=c34ee2c7-72a9-4fb4-9bc8-9c0d095c16f4&ref=email_comment_reply&ref_campaign=email_comment_reply&ref_source=email&%243p=e_as&_branch_match_id=1053862608778522343&utm_medium=Email%20Amazon%20SES&_branch_referrer=H4sIAAAAAAAAA31O0WrDMAz8muwtSWu7TVMoYzD2G8ZRlNaNY3uKjde%2Fn0K714EEp9OddLeU4npuW8JxtKkxMTbO%2BrmV8b0SSsYLarO%2BMQxkr9YbpzO5y21zVfKjEl9cpZTm5YewMEHcfCX%2FKB%2FCsPLE%2FII%2BbTDfB%2Fh%2BMBhgKW5G8ujWkAlQ%2B5B0CTRbf9XB68O%2BY5k9WVHyfXsl%2BZsaEaPeMlbyM1HGShwhEKEzybLJjsyDVIgCuroTpq%2FVNKi6H%2BBU97Abd%2F0B9sdJsY9wYjEuxjr9SqgJo3s8dxrMEo29%2Bn9Fz%2Bx%2Fkl9WQ6EfUAEAAA%3D%3D)
+
+
+
+
 ## Not Organized Yet (Recently Added)
 `awk '{for (i=1;i<100/2;i++){b=100-i; print $i ". (" $i "+" $b") =",$i+$(100-i)}}' file`
 : Will print 1+99, 2+88 etc using a file with 1-99 on one line. Use an empty file to
