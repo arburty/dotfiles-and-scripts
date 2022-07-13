@@ -13,6 +13,7 @@ declare -r backup="$HOME/notes/branchnamesbackup"
 declare -r backup2="$HOME/notes/branchnamesbackup2"
 declare -r myBranch=$(git mybr 2> /dev/null)
 declare -r cleanedBranches="$HOME/notes/cleanedbranchnames"
+exitCode=0
 
 die() {
     echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
@@ -99,11 +100,14 @@ clean() {
 listAll() {
     searchTerm=$myBranch
     [[ ! -z $1 ]] && searchTerm=$1
-    count=$(cat $branchFile | grep -e "$searchTerm" | wc -l)
+    lines=$(cat $branchFile | grep -e "$searchTerm")
+    count=$(echo "$lines" | wc -l)
 
-    if [[ $count -ge 1 ]]
+    if [[ $count -ge 1 && ! -z "$lines" ]]
     then
-        cat $branchFile | grep -e "$searchTerm"
+        echo $lines
+      else
+        exitCode=2
     fi
 }
 
@@ -152,4 +156,4 @@ main() {
 
 main "$@"
 
-exit 0
+exit $exitCode

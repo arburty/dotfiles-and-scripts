@@ -7,8 +7,9 @@
 #
 # Opening and viewing notes for my stories.
 #
-# Arguments will be added as a new note ~/story_notes/{arg}/{arg}.md.
+# Arguments will be added as a new note ~/story_notes/{arg}/{arg}.snote.
 
+PROGRAMPATH="$0"
 [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 [[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
 
@@ -16,6 +17,20 @@ STORYNOTES="$HOME/story_notes"
 STORY=${$(git mybr 2>/dev/null):-NONE}
 NEWSTORIES=${@:-NONE}
 mystory="$STORYNOTES/$STORY"
+
+printNewStory() {
+cat << EOF >> "$file"
+$new_story
+$(desc -l $new_story 2>/dev/null || echo INFO)
+S100 <!-- CHANGE -->
+
+[Jira](https://invesco.atlassian.net/browse/$new_story)
+
+|> [X] Research
+
+# Notes
+EOF
+}
 
 die() {
   echo "$PROGRAM: $@" >&2 
@@ -34,29 +49,43 @@ then
   declare -a files
   for new_story in $(echo $NEWSTORIES)
   do
-    file="$new_story/$new_story.md"
+    file="$new_story/$new_story.snote"
     echo "making new netes for: $new_story"
     mkdir -pv $new_story
-    [ ! -s $file ] \
-      && echo "$new_story" > "$file" \
-      && desc -l $new_story 2>/dev/null >> "$file"
+    if [ ! -s $file ]
+    then
+      printNewStory
+    fi
     files+="$file"
   done
 
-  $VEDITOR -O ${files}
-  exit 0
+$VEDITOR -O ${files}
+exit 0
 fi
 
 if [[ ! $STORY -eq "NONE" ]]
 then
   [[ ! -d $mystory ]] && mkdir $mystory
 
-  files=$(find $mystory '(' -name '*.md' -o -name '*.java' -o -name '*.sql' -o -name '*.txt' ')')
+  files=$(find $mystory '(' -name '*.snote' -o -name '*.md' -o -name '*.java' -o -name '*.sql' -o -name '*.txt' ')')
+  tmpfile=$(mktemp /tmp/snote.XXXX)
+  echo $files > $tmpfile
+
   [[ -z "$files" ]] && files="$mystory/$STORY.md" && echo Creating file $files
 
-  $VEDITOR ${files} -O
+  xargs -d '\n' --arg-file=$tmpfile $VEDITOR -O --
+  # xargs -d '\n' --arg-file=$tmpfile $VEDITOR -O --
+
+  rm $tmpfile 2>/dev/null
 else
-  $VEDITOR ./
+  if [[ ! -z "$STORY" ]]
+  then
+    echo "Retrying snote with your branch name as an argument"
+    $PROGRAMPATH $STORY
+  else
+    echo "No clear options, Opening $STORYNOTES"
+    $VEDITOR ./
+  fi
 fi
 
 exit 0
