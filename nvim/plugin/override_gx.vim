@@ -2,8 +2,11 @@
 " Open URL's workaround
 function! OpenURLUnderCursor()
   let s:uri = expand('<cWORD>')
-  let s:uri = substitute(s:uri, '.*[<(]', '', '')
-  let s:uri = substitute(s:uri, '[>)].*', '', '')
+  let s:uri = substitute(s:uri, '.*[^\\][<(]', '', '')
+  let s:uri = substitute(s:uri, '[)]$', '', '')
+  let s:uri = substitute(s:uri, '[\\][(]', '(', '')
+  let s:uri = substitute(s:uri, '[\\][)]', ')', '')
+
   " let s:uri = substitute(s:uri, '?', '\\?', '')
   let s:uri = shellescape(s:uri, 1)
   echom s:uri
