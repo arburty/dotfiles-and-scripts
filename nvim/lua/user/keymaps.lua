@@ -3,12 +3,12 @@
 --Email  : austin@burt.us.com
 --Date   : 01/05/2022
 
-vim.cmd [[
-  augroup source_keymaps
-    autocmd!
-    autocmd BufWritePost keymaps.lua source <afile>
-  augroup END
-]]
+local source_keymaps = vim.api.nvim_create_augroup("source_keymaps", {clear = true})
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+  pattern = {"keymaps.lua"},
+  group = sft,
+  command = "source " .. vim.fn.expand('<afile>')
+})
 
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
