@@ -7,6 +7,7 @@ import sys
 
 from ranger.api.commands import Command
 from ranger.ext.shell_escape import shell_escape
+# from ranger.gui.ui import open_pager
 
 # My cusomization: arburty
 class save_sorted_files_buffer(Command):
@@ -66,3 +67,14 @@ class deleteAmp(Command):
         self.fm.notify("running deleteAmp " + amp)
         os.system("notify-send 'deleting Amp'")
         os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/deleteAmp " + amp)
+
+
+class count_images(Command):
+    def execute(self):
+        # sys.path.insert(0, '/home/vladislav/shared_drive/laptop-backup/.sysctl/bin')
+        # import count_images
+        # totals = count_images.return_totals()
+        
+        if self.arg(1):
+            dir = self.rest(1)
+        self.fm.execute_console('shell -p /home/vladislav/shared_drive/laptop-backup/.sysctl/bin/count_images.py ' + dir)
