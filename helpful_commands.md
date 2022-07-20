@@ -21,6 +21,13 @@ every instance of 'Permission denied".  There were a lot.
 `date '+%m/%d/%y %H:%M'`
 : Month/day/year hour:minute
 
+`date -d@$seconds -u +%H:%M:%S`
+: This is a little hack to turn seconds into H:M:S. Only works on GNU, and is
+not portable (Mac you bastard) so not good for scripts.
+
+`printf '%02d:%02d:%02d\n' $((secs/3600)) $((secs%3600/60)) $((secs%60))`
+: One liner to adapt seconds to H:M:S
+
 `ln -s /home/vladislav/git/dotfiles/helpful_commands.md .helpful_commands.md`
 : This symlink example is run from the home directory.
 
