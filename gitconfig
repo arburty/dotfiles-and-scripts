@@ -67,3 +67,5 @@
 	default = simple
 #[init]
 #	templatedir = ~/.git_template
+[safe]
+	directory = /mnt/shared/laptop-backup/.sysctl/bin

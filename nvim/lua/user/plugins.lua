@@ -113,7 +113,8 @@ return packer.startup(function(use)
   --use 'scrooloose/nerdcommenter'
   use "tpope/vim-abolish"
   use "tpope/vim-repeat"
-  use "tpope/vim-surround"
+  -- use "tpope/vim-surround"
+  use "kylechui/nvim-surround"
   use "romainl/vim-cool"
   use "justinmk/vim-sneak"
   use "tpope/vim-unimpaired"
