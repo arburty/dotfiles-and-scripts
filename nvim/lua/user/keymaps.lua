@@ -6,7 +6,7 @@
 local source_keymaps = vim.api.nvim_create_augroup("source_keymaps", {clear = true})
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
   pattern = {"keymaps.lua"},
-  group = sft,
+  group = source_keymaps,
   command = "source " .. vim.fn.expand('<afile>')
 })
 
@@ -134,6 +134,7 @@ keymap("n", "<leader>hD", "<cmd>Gitsigns diffthis<cr>", opts)
 
 keymap("n", "<leader>gB", "<cmd>Git blame<cr>", opts)
 keymap("n", "<leader>gg", "<cmd>Git<cr>", opts)
+keymap("n", "gcd", "<cmd>Gcd<cr><cmd>pwd<cr>", opts)
 
 keymap("n", "g~", ":s;\\~;$HOME<cr>", opts)
 keymap("n", "gH", ":s/$HOME/\\~/<cr>", opts)
@@ -144,3 +145,4 @@ keymap("n", "<leader>sd", "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><
 --keymap("n", "<c-o>", "<c-o><c-i>", opts)
 
 keymap("n", "gx", "<cmd>sil! exe  '!msedge.exe ' . shellescape('<cWORD>')<cr>", opts)
+keymap("n", "gwJ", [[vip:join<cr>]], opts)
