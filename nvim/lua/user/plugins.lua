@@ -118,7 +118,8 @@ return packer.startup(function(use)
   use "romainl/vim-cool"
   use "justinmk/vim-sneak"
   use "tpope/vim-unimpaired"
-  use "JamshedVesuna/vim-markdown-preview"
+  -- use "JamshedVesuna/vim-markdown-preview"
+  use "ellisonleao/glow.nvim"
 
   -- }}}
 

@@ -146,3 +146,5 @@ keymap("n", "<leader>sd", "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><
 
 keymap("n", "gx", "<cmd>sil! exe  '!msedge.exe ' . shellescape('<cWORD>')<cr>", opts)
 keymap("n", "gwJ", [[vip:join<cr>]], opts)
+
+keymap("n", "\\z", [[:nnoremap <buffer> \z :]], opts)
