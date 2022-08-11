@@ -59,7 +59,53 @@ createSession() {
     cd - >> /dev/null
 }
 
+validate_arg_amount() {
+  # If user gave arguments use those
+  [[ $# -ge 2 ]] && return 0 
+  if [[ $# -eq 1 ]] 
+  then
+    isFlagW $1 && return 0 || die "Invalid arguments"
+  fi
+
+  # No arguments, we will use gum if available.
+  if [[ ! $(command -v gum) ]]
+  then
+    die "Invalid arguments, and gum not installed"
+  fi
+
+  return 0
+}
+
+select_projects() {
+  local FILE_PROJECTS="$HOME/.local/share/tmux/tmstart_all_projects.txt"
+
+  local do_all=$(gum confirm "Instantiate same projects as last time?";echo $?)
+
+  if [ $do_all == 0 ]
+  then
+    CHOSE=$(cat $FILE_PROJECTS)
+  else
+    CHOSE=$(cat $FILE_PROJECTS | gum choose --no-limit \
+      --selected.bold --selected.italic)
+  fi
+
+  local str=""
+  for line in $CHOSE
+  do
+    str="$str $line"
+  done
+
+  # Rerun the script with the chosen arguments
+  $0 $str
+  local recursive_run=$?
+  exit $recursive_run
+}
+
 # Main {
+
+validate_arg_amount $@
+[ $# == 0 ] && select_projects
+
 detach=false
 case $1 in
     -d ) detach=true && shift ;;
