@@ -1,0 +1,18 @@
+#! /bin/bash
+
+# tmsendcd
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 12/23/21
+#
+# send to all panes.  Ranger and welcome screen is special
+
+# If directory not given use dirfinder.
+[[ -d "$1" ]] && path="$1" || path=$(dirfinder.sh)
+
+tmux send-keys -t 1.1 'qq' C-C
+tmux send-keys -t 4.0 ':'
+tmux list-panes -s -F "#{session_name}:#{window_index}.#{pane_index}" \
+    | xargs -I{} tmux send -t {} " cd ${path}" C-M
+tmux list-panes -s -F "#{session_name}:#{window_index}.#{pane_index}" \
+    | xargs -I{} tmux send -t {} C-L
