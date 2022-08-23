@@ -38,6 +38,9 @@
     diffstaged = diff --staged
       # diff HEAD; i think finds all changes
 
+    stopwatching = update-index --assume-unchanged
+    resetorigin  = "!f() { git fetch origin && git reset --hard origin/$(git mybr) && git clean -f -d; }; f"
+
     # Log outputs
     # single line, pretty
     l1 = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
@@ -52,11 +55,11 @@
     ec     = config --global -e
     up     = "!f() { git pull --rebase $@ && git submodule update --init --recursive; }; f"
     cob    = checkout -b
+    cod    = checkout develop
     cm     = !git add -A && git commit -m
     save   = !git add -A && git commit -m 'SAVEPOINT'
     wip    = commit -am "WIP"
     undo   = reset HEAD~1 --mixed
-    resetorigin = "!f() { git fetch origin && git reset --hard origin/$(git mybr) && git clean -f -d; }; f"
     amend  = commit -a --amend
     #wipe  = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
     wipe   = "!f() { rev=$(git rev-parse ${1-HEAD}); git add -A && git commit --allow-empty -qm 'WIPE SAVEPOINT' && git reset $rev --hard; }; f"
