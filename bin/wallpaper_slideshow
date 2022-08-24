@@ -17,6 +17,8 @@ die() {
     echo "ERROR: $PROGRAM: Line $BASH_LINENO: $*" >&2
     exit 1
 }
+LOGFILE="$HOME/.local/logs/wallpaper_slideshow.log"
+date +"Script started: %F %T" > "$LOGFILE"
 
 let minutes=30
 let seconds=0
@@ -53,6 +55,7 @@ do
     let random=$(( RANDOM % $array_size ))
     selected="${wallpapers[$random]}"
     [ -f "${selected}" ] && cp "${selected}" ~/.local/share/eog-wallpaper.jpg || continue
+    echo "$selected" >> "$LOGFILE"
     sleep "$speed"
 done
 
