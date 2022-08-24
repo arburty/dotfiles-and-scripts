@@ -275,6 +275,20 @@ packages had been fixed in the intervening days.
 [Reddit_comments_w/me!](https://www.reddit.com/r/linux4noobs/comments/ujbcqy/bcmwlkernelsource_not_working_on_517/i8i2wuj/?%24deep_link=true&correlation_id=c34ee2c7-72a9-4fb4-9bc8-9c0d095c16f4&ref=email_comment_reply&ref_campaign=email_comment_reply&ref_source=email&%243p=e_as&_branch_match_id=1053862608778522343&utm_medium=Email%20Amazon%20SES&_branch_referrer=H4sIAAAAAAAAA31O0WrDMAz8muwtSWu7TVMoYzD2G8ZRlNaNY3uKjde%2Fn0K714EEp9OddLeU4npuW8JxtKkxMTbO%2BrmV8b0SSsYLarO%2BMQxkr9YbpzO5y21zVfKjEl9cpZTm5YewMEHcfCX%2FKB%2FCsPLE%2FII%2BbTDfB%2Fh%2BMBhgKW5G8ujWkAlQ%2B5B0CTRbf9XB68O%2BY5k9WVHyfXsl%2BZsaEaPeMlbyM1HGShwhEKEzybLJjsyDVIgCuroTpq%2FVNKi6H%2BBU97Abd%2F0B9sdJsY9wYjEuxjr9SqgJo3s8dxrMEo29%2Bn9Fz%2Bx%2Fkl9WQ6EfUAEAAA%3D%3D)
 
 
+# Gum
+
+[Github](https://github.com/charmbracelet/gum)
+
+Spinner types
+: line, dot, minidot, jump, pulse, points, globe, moon, monkey, meter, hamburger
+
+```bash
+for mytype in $(echo {line,dot,minidot,jump,pulse,points,globe,moon,monkey,meter,hamburger} )
+do
+  echo "> $mytype"
+  gum spin --spinner $mytype --title.bold --title "Buying Bubble Gum..." -- sleep 5
+done
+```
 
 
 ## Not Organized Yet (Recently Added)
