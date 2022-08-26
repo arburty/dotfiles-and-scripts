@@ -13,12 +13,30 @@
 headphonesName="Arctis Pro Wireless Game"
 anotherDevice="Family 17h"
 
+# Opted to use only sed.  THis was the previous command using more pipes.
+# local device    =`wpctl status | grep -A 5 -m 1 Sinks | tail -n 5 | grep "$anotherDevice" | grep -oP '^[^0-9]*\K[0-9]+'`
+#   sed command:
+#    finds lines between Sinks and the next "empty" line
+#    quits on "empty" line. Done processing
+#    searches the given pattern
+#    returns the index
+find_device() {
+  local find="$@"
+  wpctl status \
+    | sed -E -n '
+      /Sinks:/,/^\s.\s*$/ { 
+        /^\s.\s*$/q
+        /'"$find"'/ { 
+          s/^[[:space:]│*]+([[:digit:]]+)\..*/\1/ 
+          p
+        }
+      }'
+}
 
 # Getting headphones sink id
-headphones=`wpctl status | grep -A 5 -m 1 Sinks | tail -n 5 | grep "$headphonesName" | grep -oP '^[^0-9]*\K[0-9]+'`
-
 # Getting another device sink id
-device=`wpctl status | grep -A 5 -m 1 Sinks | tail -n 5 | grep "$anotherDevice" | grep -oP '^[^0-9]*\K[0-9]+'`
+device=$(find_device "$anotherDevice")
+headphones=$(find_device "$headphonesName")
 
 echo "device = $device"
 echo "headphones = $headphones"
