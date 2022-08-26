@@ -1,20 +1,10 @@
 #!/bin/bash
 
-# Your headphones name (or keyword)
-# and another device you want switch to (or keyword)
-#
-# You can find these names (or keywords) by running this command:
-#    wpctl status | grep -A3 -m 1 Sinks | tail -n 3 |
-#
-#	EXAMPLE:
-#	headphonesName=HyperX
-# 	anotherDevice=HDMI
-
 headphonesName="Arctis Pro Wireless Game"
-anotherDevice="Family 17h"
+speakerName="Family 17h"
 
-# Opted to use only sed.  THis was the previous command using more pipes.
-# local device    =`wpctl status | grep -A 5 -m 1 Sinks | tail -n 5 | grep "$anotherDevice" | grep -oP '^[^0-9]*\K[0-9]+'`
+# Opted to use only sed.  This was the previous command using more pipes. less accurate fetching of all ids.
+# local device    =`wpctl status | grep -A 5 -m 1 Sinks | tail -n 5 | grep "$speakerName" | grep -oP '^[^0-9]*\K[0-9]+'`
 #   sed command:
 #    finds lines between Sinks and the next "empty" line
 #    quits on "empty" line. Done processing
@@ -33,28 +23,28 @@ find_device() {
       }'
 }
 
-# Getting headphones sink id
-# Getting another device sink id
-device=$(find_device "$anotherDevice")
+# Getting sink ids
 headphones=$(find_device "$headphonesName")
+speakerBar=$(find_device "$speakerName")
 
-echo "device = $device"
+echo "speakerBar = $speakerBar"
 echo "headphones = $headphones"
 
 
 if [[ "$(wpctl status | grep -A 5 -m 1 Sinks | tail -n 5 | grep "\*")" = *"$headphonesName"* ]]; then	
-	let nonActive="$device"
-	nonActiveName="$anotherDevice"
-	nonActiveIcon="speaker"
+	let nonActive="$speakerBar"
+	nonActiveName="$speakerName"
 else
 	let nonActive="$headphones"
 	nonActiveName="$headphonesName"
-	nonActiveIcon="headphones"
 fi
+icon=$HOME/shared_drive/Pictures/Me/Matt-and-I-Ren-Fair.jpg
 
 # Changing output  	
 wpctl set-default "$nonActive" &&
 
 # Sending notification (comment the line below if you don`t want notifications)
-notify-send.sh "Audio output" "Switched to $nonActiveName" -u low --icon="$nonActiveIcon"
+notify-send -t 100 "Audio output" "Switched to $nonActiveName" --icon="$icon"
+
+exit 0
 
