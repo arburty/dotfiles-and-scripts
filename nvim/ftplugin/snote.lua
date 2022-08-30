@@ -37,6 +37,8 @@ user_command(
   "ExecuteSnote",
   function ()
     local sedfile="~/bin/sed-snoteHeaders_to_vars"
+    local currbuf=vim.api.nvim_get_current_buf()
+    local currbufname=vim.api.nvim_buf_get_name(currbuf)
     local startbuf=vim.api.nvim_get_current_buf()
     local script=vim.fn.expand('%:p:r') .. "-script.sh"
     local std_output={}
@@ -46,26 +48,29 @@ user_command(
     -- print(newbufnr)
     -- nvim_buf_set_name({newbufnr}, {script})
 
+    local newbuf=vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_buf_set_name(newbuf, script)
+
     local callbacks = {
+      cwd = "/home/wslburtar/story_notes/",
+      stdout_buffered = true,
       on_sterr = vim.schedule_wrap( function(_, data, _)
         local out = table.concat(data, "\n")
         vim.notify(out, vim.log.levels.ERROR)
       end),
+
       on_stdout = vim.schedule_wrap( function (_, data, _)
-        local std_output = table.concat(data, "\n") --, "\n")
-        vim.api.nvim_buf_set_lines(newbuf, 0, -1, true, {std_output})
+        vim.api.nvim_buf_set_lines(newbuf, 0, -1, true, data)
       end),
+
       on_exit = vim.schedule_wrap( function (first, second, third)
         print( first .. "--" .. second .. "--" .. third)
         print(std_output)
       end)
     }
 
-    local newbuf=vim.api.nvim_create_buf(true, false)
-    vim.api.nvim_buf_set_name(newbuf, script)
-
     vim.api.nvim_buf_set_lines(newbuf, 0, -1, false, {"line1", "line2"})
-    -- vim.fn.jobstart({"/home/wslburtar/bin/juicy", "data" }, callbacks )
+    vim.fn.jobstart({ "sed", "-nf", "/home/wslburtar/bin/sed-snoteHeaders_to_vars", currbufname }, callbacks )
 
   end,
   { nargs = 0 , desc = "create a script for using this story." }
