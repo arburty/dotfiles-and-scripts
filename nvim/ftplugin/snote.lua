@@ -30,10 +30,53 @@ vim.api.nvim_create_autocmd({"BufWinEnter"}, {
   end
 })
 
+-- User Commands
+local user_command = vim.api.nvim_create_user_command
+
+user_command(
+  "ExecuteSnote",
+  function ()
+    local sedfile="~/bin/sed-snoteHeaders_to_vars"
+    local startbuf=vim.api.nvim_get_current_buf()
+    local script=vim.fn.expand('%:p:r') .. "-script.sh"
+    local std_output={}
+
+    -- vim.cmd[[new script]]
+    -- newbufnr=vim.api.nvim_create_buf()
+    -- print(newbufnr)
+    -- nvim_buf_set_name({newbufnr}, {script})
+
+    local callbacks = {
+      on_sterr = vim.schedule_wrap( function(_, data, _)
+        local out = table.concat(data, "\n")
+        vim.notify(out, vim.log.levels.ERROR)
+      end),
+      on_stdout = vim.schedule_wrap( function (_, data, _)
+        local std_output = table.concat(data, "\n") --, "\n")
+        vim.api.nvim_buf_set_lines(newbuf, 0, -1, true, {std_output})
+      end),
+      on_exit = vim.schedule_wrap( function (first, second, third)
+        print( first .. "--" .. second .. "--" .. third)
+        print(std_output)
+      end)
+    }
+
+    local newbuf=vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_buf_set_name(newbuf, script)
+
+    vim.api.nvim_buf_set_lines(newbuf, 0, -1, false, {"line1", "line2"})
+    -- vim.fn.jobstart({"/home/wslburtar/bin/juicy", "data" }, callbacks )
+
+  end,
+  { nargs = 0 , desc = "create a script for using this story." }
+)
+
 -- Keymappings
 -- local keymap = vim.api.nvim_set_keymap
 local keymap = vim.api.nvim_buf_set_keymap
 local opts = { noremap = true, silent = true}
+
+keymap(0, "n", "\\z", "<cmd>ExecuteSnote<cr>", opts)
 
 keymap(0, "n", "<leader>em", "<cmd>r ~/Templates/email_to_mehvish.txt<cr>", opts)
 keymap(0, "n", "<leader>ni", "<cmd>r ~/Templates/non_issue_tasks.txt<cr>", opts)
