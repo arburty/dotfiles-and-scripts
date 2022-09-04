@@ -1,0 +1,89 @@
+#!/bin/sh
+
+# Originally found at:
+# https://github.com/mozanunal/wpctl
+
+RES_X=1920
+RES_Y=1080
+PICTURE_DIRECTORY=$HOME/wpctl
+DATE=$(date '+%Y_%m_%d_%H_%M_%S')
+
+getScreenRes ()
+{
+    # RES_X=`xrandr --current | grep '*' | uniq | awk '{print $1}' | head -n 1 | cut -d 'x' -f1`
+    # RES_Y=`xrandr --current | grep '*' | uniq | awk '{print $1}' | head -n 1 | cut -d 'x' -f2`
+    [ -z $RES_X ] && RES_X="1920"
+    [ -z $RES_Y ] && RES_Y="1080"
+}
+
+getWallPaper ()
+{
+   IMAGE_URL=$(wget  $SOURCE_URL -O $PICTURE_DIRECTORY/wallpaper$DATE.jpeg 2>&1 | grep Location | awk '{print $2}')
+}
+
+setWallPaper()
+{
+    # gsettings set org.gnome.desktop.background picture-uri "file://$PICTURE_DIRECTORY/wallpaper$DATE.jpeg"
+    cp $PICTURE_DIRECTORY/wallpaper$DATE.jpeg ~/.local/share/eog-wallpaper.jpg
+}
+
+setSource()
+{
+    case $SOURCE_ARG in
+        "random") 
+        SOURCE_URL=https://source.unsplash.com/random/$RES_X'x'$RES_Y
+        echo "--> Random is selected as source.";;
+        "daily") 
+        SOURCE_URL=https://source.unsplash.com/daily
+        echo "--> Daily is selected as source.";;
+        "collection") 
+        SOURCE_URL=https://source.unsplash.com/collection/4277594/$RES_X'x'$RES_Y
+        echo "--> Collection is selected as source.";;
+        *) 
+        SOURCE_URL=https://source.unsplash.com/featured/$RES_X'x'$RES_Y'/?'$SOURCE_ARG
+        echo "--> $SOURCE_ARG is selected as source."
+        ;;
+    esac
+}
+
+printHelp()
+{
+    echo "Usage:"
+    echo "wpctl <SOURCE>"
+    echo "       random"
+    echo "       daily"
+    echo "       collection"
+    echo "       topic1,topic2"
+    echo
+    echo "Example Crontab Commands: "
+    echo "0 * * * *    /usr/local/bin/wpctl random"
+    echo "0 10 * * *   /usr/local/bin/wpctl daily"
+    echo "*/15 * * * * /usr/local/bin/wpctl cat"
+    echo "0 */3 * * *  /usr/local/bin/wpctl blue"
+}
+
+
+if [ -z $1 ]
+then
+    echo "Please provide a valid wallpaper source"
+    printHelp
+elif [ -n $1 ]
+then
+    SOURCE_ARG=$1
+    if [ ! -d "$DIRECTORY" ]; then
+        mkdir -p $PICTURE_DIRECTORY
+    fi
+    export DISPLAY=:0 
+    export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+    getScreenRes
+    mkdir -p $PICTURE_DIRECTORY
+    setSource
+    echo $SOURCE_URL
+    getWallPaper
+    setWallPaper
+    echo "--> From source '$SOURCE_ARG' wallpaper set. $RES_X x $RES_Y"
+    notify-send "From source '$SOURCE_ARG' wallpaper set. $RES_X x $RES_Y" "$IMAGE_URL"
+fi
+
+echo "$RESULT"
+
