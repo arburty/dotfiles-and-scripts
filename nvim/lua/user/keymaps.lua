@@ -148,3 +148,5 @@ keymap("n", "gx", "<cmd>sil! exe  '!msedge.exe ' . shellescape('<cWORD>')<cr>", 
 keymap("n", "gwJ", [[vip:join<cr>]], opts)
 
 keymap("n", "\\z", [[:nnoremap <buffer> \z :]], opts)
+
+keymap("n", "\\q", "<cmd>Bdelete<cr>", opts)

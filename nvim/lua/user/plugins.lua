@@ -58,6 +58,7 @@ return packer.startup(function(use)
   use "numToStr/Comment.nvim" -- Easily comment stuff
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
+  use "moll/vim-bbye"
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -79,6 +80,9 @@ return packer.startup(function(use)
   -- colorschemes
   use "lunarvim/darkplus.nvim"
   use "bignimbus/pop-punk.vim"
+
+  -- Aesthetics
+  use "akinsho/bufferline.nvim"
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
