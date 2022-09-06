@@ -41,15 +41,12 @@ user_command(
     local currbufname=vim.api.nvim_buf_get_name(currbuf)
     local startbuf=vim.api.nvim_get_current_buf()
     local script=vim.fn.expand('%:p:r') .. "-script.sh"
-    local std_output={}
 
-    -- vim.cmd[[new script]]
-    -- newbufnr=vim.api.nvim_create_buf()
-    -- print(newbufnr)
-    -- nvim_buf_set_name({newbufnr}, {script})
-
+    vim._system('chmod 755 ' .. script)
     local newbuf=vim.api.nvim_create_buf(true, false)
     vim.api.nvim_buf_set_name(newbuf, script)
+    vim.api.nvim_set_current_buf(newbuf)
+    vim.bo.filetype = "sh"
 
     local callbacks = {
       cwd = "/home/wslburtar/story_notes/",
@@ -63,17 +60,14 @@ user_command(
         vim.api.nvim_buf_set_lines(newbuf, 0, -1, true, data)
       end),
 
-      on_exit = vim.schedule_wrap( function (first, second, third)
-        print( first .. "--" .. second .. "--" .. third)
-        print(std_output)
-      end)
     }
 
     vim.api.nvim_buf_set_lines(newbuf, 0, -1, false, {"line1", "line2"})
+    -- print("sed -nf sed")
     vim.fn.jobstart({ "sed", "-nf", "/home/wslburtar/bin/sed-snoteHeaders_to_vars", currbufname }, callbacks )
 
   end,
-  { nargs = 0 , desc = "create a script for using this story." }
+  { nargs = 0 , desc = "Create a script for this story." }
 )
 
 -- Keymappings
@@ -102,6 +96,11 @@ keymap(0, "n", "<Plug>(snote_openAllIssues)", '<cmd>sil! g;\\[Issue_;norm gx<cr>
 keymap(0, "n", "<Plug>(snote_openIssueNumber)", '<cmd>sil! exe "g;\\\\[Issue_" . v:count . ";norm gx"<cr>', opts)
 keymap(0, "n", "<leader>of", "mz<Plug>(snote_openAllIssues)`z", opts)
 keymap(0, "n", "<leader>oi", '<cmd>exe "norm mz" . v:count . "<Plug>(snote_openIssueNumber)"<cr>`z', opts)
+
+keymap(0, "n", '<Plug>(next_header)', '<cmd>norm /^#\\+<cr>', opts)
+keymap(0, "n", '<Plug>(previous_header)', '<cmd>norm ?^#\\+<cr>', opts)
+keymap(0, "n", "]]", '<Plug>(next_header)', opts)
+keymap(0, "n", "[[", '<Plug>(previus_header)', opts)
 
 keymap(0, "n", "<leader>sn"
   , string.format("<cmd>put '%s'<cr>", servicenowlink)

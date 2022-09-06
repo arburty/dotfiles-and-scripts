@@ -3,9 +3,11 @@
 # Hold story number first
 1 {
 i #! /bin/bash \
+\
+\\# Sed Variables \
 
 h
-s/^\(.*\)/project_dir=\1/
+s/^\(.*\)/ticket=\1/
 p
 }
 
@@ -17,11 +19,12 @@ p
 2 {
     N
     x
-    s/^\(.*\)/full_description=\1/ 
+    s/^\(.*\)/full_description="\1/ 
     x
     H
     g
     s/\n/ /g
+    s/$/"/
     p
 }
 
