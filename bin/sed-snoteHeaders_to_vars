@@ -1,0 +1,40 @@
+#! /usr/bin/sed
+
+# Hold story number first
+1 {
+i #! /bin/bash \
+\
+\\# Sed Variables \
+
+h
+s/^\(.*\)/ticket=\1/
+p
+}
+
+# append third line
+# exchange with story number
+# prepend variable assignment
+# exchange and then append to command in register
+# get it and make it one line
+2 {
+    N
+    x
+    s/^\(.*\)/full_description="\1/ 
+    x
+    H
+    g
+    s/\n/ /g
+    s/$/"/
+    p
+}
+
+# define the last variable
+# append the script template.
+# quit. Done processing.
+4 {
+    s/^/project_dir=/
+    p
+    r /home/wslburtar/Templates/story_script
+
+    q
+}

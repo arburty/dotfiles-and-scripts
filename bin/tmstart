@@ -92,6 +92,7 @@ select_projects() {
   local str=""
   for line in $CHOSE
   do
+    line=$(echo $line | sed -e 's;burtar/;/mnt/c/Users/&;')
     str="$str $line"
   done
 

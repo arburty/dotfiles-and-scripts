@@ -30,10 +30,52 @@ vim.api.nvim_create_autocmd({"BufWinEnter"}, {
   end
 })
 
+-- User Commands
+local user_command = vim.api.nvim_create_user_command
+
+user_command(
+  "ExecuteSnote",
+  function ()
+    local sedfile="~/bin/sed-snoteHeaders_to_vars"
+    local currbuf=vim.api.nvim_get_current_buf()
+    local currbufname=vim.api.nvim_buf_get_name(currbuf)
+    local startbuf=vim.api.nvim_get_current_buf()
+    local script=vim.fn.expand('%:p:r') .. "-script.sh"
+
+    vim._system('chmod 755 ' .. script)
+    local newbuf=vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_buf_set_name(newbuf, script)
+    vim.api.nvim_set_current_buf(newbuf)
+    vim.bo.filetype = "sh"
+
+    local callbacks = {
+      cwd = "/home/wslburtar/story_notes/",
+      stdout_buffered = true,
+      on_sterr = vim.schedule_wrap( function(_, data, _)
+        local out = table.concat(data, "\n")
+        vim.notify(out, vim.log.levels.ERROR)
+      end),
+
+      on_stdout = vim.schedule_wrap( function (_, data, _)
+        vim.api.nvim_buf_set_lines(newbuf, 0, -1, true, data)
+      end),
+
+    }
+
+    vim.api.nvim_buf_set_lines(newbuf, 0, -1, false, {"line1", "line2"})
+    -- print("sed -nf sed")
+    vim.fn.jobstart({ "sed", "-nf", "/home/wslburtar/bin/sed-snoteHeaders_to_vars", currbufname }, callbacks )
+
+  end,
+  { nargs = 0 , desc = "Create a script for this story." }
+)
+
 -- Keymappings
 -- local keymap = vim.api.nvim_set_keymap
 local keymap = vim.api.nvim_buf_set_keymap
 local opts = { noremap = true, silent = true}
+
+keymap(0, "n", "\\z", "<cmd>ExecuteSnote<cr>", opts)
 
 keymap(0, "n", "<leader>em", "<cmd>r ~/Templates/email_to_mehvish.txt<cr>", opts)
 keymap(0, "n", "<leader>ni", "<cmd>r ~/Templates/non_issue_tasks.txt<cr>", opts)
@@ -54,6 +96,11 @@ keymap(0, "n", "<Plug>(snote_openAllIssues)", '<cmd>sil! g;\\[Issue_;norm gx<cr>
 keymap(0, "n", "<Plug>(snote_openIssueNumber)", '<cmd>sil! exe "g;\\\\[Issue_" . v:count . ";norm gx"<cr>', opts)
 keymap(0, "n", "<leader>of", "mz<Plug>(snote_openAllIssues)`z", opts)
 keymap(0, "n", "<leader>oi", '<cmd>exe "norm mz" . v:count . "<Plug>(snote_openIssueNumber)"<cr>`z', opts)
+
+keymap(0, "n", '<Plug>(next_header)', '<cmd>norm /^#\\+<cr>', opts)
+keymap(0, "n", '<Plug>(previous_header)', '<cmd>norm ?^#\\+<cr>', opts)
+keymap(0, "n", "]]", '<Plug>(next_header)', opts)
+keymap(0, "n", "[[", '<Plug>(previus_header)', opts)
 
 keymap(0, "n", "<leader>sn"
   , string.format("<cmd>put '%s'<cr>", servicenowlink)
