@@ -132,7 +132,8 @@ nvim_tree.setup {
       },
     },
 
-  number = true,
-  relativenumber = true,
+    number = true,
+    relativenumber = true,
+  }
 }
 
