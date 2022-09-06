@@ -8,6 +8,16 @@
 runmsedge() {
     ( msedge.exe "$@" > /dev/null 2>&1 & )
 }
+jira() {
+  if [ -z "$1" ]; then
+    # runmsedge "https://invesco.atlassian.net/jira/software/c/projects/IUWE/boards/1027?quickFilter=3665 "
+    runmsedge 'https://invesco.atlassian.net/jira/software/c/projects/IUWE/boards/1027/?quickFilter=3665'
+  else
+    local story=$(echo "$1" | sed -E -n 's/^([iIuUwWeE-]*)?/IUWE-/ ;p')
+    runmsedge "https://invesco.atlassian.net/browse/$story"
+  fi
+}
+
 alias ff="runmsedge"
 alias maps="runmsedge google.com/maps"
 alias mes="runmsedge -search"
@@ -16,7 +26,6 @@ alias mews="runmsedge -new-window -search"
 alias met="runmsedge -new-tab"
 alias mets="runmsedge -new-tab -search"
 alias mep="runmsedge -inprivate"
-alias jira="runmsedge https://invesco.atlassian.net/jira/software/c/projects/IUWE/boards/1027\?quickFilter\=3665 "
 # }}}
 
 # Modeline{{{
