@@ -1,3 +1,20 @@
+-- My custom note taking files. Markdown with some flair.
+
+function freadable(file)
+  return vim.fn.filereadable(vim.fn.expand(vim.fn.expand(file)))
+end
+
+function open_new_split_by_filename(filename, bang)
+  local v = bang and '' or 'v'
+  vim.cmd(v .. 'split')
+  local win = vim.api.nvim_get_current_win()
+  local buf = vim.api.nvim_create_buf(true, false)
+  vim.api.nvim_win_set_buf(win, buf)
+
+  filename = vim.fn.fnamemodify(filename, ':.')
+  vim.cmd('edit ' .. filename)
+end
+
 -- localmachine set in zshrc
 local mymachine = vim.env.localmachine
 local browser = "gio open"
@@ -17,6 +34,28 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
   callback = function() 
     local file = vim.fn.expand('<afile>')
     print ( file .. " was saved" ) 
+    local script=vim.fn.expand('<afile>:p:r') .. "-script.sh"
+    freadable(script)
+  end
+})
+
+local makeExecutable = 0
+vim.api.nvim_create_autocmd({"BufWritePre", "BufWritePost"}, {
+  pattern = {"*-script.sh"},
+  group = sft,
+  callback = function() 
+    local script=vim.fn.expand('<afile>')
+    local scriptexists = freadable(script)
+
+    if makeExecutable == 1 
+    then 
+      makeExecutable = 0
+      print('MAKING ' .. script .. ' EXECUTABLE')
+      vim._system('chmod 755 ' .. script)
+
+      vim.api.nvim_buf_set_keymap(0, "n", "\\z", "<cmd>!%<cr>", {noremap = true, silent = true })
+    end
+    if scriptexists == 0 then makeExecutable = 1 end
   end
 })
 
@@ -35,14 +74,21 @@ local user_command = vim.api.nvim_create_user_command
 
 user_command(
   "ExecuteSnote",
-  function ()
+  function (input)
     local sedfile="~/bin/sed-snoteHeaders_to_vars"
     local currbuf=vim.api.nvim_get_current_buf()
     local currbufname=vim.api.nvim_buf_get_name(currbuf)
     local startbuf=vim.api.nvim_get_current_buf()
     local script=vim.fn.expand('%:p:r') .. "-script.sh"
+    local scriptexists = freadable(script)
 
-    vim._system('chmod 755 ' .. script)
+    if scriptexists == 1
+    then
+      open_new_split_by_filename(script, input.bang)
+      return
+    end
+    --[[ plenary. ]]
+
     local newbuf=vim.api.nvim_create_buf(true, false)
     vim.api.nvim_buf_set_name(newbuf, script)
     vim.api.nvim_set_current_buf(newbuf)
@@ -59,7 +105,6 @@ user_command(
       on_stdout = vim.schedule_wrap( function (_, data, _)
         vim.api.nvim_buf_set_lines(newbuf, 0, -1, true, data)
       end),
-
     }
 
     vim.api.nvim_buf_set_lines(newbuf, 0, -1, false, {"line1", "line2"})
@@ -67,7 +112,7 @@ user_command(
     vim.fn.jobstart({ "sed", "-nf", "/home/wslburtar/bin/sed-snoteHeaders_to_vars", currbufname }, callbacks )
 
   end,
-  { nargs = 0 , desc = "Create a script for this story." }
+  { nargs = 0 , bang = true, desc = "Create a script for this story." }
 )
 
 -- Keymappings
@@ -75,7 +120,9 @@ user_command(
 local keymap = vim.api.nvim_buf_set_keymap
 local opts = { noremap = true, silent = true}
 
+-- TODO : unmap \\z.  can only happen the first time.
 keymap(0, "n", "\\z", "<cmd>ExecuteSnote<cr>", opts)
+keymap(0, "n", "\\Z", "<cmd>ExecuteSnote!<cr>", opts)
 
 keymap(0, "n", "<leader>em", "<cmd>r ~/Templates/email_to_mehvish.txt<cr>", opts)
 keymap(0, "n", "<leader>ni", "<cmd>r ~/Templates/non_issue_tasks.txt<cr>", opts)
