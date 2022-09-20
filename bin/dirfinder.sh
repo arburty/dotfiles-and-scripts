@@ -3,6 +3,16 @@
 # Author : Austin Burt
 # Email  : austin@burt.us.com
 # Date   :
+#
+# Dynamically produce a list of directories on
+# the system. 
+#
+# Use the ranger bookmarks file to get a shortcuts list, then an fdfind command
+# to find all other directories.
+#
+# TODO: 
+# Add fzf if dmenu is unavailable.
+# Add find option if fdfind unavailable. 
 
 # [[ -z $PROGRAM ]] && declare -r PROGRAM=$(basename $0)
 # [[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues

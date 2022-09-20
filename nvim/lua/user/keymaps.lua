@@ -97,6 +97,8 @@ keymap("n", "<leader>fd", "<cmd>lua require('telescope.builtin').diagnostics()<c
 keymap("n", "<leader>fM", "<cmd>lua require('telescope.builtin').man_pages()<cr>", opts)
 keymap("n", "<leader>fH", "<cmd>lua require('telescope.builtin').command_history()<cr>", opts)
 keymap("n", "<leader>fC", "<cmd>lua require('telescope.builtin').commands()<cr>", opts)
+--[[ keymap("n", "z=", "<cmd>Telescope spell_suggest<cr>", opts) ]]
+keymap("n", "z=", "<cmd>lua require('telescope.builtin').spell_suggest()<cr>", opts)
 
 --keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
