@@ -22,6 +22,7 @@ printNewStory() {
 cat << EOF >> "$file"
 $new_story
 $(desc -l $new_story 2>/dev/null || echo INFO)
+~/apps/PROJECT
 S100 <!-- CHANGE -->
 
 [Jira](https://invesco.atlassian.net/browse/$new_story)

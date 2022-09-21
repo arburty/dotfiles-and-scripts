@@ -7,6 +7,13 @@ vim.api.nvim_create_autocmd({"BufRead"}, {
   callback = function() vim.bo.filetype = "snote" end
 })
 
+vim.api.nvim_create_autocmd({"BufRead"}, {
+  pattern = {"*-script.sh"},
+  group = cft,
+  callback = function() vim.api.nvim_buf_set_keymap(0, "n", "\\z", "<cmd>!%<cr>", {noremap = true, silent = true }) end
+})
+
+
 local sft = vim.api.nvim_create_augroup("SetFileTypes", {clear = true})
 vim.api.nvim_create_autocmd({"BufRead"}, {
   pattern = {".gitconfig","gitconfig"},
