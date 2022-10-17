@@ -21,27 +21,30 @@ die() {
 }
 
 USAGE() {
-    echo -e  "${LIGHT_PURPLE}USAGE${NC}"
-    echo -e "${BLUE}DESCRIPTION:${NC}"
-    echo     "Create descriptions for a git branch branch. By default the current one is used."
-    echo -e  "Descriptions live in ${GREEN}$branchFile.${NC}"
-    echo -e  "${WHITE}desc [flag] <description>${NC}"
-    echo -e  "${BLUE}FLAGS:${NC}"
-    echo -e  "${YELLOW}-n:${NC} give a different branch a name"
-    echo -e  "      ${WHITE}desc -n <branchname> <description>${NC}"
-    echo -e  "${YELLOW}-c:${NC} clean up the file holding descriptions. It leaves the most recent one"
-    echo     "    it moves the removed lines from the description file,"
-    echo -e  "    to ${GREEN}$cleanedBranches.${NC}"
-    echo     "    'searchTerm' defaults to current branch."
-    echo -e  "      ${WHITE}desc -c [searchTerm]${NC}"
-    echo -e  "${YELLOW}-rm:${NC} helps clean the file like -c but it does not leave the most recent description"
-    echo -e  "      ${WHITE}desc -rm [searchTerm]${NC}"
-    echo -e  "${YELLOW}-l:${NC} list the lines in $branchFile bases on searchTerm"
-    echo -e  "      ${WHITE}desc -l [searchTerm]${NC}"
-    echo -e  "${YELLOW}-la:${NC} list every description in $branchFile"
-    echo -e  "      ${WHITE}desc -la${NC}"
-    echo -e  "${YELLOW}-u:${NC} Undo. copies the backup file in $backup"
-    echo     "    back into the descripion file."
+  echo -e "$(cat << __EOF__
+${LIGHT_PURPLE}USAGE${NC}
+${BLUE}DESCRIPTION:${NC}
+Create descriptions for a git branch branch. By default the current one is used.
+Descriptions live in ${GREEN}$branchFile.${NC}
+${WHITE}desc [flag] <description>${NC}
+${BLUE}FLAGS:${NC}
+${YELLOW}-n:${NC} give a different branch a name
+      ${WHITE}desc -n <branchname> <description>${NC}
+${YELLOW}-c:${NC} clean up the file holding descriptions. It leaves the most recent one
+    it moves the removed lines from the description file,
+    to ${GREEN}$cleanedBranches.${NC}
+    'searchTerm' defaults to current branch.
+      ${WHITE}desc -c [searchTerm]${NC}
+${YELLOW}-rm:${NC} helps clean the file like -c but it does not leave the most recent description
+      ${WHITE}desc -rm [searchTerm]${NC}
+${YELLOW}-l:${NC} list the lines in $branchFile bases on searchTerm
+      ${WHITE}desc -l [searchTerm]${NC}
+${YELLOW}-la:${NC} list every description in $branchFile
+      ${WHITE}desc -la${NC} 
+${YELLOW}-u:${NC} Undo. copies the backup file in $backup
+    back into the descripion file.
+__EOF__
+)"
     exit 0
 }
 
