@@ -169,7 +169,12 @@ then # a tmux session exists
 else # create new session
     if [[ $(which tmstart) ]]
     then
+      if [ ${localmachine} = "WSL" ];then
+        tmstart -d -w
+        tmstart
+      else
         tmstart -w
+      fi
     else
         tmux new-session -s workin
     fi
@@ -182,4 +187,3 @@ fi
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
