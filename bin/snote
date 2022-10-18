@@ -17,13 +17,15 @@ STORYNOTES="$HOME/story_notes"
 STORY=${$(git mybr 2>/dev/null):-NONE}
 NEWSTORIES=${@:-NONE}
 mystory="$STORYNOTES/$STORY"
+new_sprint_value=$( sprint_values | tail -1 | awk '{split($1, a, "S"); print "S"a[2]+1}' )
 
 printNewStory() {
+
 cat << EOF >> "$file"
 $new_story
-$(desc -l $new_story 2>/dev/null || echo INFO)
+$(desc -l $new_story 2>/dev/null || printf "INFO_HEAD\nINFO_SUBH")
 ~/apps/PROJECT
-S100 <!-- CHANGE -->
+$new_sprint_value
 
 [Jira](https://invesco.atlassian.net/browse/$new_story)
 
