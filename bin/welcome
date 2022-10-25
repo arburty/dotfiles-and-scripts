@@ -48,7 +48,7 @@ echo -e "$wttr\n" >> $tempFile
 if [ $(command -v nordvpn) ]
 then
     nordvpn status \
-        | sed -ne 's/:/:@/; s/^.*\(Status\|City\|Country\)/ \1/p' \
+      | sed -Ene 's/:/:@/; s/^.*((Status|City|Country):)/ \1/p' \
         | column -t -s'@'  \
         >> $tempFile && echo "" >> $tempFile
 else
