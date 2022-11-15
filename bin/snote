@@ -14,7 +14,7 @@ PROGRAMPATH="$0"
 [[ -f $HOME/bin/colorValues ]] && source $HOME/bin/colorValues
 
 STORYNOTES="$HOME/story_notes"
-STORY=${$(git mybr 2>/dev/null):-NONE}
+STORY=${$(git mybr | sed -E 's/[-_][a-zA-Z][-_0-9a-zA-Z]+$//' 2>/dev/null):-NONE}
 NEWSTORIES=${@:-NONE}
 mystory="$STORYNOTES/$STORY"
 new_sprint_value=$( sprint_values | tail -1 | awk '{split($1, a, "S"); print "S"a[2]+1}' )
