@@ -209,7 +209,36 @@ bindsym $mod+o resize grow width 10 px or 10 ppt
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+  status_command i3status
+  tray_output primary
+
+  colors {
+
+    # OneDark theme
+    set $black #282C34
+    set $red   #E06C75
+    set $yellow   #E5C07B
+    set $blue   #61AFEF
+    set $purple   #C678DD
+    set $cyan   #56B6C2
+    set $grey   #ABB2BF
+
+    # Other
+    set $green_forest #016E51
+
+# Defaults
+    background #000000
+    statusline #ffffff
+    separator #666666
+
+    focused_workspace  #4c7899 #285577 #ffffff
+    active_workspace   #333333 $grey $black
+    inactive_workspace #333333 #222222 #888888
+    urgent_workspace   #2f343a #900000 #ffffff
+    binding_mode       #2f343a #900000 #ffffff
+
+    focused_background $green_forest
+  }
 }
 
 # Swap out the caps lock key for escape
