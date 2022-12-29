@@ -160,9 +160,12 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-workspace $ws1 output DP-1 HDMI-1
-workspace $ws2 output DP-1 HDMI-1
-workspace $ws3 output HDMI-1 DP-1
+set $samsungmonitor DP-1
+set $asusmonitor HDMI-1
+
+workspace $ws1 output $asusmonitor $samsungmonitor
+workspace $ws2 output $asusmonitor $samsungmonitor
+workspace $ws3 output $samsungmonitor $asusmonitor
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -226,7 +229,7 @@ bar {
     # Other
     set $green_forest #016E51
 
-# Defaults
+    # Defaults
     background #000000
     statusline #ffffff
     separator #666666
@@ -248,5 +251,56 @@ bindsym $mod+c exec co-pw
 bindsym $mod+Shift+s exec spotify
 bindsym $mod+shift+q exec qutebrowser
 
+# this one not working
+# bindsym $mod+a [class="Firefox"] focus
+
+# Move workspace to next monitor. (aka toggle workspace's monitor)
+bindsym $mod+x move workspace to output next
+
+# Move all workspaces.
+bindsym $mod+Shift+bracketright \
+          workspace $ws2  ; move workspace to output $asusmonitor ;\
+          workspace $ws3  ; move workspace to output $asusmonitor ;\
+          workspace $ws4  ; move workspace to output $asusmonitor ;\
+          workspace $ws5  ; move workspace to output $asusmonitor ;\
+          workspace $ws6  ; move workspace to output $asusmonitor ;\
+          workspace $ws7  ; move workspace to output $asusmonitor ;\
+          workspace $ws8  ; move workspace to output $asusmonitor ;\
+          workspace $ws9  ; move workspace to output $asusmonitor ;\
+          workspace $ws10 ; move workspace to output $asusmonitor ;\
+          workspace $ws1  ; move workspace to output $asusmonitor
+
+bindsym $mod+Shift+bracketleft \
+          workspace $ws2  ; move workspace to output $samsungmonitor ;\
+          workspace $ws3  ; move workspace to output $samsungmonitor ;\
+          workspace $ws4  ; move workspace to output $samsungmonitor ;\
+          workspace $ws5  ; move workspace to output $samsungmonitor ;\
+          workspace $ws6  ; move workspace to output $samsungmonitor ;\
+          workspace $ws7  ; move workspace to output $samsungmonitor ;\
+          workspace $ws8  ; move workspace to output $samsungmonitor ;\
+          workspace $ws9  ; move workspace to output $samsungmonitor ;\
+          workspace $ws10 ; move workspace to output $samsungmonitor ;\
+          workspace $ws1  ; move workspace to output $samsungmonitor
+
+bindsym $mod+Shift+O \
+          workspace $ws9  ; move workspace to output $samsungmonitor ;\
+          workspace $ws10 ; move workspace to output $asusmonitor ;\
+          workspace $ws3  ; move workspace to output $asusmonitor ;\
+          workspace $ws2  ; move workspace to output $samsungmonitor ;\
+          workspace $ws1  ; move workspace to output $samsungmonitor
+
+
+
+
+
+
+
+# read 1 character and mark the current window with this character
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+
+# read 1 character and go to the window with the character
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+#
+#
 # Modeline{{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
