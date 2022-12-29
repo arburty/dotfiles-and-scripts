@@ -6,7 +6,7 @@
 !
 ! Use a nice truetype font and size by default...
 ! xterm*faceName: DejaVu Sans Mono:style=Book
-xterm*faceName: DroidSansMono Nerd Font:style=Book
+xterm*faceName: VictorMono:style=Regular
 !xterm*faceName: MesloLGS NF:style=Regular
 xterm*faceSize: 14
 
