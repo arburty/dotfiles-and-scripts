@@ -1,6 +1,7 @@
 #!/bin/bash
 
 headphonesName="Arctis Pro Wireless Game"
+headphonesName="HyperX Virtual Surround Sound Digital Stereo"
 speakerName="Family 17h"
 
 # Opted to use only sed.  This was the previous command using more pipes. less accurate fetching of all ids.
