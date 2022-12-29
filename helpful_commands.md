@@ -48,6 +48,9 @@ not portable (Mac you bastard) so not good for scripts.
 : simple grep for if attached to workspace
 
 ## Vim Related Fun
+`exec $e +'$r!date "+\%a \%F \%R "' +startinsert! "$file"`
+: open editor '$e' (i.e. vim) and on the last line print the date and start in insert mode
+
 `:source $VIMRUNTIME/syntax/hitest.vim`
 : creates a file colorcoded with names
 
