@@ -34,7 +34,13 @@ eclipse() {
 
   if [[ $1 == "here" ]]
   then
-    workspace="$(wslpath -w /mnt/c/projects/)"'\\'"$(basename "`realpath ./`")" 
+    root="/mnt/c/projects/"
+    dir="$(basename "`realpath ./`")"
+
+    [[ ! $(ls $root | grep $dir) ]] \
+      && echo "Failed: no project named '$dir'" && return 1
+
+    workspace="$(wslpath -w $root)"'\\'"$dir" 
     echo "${GREEN}Opening: $workspace${NC}"
     ( $CMD -data "$workspace" >/dev/null 2>&1 & )
   else
