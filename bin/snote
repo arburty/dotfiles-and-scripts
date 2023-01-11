@@ -48,7 +48,6 @@ cd $STORYNOTES
 # Create and open new files if available.
 if [[ "$NEWSTORIES" != "NONE" ]]
 then
-  files=
   declare -a files
   for new_story in $(echo $NEWSTORIES)
   do
@@ -77,7 +76,6 @@ then
   [[ -z "$files" ]] && files="$mystory/$STORY.md" && echo Creating file $files
 
   xargs -d '\n' --arg-file=$tmpfile $VEDITOR -O --
-  # xargs -d '\n' --arg-file=$tmpfile $VEDITOR -O --
 
   rm $tmpfile 2>/dev/null
 else

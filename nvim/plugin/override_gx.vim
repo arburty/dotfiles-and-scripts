@@ -11,7 +11,7 @@ function! OpenURLUnderCursor()
   let s:uri = shellescape(s:uri, 1)
   echom s:uri
   if s:uri != ''
-    exec "!".s:browser." ".s:uri." >/dev/null 2>&1"
+    sil exec "!".s:browser." ".s:uri." >/dev/null 2>&1"
     :redraw!
   endif
 endfunction
