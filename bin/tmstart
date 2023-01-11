@@ -113,8 +113,8 @@ case $1 in
     --help | -h )  USAGE ;;
 esac
 
-# it its less than 2 args and its not '-w' then exit
-[[ $# -ge 2 ]] || isFlagW $1 || die "invalid arguments"
+# it its less than 2 args and its not '-{w,d}' then exit
+[[ $# -ge 2 ]] || isFlagW $1 || [ $detach == true ] || die "invalid arguments"
 
 # The first session is the 'primary' session and the one to attach to
 # -w becomes 'workspace' and -s returns basename of following path

@@ -19,6 +19,19 @@ local keymap = vim.api.nvim_set_keymap
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
+local user_command = vim.api.nvim_create_user_command
+
+user_command(
+  "ReplaceLineWithName",
+  function (input)
+    local basename = ':t'
+    local dirname = ':h:t'
+    local name = (input.bang and basename or dirname)
+    vim.api.nvim_set_current_line(vim.fn.expand('<cfile>' .. name))
+  end,
+  { nargs = 0 , bang = true, desc = "Replace line with the basename or directory of the file under cursor." }
+)
+
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
@@ -154,3 +167,8 @@ keymap("n", "gwJ", [[vip:join<cr>]], opts)
 keymap("n", "\\z", [[:nnoremap <buffer> \z :]], opts)
 
 keymap("n", "\\q", "<cmd>Bdelete<cr>", opts)
+
+keymap("n", ",bn", "<cmd>ReplaceLineWithName!<cr>", opts)
+keymap("n", ",dn", "<cmd>ReplaceLineWithName<cr>", opts)
+
+keymap("n", ",0", "<cmd>lua require'user.markdownExample'.convertFile()<CR>", opts)

@@ -4,11 +4,11 @@
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
+  Linux*)     machine=Linux;;
+  Darwin*)    machine=Mac;;
+  CYGWIN*)    machine=Cygwin;;
+  MINGW*)     machine=MinGw;;
+  *)          machine="UNKNOWN:${unameOut}"
 esac
 
 unameNodeName="$(uname -n)"
@@ -30,14 +30,14 @@ export ZSH="$HOME/.oh-my-zsh"
 
 if [[ $machine == "Mac" ]]
 then
-    export JAVA_HOME=$(/usr/libexec/java_home -v 11)
-    [ -d /usr/local/opt/tomcat@9/bin ] && PATH="$PATH:/usr/local/opt/tomcat@9/bin"
+  export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+  [ -d /usr/local/opt/tomcat@9/bin ] && PATH="$PATH:/usr/local/opt/tomcat@9/bin"
 elif [[ $machine == "Linux" ]]
 then
-    # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-    export JAVA_HOME=/opt/jdk-17
-    export PATH="$PATH:$JAVA_HOME/bin"
-    # export JDK_HOME=/usr/lib/jvm/openjdk-11
+  # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+  export JAVA_HOME=/opt/jdk-17
+  export PATH="$PATH:$JAVA_HOME/bin"
+  # export JDK_HOME=/usr/lib/jvm/openjdk-11
 fi
 
 export GRADLE_HOME='/mnt/c/projects/.gradle'
@@ -53,9 +53,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"
 
 plugins=(
-    git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -63,9 +63,9 @@ source $ZSH/oh-my-zsh.sh
 # Preferred Vim editor for local and remote sessions
 [ $(command -v nvim) ] && export EDITOR='nvim' || export EDITOR='vim'
 #if [[ -n $SSH_CONNECTION ]]; then
-    #export EDITOR='vim'
+  #export EDITOR='vim'
 #else
-    #export EDITOR='vi'
+  #export EDITOR='vi'
 #fi
 
 # Setup for personalizing the colors and prompt
@@ -90,7 +90,7 @@ POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='238' # a light grey
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%f" # Visual customisation of the second prompt line
 local user_symbol="$"
 if [[ $(print -P "%#") =~ "#" ]]; then
-    user_symbol = "#"
+  user_symbol = "#"
 fi
 secondPrompt='black'
 
@@ -131,21 +131,21 @@ bindkey -M vicmd O edit-command-line
 # This awk command removes duplicates for my sanity.
 #   https://www.linuxjournal.com/content/removing-duplicate-path-entries
 export PATH=$(echo -n $PATH | awk -v RS=: \
-    '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
-# }}}2
+  '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
+  # }}}2
 
-tabs -4
+  tabs -4
 
 if [[ ${localmachine} == "pop-os" ]]
 then
-    [[ ! $(ps -e | grep "wallpaper_slide") ]] \
-        && echo "start the show!" \
-        && ~/bin/wallpaper_slideshow &
+  [[ ! $(ps -e | grep "wallpaper_slide") ]] \
+    && echo "start the show!" \
+    && ~/bin/wallpaper_slideshow &
 fi
 
 # Custom Alias's Variables and Functions {{{2
 badSource() { # Used to send a message to std out in red if theres a problem with sourcing a file
-    >&2 echo "${RED}Problem sourcing $*${NC}"
+  >&2 echo "${RED}Problem sourcing $*${NC}"
 }
 
 pL10k="$ZSH/custom/themes/powerlevel10k/powerlevel10k.zsh-theme"
@@ -160,19 +160,24 @@ fi
 # TMUX is love. TMUX is life {{{3
 if [[ $(tmux ls 2&> /dev/null) ]]
 then # a tmux session exists
-    if [[ -z $(tmux ls | grep -e "(attached)$") && -z "$TMUX" ]]
-    then # not attached to a session, and not a session being created
-        echo "A TMUX server is running. Attaching"
-        sleep 2
-        tmux attach
-    fi
+  if [[ -z $(tmux ls | grep -e "(attached)$") && -z "$TMUX" ]]
+  then # not attached to a session, and not a session being created
+    echo "A TMUX server is running. Attaching"
+    sleep 2
+    tmux attach
+  fi
 else # create new session
-    if [[ $(which tmstart) ]]
-    then
-        tmstart -w
+  if [[ $(which tmstart) ]]
+  then
+    if [ ${localmachine} = "WSL" ];then
+      tmstart -d -w
+      tmstart
     else
-        tmux new-session -s workin
+      tmstart -w
     fi
+  else
+    tmux new-session -s workin
+  fi
 fi
 
 
@@ -182,4 +187,3 @@ fi
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-

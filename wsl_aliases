@@ -28,6 +28,27 @@ alias mets="runmsedge -new-tab -search"
 alias mep="runmsedge -inprivate"
 # }}}
 
+eclipse() { # {{{
+  CMD='/mnt/c/usr/local/java/eclipse/eclipse.exe'
+  echo -e "\n${RED}Abandon Hope All Ye Who Enter Here.${NC}\n"
+
+  if [[ $1 == "here" ]]
+  then
+    root="/mnt/c/projects/"
+    dir="$(basename "`realpath ./`")"
+
+    [[ ! $(ls $root | grep $dir) ]] \
+      && echo "Failed: no project named '$dir'" && return 1
+
+    workspace="$(wslpath -w $root)"'\\'"$dir" 
+    echo "${GREEN}Opening: $workspace${NC}"
+    ( $CMD -data "$workspace" >/dev/null 2>&1 & )
+  else
+    ( $CMD >/dev/null 2>&1 & )
+  fi
+}
+# }}}
+
 # Modeline{{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker ft=sh:}}}
 return 0
