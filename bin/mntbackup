@@ -1,0 +1,50 @@
+#! /bin/sh
+
+# mntbackup : Mount External Backup Drive {{{1
+# Author    : Austin Burt
+# Email     : austin@burt.us.com
+# Date      : 01/24/23
+#
+# Mount or unmount the LUKS encrypted backup drive.
+#
+# https://trendoceans.com/mount-luks-encrypted-drive-partition-in-linux/
+
+die() {
+  >&2 echo "EXITING: $@"
+  exit 1
+}
+
+[ -z "$(command -v cryptsetup)" ] && die "cryptsetup not installed."
+
+virtualName="BackupDrive"
+mountdir="/media/vladislav/Backups"
+listblock=$(lsblk | grep $virtualName)
+mountedfield=$(echo $listblock | cut -d" " -f 7)
+
+
+mount_drive() {
+  echo Mounting $virtualName
+  echo $mountedfield
+  [ -z "$mountedfield" ] || die "device is already mounted"
+  sudo cryptsetup luksOpen /dev/sdc1 BackupDrive
+  sudo mkdir -p $mountdir
+  sudo mount /dev/mapper/$virtualName $mountdir
+}
+
+unmount_drive() {
+  echo Unmounting $virtualName
+
+  [ ! -z "$mountedfield" ] || die "device is not mounted"
+  sudo umount $mountdir
+  sudo cryptsetup luksClose $virtualName
+}
+
+case $1 in
+  "-m" | "--mount") mount_drive ;;
+  "-u" | "--unmount" | "--umount" ) unmount_drive ;;
+  "-h" | "--help") echo "use '-m' or '-u' to mount or unmount the drive." ;;
+  *) 
+    echo "No flag used, We'll try mounting." 
+    mount_drive 
+    ;;
+esac
