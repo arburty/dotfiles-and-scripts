@@ -52,6 +52,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+focus_follows_mouse no
+
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec st
@@ -96,10 +98,11 @@ bindsym $mod+Shift+Right move right
 # split in horizontal orientation
 # bindsym $mod+h split h
 # was 'h' but I shifted the movement keys to match vim.
-bindsym $mod+semicolon split h
+# bindsym $mod+semicolon split h
+bindsym $mod+Ctrl+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+Ctrl+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -125,21 +128,21 @@ bindsym $mod+space focus mode_toggle
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "st"
-set $ws2 "browser"
-set $ws3 "spotify"
+set $ws1 "1:st"
+set $ws2 "2:browser"
+set $ws3 "3:spotify"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
+set $ws9 "9:"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
 bindsym $mod+4 workspace number $ws4
 bindsym $mod+5 workspace number $ws5
 bindsym $mod+6 workspace number $ws6
@@ -160,12 +163,17 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+workspace_auto_back_and_forth yes
+
 set $samsungmonitor DP-1
 set $asusmonitor HDMI-1
 
 workspace $ws1 output $samsungmonitor $asusmonitor
 workspace $ws2 output $samsungmonitor $asusmonitor
+workspace $ws9 output $samsungmonitor $asusmonitor
+
 workspace $ws3 output $asusmonitor $samsungmonitor
+workspace $ws10 output $asusmonitor $samsungmonitor
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -294,6 +302,8 @@ bindsym $mod+Shift+O \
 
 
 
+# Toggling focos of monitor
+bindsym $mod+grave focus output right
 
 # read 1 character and mark the current window with this character
 bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
@@ -302,6 +312,8 @@ bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
 bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 bindsym $mod+Shift+End exec shutdown -r now
+
+bindsym $mod+Shift+Ctrl+l exec i3lock -i /home/vladislav/shared_drive/Pictures/wallpaper/Pink_Floyd-Animals-5125158.png -et
 
 # Modeline{{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
