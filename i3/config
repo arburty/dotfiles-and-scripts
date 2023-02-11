@@ -313,7 +313,7 @@ bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 bindsym $mod+Shift+End exec shutdown -r now
 
-bindsym $mod+Shift+Ctrl+l exec i3lock -i /home/vladislav/shared_drive/Pictures/wallpaper/Pink_Floyd-Animals-5125158.png -et
+bindsym $mod+Shift+Ctrl+l exec lock_screen
 
 # Modeline{{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
