@@ -1,0 +1,23 @@
+#! /bin/zsh
+
+# lock_screen
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 02/11/23
+#
+# Wrapper for i3lock to use my directory of backgrounds.
+
+dir="$HOME/shared_drive/Pictures/Tiles/lockscreen"
+cd "$dir"
+
+# Make the command more portable.
+[[ $(command -v fdfind) ]] \
+  && FINDCMD="fdfind -e png -t f" \
+  || FINDCMD="find ./ \"*.png\" -type f"
+files=$(${=FINDCMD})
+
+i3lock -i "$(echo "$files" | sort -R | head -1)" -et
+
+
+# Modeline{
+# vim: set foldmarker={,} foldlevel=0 foldmethod=marker:}
