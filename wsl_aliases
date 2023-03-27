@@ -3,6 +3,13 @@
 # austin@burt.us.com
 # workaround aliases for WSL
 
+alias psh='powershell.exe'
+pshmvn2eclipse() {
+  psh mvn clean install -U pmd:check && eclipse here \
+    || (pmdpath=ca-services/target/pmd.xml;[[ -f $pmdpath && $(wc -l $pmdpath | awk '{print $1}') -gt 3 ]] && v $pmdpath \
+    || echo "Ur A Failure Harry."; return 1)
+}
+alias pshmvndocs='psh mvn dependency:sources dependency:resolve -Dclassifier=javadoc'
 
 # Microsoft Edge {{{
 runmsedge() {
@@ -10,14 +17,17 @@ runmsedge() {
 }
 jira() {
   if [ -z "$1" ]; then
+    #   IUWE
     # runmsedge "https://invesco.atlassian.net/jira/software/c/projects/IUWE/boards/1027?quickFilter=3665 "
-    runmsedge 'https://invesco.atlassian.net/jira/software/c/projects/IUWE/boards/1027/?quickFilter=3665'
+    #   Canada
+    runmsedge "https://invesco.atlassian.net/jira/software/c/projects/CDN/boards/2878"
   else
-    local story=$(echo "$1" | sed -E -n 's/^([iIuUwWeE-]*)?/IUWE-/ ;p')
+    local story=$(echo "$1" | sed -E -n 's/^[iI][uU][wW][eE]-/IUWE-/ ; s/^[cC][dD][nN]-/CDN-/ ;p')
     runmsedge "https://invesco.atlassian.net/browse/$story"
   fi
 }
 
+alias bb="runmsedge https://bitbucket.dev.invesco.net/dashboard"
 alias ff="runmsedge"
 alias maps="runmsedge google.com/maps"
 alias mes="runmsedge -search"
