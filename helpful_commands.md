@@ -356,3 +356,6 @@ show what happens without data.
     sudo apt-get install python3-dev python3-pip
 
 <dd>This will install the master version for neovim</dd>
+
+`xrandr --dryrun --output DP-1 --primary --mode 2560x1440 --rate 99.95 --output HDMI-1 --mode 2560x1440 --rate 99.95 --right-of DP-1`
+: set my screen monitors and resolution.

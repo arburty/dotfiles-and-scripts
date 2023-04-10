@@ -18,6 +18,7 @@ c.aliases = {'w'   : 'session-save',
              'gm' : 'open gmail.com',
              'yt'  : 'open youtube.com',
              'yth' : 'open youtube.com/feed/history',
+             'cs'  : 'open curiositystream.com/',
              }
 
 ## Time interval (in milliseconds) between auto-saves of
@@ -1634,7 +1635,8 @@ c.tabs.width = '16%'
 ## Type: Dict
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'ddg' : 'https://duckduckgo.com/?q={}',
-                       'yt' : 'https://www.youtube.com/search?hl=en&q={}',
+                       'yt' : 'https://www.youtube.com/results?search_query={}',
+                       'cs' : 'https://curiositystream.com/search/{}?listStyle=grid',
                        'gh' : 'https://github.com/search?q={}',
                        'rr' : 'https://reddit.com/r/{}',
                        'g': 'https://www.google.com/search?hl=en&q={}',
