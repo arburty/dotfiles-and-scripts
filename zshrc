@@ -138,9 +138,9 @@ export PATH=$(echo -n $PATH | awk -v RS=: \
 
 if [[ ${localmachine} == "pop-os" ]]
 then
-  [[ ! $(ps -e | grep "wallpaper_slide") ]] \
+  [[ ! $(ps -e | grep "wallpapersimple") ]] \
     && echo "start the show!" \
-    && ~/bin/wallpaper_slideshow &
+    && ~/bin/wallpapersimple &
 fi
 
 # Custom Alias's Variables and Functions {{{2
