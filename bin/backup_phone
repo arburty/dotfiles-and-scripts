@@ -1,0 +1,41 @@
+#! /bin/zsh
+
+
+# backup_phone
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 04-20-23
+
+# Somehow lost my old script. Heres a new one.
+
+
+# directory name example : phone_transfer_2016.03.17
+# phone path example : /run/user/1000/gvfs/mtp:host=Google_Pixel_6_Pro_1A031FDEE0044M/Internal shared storage/Documents
+
+PHONE_ROOT=$(fdfind "^Internal shared storage$" -t d -d 2 --search-path="/run/user/1000/gvfs")
+[ -z $PHONE_ROOT ] && echo "No phone storage found." && exit 1
+
+# BACKUP_ROOT=$HOME/Backups/Archive/phone_transfer_$(date +'%Y.%m.%d')
+BACKUP_ROOT=$HOME/shared_drive/laptop-backup/.sysctl/unsorted/phone_transfer_$(date +'%Y.%m.%d')
+echo $BACKUP_ROOT
+
+starttime=$(date +'%s')
+
+echo "START BACKUP"
+date
+
+
+for dir in DCIM Download Pictures
+do
+  rsync -auxvP "$PHONE_ROOT/$dir" "$BACKUP_ROOT/"
+done
+
+echo -e "\nEnd of Backup\n"
+
+endttime=$(date +'%s')
+secs=$(($endttime-$starttime))
+printf 'END SCRIPT -- Time taken :: %02d:%02d:%02d\n' \
+  $((secs/3600)) $((secs%3600/60)) $((secs%60))
+date
+
+exit 0

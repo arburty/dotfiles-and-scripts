@@ -1,0 +1,91 @@
+#! /bin/bash
+
+# backup_home
+# Author : Austin Burt
+# Email  : austin@burt.us.com
+# Date   : 12/18/21
+#
+# Backup script using rclone to backup my main system onto an
+# external backup drive.
+#
+# This was a nicely made article I took my initial skeleton from.
+# https://opensource.com/article/19/5/advanced-rsync
+
+starttime=$(date +'%s')
+echo "START BACKUP"
+date
+
+HOMES=$(cat << _eof
+/home/vladislav
+/mnt/shared
+/mnt/shared/Videos/
+_eof
+)
+#/mnt/shared/Videos/TV
+#/etc
+#/usr/local/bin
+#/usr/local/sbin
+
+DRIVE="/media/vladislav/Backups/`date +'%Y'`"
+# DRIVE="/media/vladislav/Backups/Archive/TV/"
+LOGFILE="/home/vladislav/.local/logs/BACKUP_DRIVES.log"
+
+info() {
+    echo "`date +'%F %T'`:INFO: $*" >> $LOGFILE
+}
+
+info "STARTING BACK UP: $HOMES"
+mkdir -vp $DRIVE >> $LOGFILE
+for HOME in $HOMES
+do
+    info "BACKING UP: $HOME"
+    cd $HOME
+    # remove leading and trailing slash so it can be appended later.
+    HOME=$(echo $HOME | sed -e 's;^/;; ; s;/$;; ; s;/;.;g')
+
+    # remove the shared hard drive to ensure no double backups.
+    # rmshared=1
+    # if [ -h "./shared_drive" ]
+    # then
+    #     info "Found and removing symlink to shared hard drive."
+    #     rm -v ./shared_drive
+    #     rmshared=0
+    # fi
+
+    info "Moving into $(pwd)"
+    info "Create directories for: $HOME"
+
+    rsync -cdlptgov --delete . $DRIVE/$HOME >> $LOGFILE
+
+    info "Populate directories for: $HOME"
+    find . -maxdepth 1 -type d -not -name "." \
+        | grep -v "'" \
+        | xargs -I{} rsync -crlptgov --delete {} $DRIVE/$HOME/ >> $LOGFILE
+    # used to have --delete in both rsync commands
+    # if I want it at some point.
+
+    # put the symlink back
+    # [ $rmshared = 0 ] && ln -sv /mnt/shared/ ./shared_drive
+done
+info "END OF BACK UP: $HOMES"
+
+endttime=$(date +'%s')
+secs=$(($endttime-$starttime))
+printf 'END SCRIPT -- Time taken :: %02d:%02d:%02d\n' \
+  $((secs/3600)) $((secs%3600/60)) $((secs%60))
+date
+
+
+# --checksum, -c           skip based on checksum, not mod-time & size
+# --dirs, -d               transfer directories without recursing
+# --recursive, -r          recurse into directories
+# --links, -l              copy symlinks as symlinks
+# --perms, -p              preserve permissions
+# --times, -t              preserve modification times
+# --group, -g              preserve group
+# --owner, -o              preserve owner (super-user only)
+# --verbose, -v            increase verbosity
+
+# Another good site:
+#   9 Linux directories you must back up and one you shouldn't | Enable Sysadmin
+#   https://www.redhat.com/sysadmin/backup-dirs
