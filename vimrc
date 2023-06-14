@@ -793,11 +793,11 @@
 " Functions {{1
 
     " Sourced {{
-        source ~/.vim/personal/redir_messages.vim
+        " source ~/.vim/personal/redir_messages.vim
         " maps v and n <leader>G
-        source ~/.vim/personal/grep-operator.vim
+        " source ~/.vim/personal/grep-operator.vim
         " maps <leader>p commands
-        source ~/.vim/personal/rename-torrents.vim
+        " source ~/.vim/personal/rename-torrents.vim
 
         " Pickscheme() sourced from Visual Setup
     " }}

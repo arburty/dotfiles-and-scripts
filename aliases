@@ -57,7 +57,6 @@ alias sai='sudo apt install'
 alias saiy='sudo apt install -y'
 saiyd() { saiy "$@" && alldone || ifailed }
 alias copy='xclip -selection clip'   # shorter
-alias pbcopy='xclip -selection clip' # what im used to
 alias rainclear="unclear | rainbow"
 alias wow="echo such color. much impress. very dork > /tmp/wowfile | say | rainbow /tmp/wowfile"
 alias rr='mpv "https://youtu.be/dQw4w9WgXcQ"'
@@ -80,6 +79,11 @@ alias tmkmutt='tmux kill-window -t mutt'
 alias tuxispeak='tuxi $(echo "" | dmenu -p "what is ur ?") | tee >/dev/stderr | espeak'
 alias sql='sqlite3'
 alias muttbackup='rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --backup --backup-dir=BACKUPDIR'
+
+if [[ $machine != "Mac" ]]
+then
+  alias pbcopy='xclip -selection clip' # what im used to
+fi
 
 alias import_later='source $(which STASH_CONSTS)'
 
