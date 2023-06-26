@@ -109,14 +109,16 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {}
+    bundles = {
+      vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.46.0.jar", 1)
+    }
   },
 }
+
+config['on_attach'] = function(client, bufnr)
+  require('jdtls').setup_dap({ hotcodereplace = 'auto' })
+end
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
-
 require('jdtls').start_or_attach(config)
---local status_ok, _ = pcall( require, ('jdtls').start_or_attach(config) )
---if not status_ok then
---  vim.api.nvim_notify("nvim/ftplugin/java.lua not sourced")
---end
