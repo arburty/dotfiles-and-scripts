@@ -7,4 +7,4 @@ require('glow').setup({
     -- style = "dark|light", -- filled automatically with your current editor background, you can override using glow json style
     -- pager = false,
     -- width = 80,
-  })
+  }})

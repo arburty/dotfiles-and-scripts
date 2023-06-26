@@ -1,6 +1,6 @@
 
 
-lonal status_ok, symoutline = pcall(require, "symbols-outline")
+local status_ok, symoutline = pcall(require, "symbols-outline")
 if not status_ok then
   return
 end
