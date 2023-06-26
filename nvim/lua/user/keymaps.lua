@@ -107,6 +107,7 @@ keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>",
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
 keymap("n", "<leader>fj", "<cmd>lua require('telescope.builtin').jumplist()<cr>", opts)
 keymap("n", "<leader>fd", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
+keymap("n", "<leader>fr", "<cmd>lua require('telescope.builtin').resume()<cr>", opts)
 keymap("n", "<leader>fM", "<cmd>lua require('telescope.builtin').man_pages()<cr>", opts)
 keymap("n", "<leader>fH", "<cmd>lua require('telescope.builtin').command_history()<cr>", opts)
 keymap("n", "<leader>fC", "<cmd>lua require('telescope.builtin').commands()<cr>", opts)

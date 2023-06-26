@@ -66,10 +66,17 @@ else -- default args
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
+    '--module-path', 'astro-modules/astro-dev.main',
+    --[[ '--module-path', 'astro-dev/com.astro.dmp.dev.Application', ]]
+    --[[ '--module com.jenkov.mymodule/com.jenkov.mymodule.Main' ]]
+    '-Xmx1024m',
+
     -- 💀
-    '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
+    --[[ '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar', ]]
+    '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.2.400.v20211117-0650.jar',
     -- 💀
-    '-configuration', './config_linux/config.ini',
+    --[[ '-configuration', './config_linux/config.ini', ]]
+    '-configuration', './config_mac/',
     -- 💀
     '-data', workspace_dir
   }
@@ -84,7 +91,7 @@ local config = {
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
+  root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew', {upward = true}}),
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request

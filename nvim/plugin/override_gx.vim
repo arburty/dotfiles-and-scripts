@@ -16,6 +16,7 @@ function! OpenURLUnderCursor()
   endif
 endfunction
 
-let s:browser = $localmachine == "WSL" ? "msedge.exe" : "gio open"
+let s:browser = $localmachine == "WSL" ? "msedge.exe" : "open"
+let s:browser = $localmachine == "Linux" ? "gio ".s:browser : s:browser
 let g:netrw_browsex_viewer = s:browser
 nnoremap gx :call OpenURLUnderCursor()<CR>
