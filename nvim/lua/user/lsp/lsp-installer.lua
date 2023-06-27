@@ -16,11 +16,6 @@ lsp_installer.on_server_ready(function(server)
 	 	opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
 	 end
 
-	 if server.name == "lua_ls" then
-	 	local lua_opts = require("user.lsp.settings.lua_ls")
-	 	opts = vim.tbl_deep_extend("force", lua_opts, opts)
-	 end
-
 	 if server.name == "pyright" then
 	 	local pyright_opts = require("user.lsp.settings.pyright")
 	 	opts = vim.tbl_deep_extend("force", pyright_opts, opts)
