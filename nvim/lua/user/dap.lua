@@ -3,6 +3,8 @@ if not dap_status_ok then
   return
 end
 
+local utils = require'utils'
+
 local store_mapleader = vim.g.mapleader
 vim.g.mapleader = '\\'
 
@@ -25,13 +27,11 @@ local function get_test_runner(test_name, debug)
 end
 
 function Run_java_test_method(debug)
-  local utils = require'utils'
   local method_name = utils.get_current_full_method_name("\\#")
   vim.cmd('term ' .. get_test_runner(method_name, debug))
 end
 
 function Run_java_test_class(debug)
-  local utils = require'utils'
   local class_name = utils.get_current_full_class_name()
   vim.cmd('term ' .. get_test_runner(class_name, debug))
 end
@@ -51,6 +51,7 @@ function Get_spring_boot_runner(profile, debug)
 end
 
 function Run_spring_boot(debug)
+  local method_name = utils.get_current_full_method_name("\\#")
   vim.cmd('term ' .. Get_spring_boot_runner(method_name, debug))
 end
 
@@ -67,6 +68,13 @@ key_map('n', '<leader>B', ':lua require"dap".set_breakpoint(vim.fn.input("Condit
 key_map('n', '<leader>bl', ':lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log: "))<CR>')
 key_map('n', '<leader>dr', ':lua require"dap".repl.open()<CR>')
 
+-- telsecope dap
+key_map('n', '<leader>lb', ':lua require"telescope".extensions.dap.list_breakpoints{}<CR>')
+key_map('n', '<leader>lc', ':lua require"telescope".extensions.dap.commands{}<CR>')
+key_map('n', '<leader>lC', ':lua require"telescope".extensions.dap.configurations{}<CR>')
+key_map('n', '<leader>lv', ':lua require"telescope".extensions.dap.variables{}<CR>')
+key_map('n', '<leader>lf', ':lua require"telescope".extensions.dap.frames{}<CR>')
+
 -- view informations in debug
 function Show_dap_centered_scopes()
   local widgets = require'dap.ui.widgets'
@@ -82,13 +90,20 @@ key_map('n', '<S-F8>', ':lua require"dap".step_out()<CR>')
 
 
 function Attach_to_debug()
-  dap.configurations.java = {
+  dap.configurations = {
     {
       type = 'java';
       request = 'attach';
-      name = "Attach to Adobe AEM";
+      name = "Attach to Adobe AEM p8888";
       hostName = 'localhost';
       port = '8888';
+    },
+    {
+      type = 'java';
+      request = 'attach';
+      name = "Attach to Adobe AEM p4502";
+      hostName = 'localhost';
+      port = '4502';
     },
   }
   dap.continue()
