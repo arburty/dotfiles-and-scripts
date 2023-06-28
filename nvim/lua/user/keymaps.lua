@@ -173,3 +173,6 @@ keymap("n", ",bn", "<cmd>ReplaceLineWithName!<cr>", opts)
 keymap("n", ",dn", "<cmd>ReplaceLineWithName<cr>", opts)
 
 keymap("n", ",0", "<cmd>lua require'user.markdownExample'.convertFile()<CR>", opts)
+
+keymap("n", "<leader>li", "<cmd>LspInfo<cr>", opts)
+keymap("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
