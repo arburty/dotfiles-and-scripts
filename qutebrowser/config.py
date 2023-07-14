@@ -19,6 +19,7 @@ c.aliases = {'w'   : 'session-save',
              'yt'  : 'open youtube.com',
              'yth' : 'open youtube.com/feed/history',
              'cs'  : 'open curiositystream.com/',
+             'neb'  : 'open nebula.tv/',
              }
 
 ## Time interval (in milliseconds) between auto-saves of
