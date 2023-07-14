@@ -69,9 +69,11 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
   use "f3fora/cmp-spell"
+  use "rcarriga/cmp-dap"
 
   -- Language specific
   use "mfussenegger/nvim-jdtls"
+  use 'mfussenegger/nvim-dap'
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -92,6 +94,7 @@ return packer.startup(function(use)
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use "nvim-telescope/telescope-media-files.nvim"
+  use "nvim-telescope/telescope-dap.nvim"
 
   -- Treesitter
   use {

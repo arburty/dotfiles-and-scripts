@@ -46,6 +46,10 @@ local kind_icons = {
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 cmp.setup {
+  enabled = function()
+    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        or require("cmp_dap").is_dap_buffer()
+  end,
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -148,14 +152,21 @@ cmp.setup.cmdline('/', {
   }
 })
 
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
+-- Set configuration for specific filetype.
+cmp.setup.filetype(
+  'gitcommit', {
     sources = cmp.config.sources({
       { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
     }, {
-      { name = 'buffer' },
-    })
-  })
+        { name = 'buffer' },
+      })
+  },
+  { "dap-repl", "dapui_watches", "dapui_hover" }, {
+    sources = {
+      { name = "dap" },
+    },
+  }
+)
 
 -- Setup lspconfig.
 -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())

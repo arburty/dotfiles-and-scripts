@@ -16,11 +16,6 @@ lsp_installer.on_server_ready(function(server)
 	 	opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
 	 end
 
-	 if server.name == "sumneko_lua" then
-	 	local sumneko_opts = require("user.lsp.settings.sumneko_lua")
-	 	opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-	 end
-
 	 if server.name == "pyright" then
 	 	local pyright_opts = require("user.lsp.settings.pyright")
 	 	opts = vim.tbl_deep_extend("force", pyright_opts, opts)
@@ -37,3 +32,29 @@ lsp_installer.on_server_ready(function(server)
 	server:setup(opts)
 end)
 
+
+-- TODO: use the user.lsp.settings.lua_ls file
+require'lspconfig'.lua_ls.setup {
+  on_attach = require("user.lsp.handlers").on_attach,
+  capabilities = require("user.lsp.handlers").capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}

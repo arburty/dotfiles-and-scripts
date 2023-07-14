@@ -10,6 +10,7 @@ if not status_ok then
 end
 
 telescope.load_extension('media_files')
+telescope.load_extension('dap')
 
 local actions = require "telescope.actions"
 
@@ -100,14 +101,14 @@ telescope.setup {
         -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
         filetypes = {"png", "webp", "jpg", "jpeg"},
         find_cmd = "rg" -- find command (defaults to `fd`)
-      }
+    },
+    dap = {}
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,
     -- }
     -- please take a look at the readme of the extension you want to configure
   },
-}
 
 
 --[[ funny inside of telescope help pages. ]]
@@ -118,5 +119,5 @@ telescope.setup {
 --V unir n lbhat fba jub xrrcf zr hc ng avtug nyy ol uvzfrys. OGJ, unir lbh
 --pbafvqrerq fraqvat culfvpny QIQf sbe znkvzhz dhnyvgl naq rneyl npprff gb arj
 --pbagrag? Vg frrzf yvxr vg pbhyq or n cerggl pbby vqrn.
-
+}
 --#FunzryrffFrysCebzbgvba: uggcf://tvguho.pbz/fcbafbef/gwqrievrf

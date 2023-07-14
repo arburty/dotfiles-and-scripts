@@ -360,7 +360,9 @@ show what happens without data.
 `xrandr --dryrun --output DP-1 --primary --mode 2560x1440 --rate 99.95 --output HDMI-1 --mode 2560x1440 --rate 99.95 --right-of DP-1`
 : set my screen monitors and resolution.
 
-
 `dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause #HELPFUL`
 : Control media through the dbus directly.  Play/Pause Spotify.
 https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html
+
+java -Xmx2048M -agentlib:jdwp=transport=dt_socket,address=8888,server=y,suspend=n -jar aem-author-p4502.jar #DEBUG AEM
+: aem debug starter command.

@@ -40,8 +40,9 @@ then
   # export JDK_HOME=/usr/lib/jvm/openjdk-11
 fi
 
-export GRADLE_HOME='/mnt/c/projects/.gradle'
-export GRADLE_USER_HOME=$GRADLE_HOME
+# TODO: make cross platform
+# export GRADLE_HOME='/mnt/c/projects/.gradle'
+# export GRADLE_USER_HOME=$GRADLE_HOME
 
 # This block is for nvm, so that npm works.
 export NVM_DIR="$HOME/.nvm"
@@ -187,3 +188,4 @@ fi
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+export HOMEBREW_GITHUB_API_TOKEN=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
