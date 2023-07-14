@@ -7,8 +7,8 @@ gbye() { . gbye $@; }
 dif() { diff $1 $2 2>/dev/null; [[ $? -eq 2 ]] && git diff; }
 clmns() { columns.sh $COLUMNS;  }
 # kill port $1
-kp() { if [[ -z $1 ]]; then echo "${RED}Needs a port #${NC}"; else
-    lsof -ti :$1 | xargs kill -9 && echo "${GREEN}Murderer!! You have killed port $1!${NC}"; fi; }
+kp() { test "${1:?kp() Needs a port #}"
+    lsof -ti :$1 | xargs kill -9 && echo "${GREEN}Murderer!! You have killed port $1!${NC}"; }
 sudothis() { echo "${GREEN}====== $* ======${NC}" && sudo $* && echo "${GREEN}====== $* SUCCESS ======${NC}" && return 0 || echo "${RED}====== $* NO SUCCESS =====${NC}" && return 1;  }
 autoupgradeos() { sudothis apt clean && sudothis apt update -m && sudothis dpkg --configure -a && sudothis apt install -f && sudothis apt dist-upgrade && sudothis apt autoremove --purge ;}
 
