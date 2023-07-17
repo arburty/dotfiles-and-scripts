@@ -140,7 +140,7 @@ set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9:"
+set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
@@ -256,6 +256,8 @@ bar {
   }
 }
 
+exec i3-msg "border pixel 5"
+
 # Swap out the caps lock key for escape
 exec xmodmap ~/.config/df/caps_to_esc -display $DISPLAY
 
@@ -319,5 +321,70 @@ bindsym $mod+Shift+End exec shutdown -r now
 
 bindsym $mod+Shift+Ctrl+l exec lock_screen
 
-# Modeline{{{
-# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker:}}}
+bindsym --release $mod+ctrl+0 \
+          workspace number $ws6 ;\
+          workspace number $ws6 ;\
+          workspace number $ws10 ;\
+          exec --no-startup-id xdotool key --clearmodifiers ctrl+x 0
+
+bindsym $mod+ctrl+k exec test_cmd
+
+mode "move_mouse" {
+        # Click 
+        bindsym space exec xdotool mousemove_relative 0 0 click 1
+
+        # small movements
+        bindsym h exec xdotool mousemove_relative --polar 270 15
+        bindsym j exec xdotool mousemove_relative --polar 180 15
+        bindsym k exec xdotool mousemove_relative --polar 0 15
+        bindsym l exec xdotool mousemove_relative --polar 90 15
+
+        # Diagonals
+        bindsym $mod+h exec xdotool mousemove_relative --polar 225 15
+        bindsym $mod+j exec xdotool mousemove_relative --polar 135 15
+        bindsym $mod+k exec xdotool mousemove_relative --polar 305 15
+        bindsym $mod+l exec xdotool mousemove_relative --polar 45 15
+
+        bindsym shift+k exec xdotool mousemove_relative --polar 0 40
+        bindsym shift+j exec xdotool mousemove_relative --polar 180 40
+        bindsym shift+h exec xdotool mousemove_relative --polar 270 40
+        bindsym shift+l exec xdotool mousemove_relative --polar 90 40
+
+        # Clear notification button
+        bindsym $mod+n exec xdotool mousemove --screen 0 2520 10 click 1
+
+        # Top Left
+        bindsym u exec xdotool mousemove 10 10
+        bindsym shift+u exec xdotool mousemove 2570 10
+        # Bottom Left
+        bindsym m exec xdotool mousemove 23 1426
+        bindsym shift+m exec xdotool mousemove 2583 1426
+        # Bottom Right
+        bindsym period exec xdotool mousemove 2526 1426
+        bindsym shift+period exec xdotool mousemove 5086 1426
+        # Top Right
+        bindsym o exec xdotool mousemove 2520 10
+        bindsym shift+o exec xdotool mousemove 5080 10
+
+        # Center
+        bindsym c exec xdotool mousemove 1280 720
+        bindsym $mod+c exec xdotool mousemove 3840 720
+        bindsym shift+c exec xdotool mousemove 3840 720
+
+        # Switch screens, same location.
+        bindsym semicolon exec eval $(xdotool getmouselocation --shell) && xdotool mousemove "$(((X + 2560) % (2560*2)))" "$Y"
+
+        # spotify pause
+        bindsym $mod+s workspace number $ws3 ;\
+            exec xdotool mousemove --sync 3852 1328 click 1
+
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+        bindsym ctrl+c mode "default"
+
+}
+
+bindsym $mod+shift+m mode "move_mouse"
