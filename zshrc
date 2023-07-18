@@ -188,4 +188,3 @@ fi
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export HOMEBREW_GITHUB_API_TOKEN=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
