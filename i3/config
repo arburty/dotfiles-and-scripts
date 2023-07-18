@@ -373,7 +373,8 @@ mode "move_mouse" {
         bindsym shift+c exec xdotool mousemove 3840 720
 
         # Switch screens, same location.
-        bindsym semicolon exec eval $(xdotool getmouselocation --shell) && xdotool mousemove "$(((X + 2560) % (2560*2)))" "$Y"
+        bindsym semicolon exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+                      && xdotool mousemove "$(((X + $WIDTH) % ($WIDTH*2)))" "$Y"
 
         # Left Screen, 9 sections within the screen.
         bindsym 1 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
