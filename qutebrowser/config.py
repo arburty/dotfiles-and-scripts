@@ -1989,11 +1989,11 @@ config.bind(',g', 'config-cycle content.user_stylesheets ~/.config/themes/solari
 config.bind(',m', 'spawn mpv {url}')
 config.bind(',M', 'hint links spawn mpv {hint-url}')
 
-config.bind(',d', 'spawn youtube-dl {url} --exec mpv')
-config.bind(',D', 'hint links spawn youtube-dl {hint-url} --exec mpv')
+config.bind(',d', 'spawn yt-dlp {url} --exec mpv')
+config.bind(',D', 'hint links spawn yt-dlp {hint-url} --exec mpv')
 
-config.bind(',y', 'spawn youtube-dl {url}')
-config.bind(',Y', 'hint links spawn youtube-dl {hint-url}')
+config.bind(',y', 'spawn yt-dlp {url}')
+config.bind(',Y', 'hint links spawn yt-dlp {hint-url}')
 
 config.bind(',f', 'spawn firefox {url}')
 config.bind(',F', 'hint links spawn firefox {hint-url}')

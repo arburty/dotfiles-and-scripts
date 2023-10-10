@@ -271,6 +271,7 @@ bindsym $mod+Shift+O \
           workspace $ws9  ; move workspace to output $samsungmonitor ;\
           workspace $ws10 ; move workspace to output $asusmonitor ;\
           workspace $ws3  ; move workspace to output $asusmonitor ;\
+          workspace $ws6  ; move workspace to output $samsungmonitor ;\
           workspace $ws2  ; move workspace to output $samsungmonitor ;\
           workspace $ws1  ; move workspace to output $samsungmonitor
 
@@ -396,6 +397,14 @@ mode "move_mouse" {
         # spotify pause
         bindsym $mod+s workspace number $ws3 ;\
             exec xdotool mousemove --sync 3852 1328 click 1
+
+        # spotify devices to phone
+        bindsym $mod+shift+p workspace number $ws3 ;\
+            exec xdotool mousemove --sync 4843 1350 click 1 mousemove --sync 4716 1161
+
+        # spotify devices to computer
+        bindsym $mod+shift+c workspace number $ws3 \
+            exec xdotool mousemove --sync 4850 1315 click 1 mousemove --sync 4717 971
 
 
         # back to normal: Enter or Escape or $mod+r
