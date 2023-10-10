@@ -13,6 +13,11 @@
 # # i3 config file (v4)
 # #
 # # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# For a reference when ricing. (color, theme)
+# https://itsfoss.com/i3-customization/
+# scripts used:
+# https://github.com/itsfoss/text-files/tree/master/i3_config_files?ref=itsfoss.com
 # }}}
 
 set $mod Mod4
@@ -195,7 +200,7 @@ bindsym $mod+o resize grow width 10 px or 10 ppt
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-  status_command i3status
+  status_command i3status -c /home/$USER/.config/i3/i3status.conf
   tray_output primary
 
   colors {
@@ -226,6 +231,8 @@ bar {
     focused_background $green_forest
   }
 }
+
+bindsym $mod+b bar mode toggle
 
 exec i3-msg "border pixel 5"
 
