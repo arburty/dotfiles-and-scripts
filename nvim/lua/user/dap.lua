@@ -89,8 +89,15 @@ key_map('n', '<F7>', ':lua require"dap".step_into()<CR>')
 key_map('n', '<S-F8>', ':lua require"dap".step_out()<CR>')
 
 
+-- Not for DAP but still debugging AEM Java stuff.
+key_map('n', '<leader>C', ':vs ~/aem-sdk/aem-curl/curl.sh<CR>')
+key_map('n', '<leader>c', ':vs | term ~/aem-sdk/aem-curl/curl.sh<cr>:norm i<CR>')
+key_map('n', '<leader>Z', ':vs ~/bin/rde-helper.zsh<cr>:norm i<CR>')
+key_map('n', '<leader>z', ':vs | term ~/bin/rde-helper.zsh<cr>:norm i<CR>')
+--[[ key_map('n', '<leader>c', ':!~/aem-sdk/aem-curl/curl.sh<CR>') ]]
+
 function Attach_to_debug()
-  dap.configurations = {
+  dap.configurations.java = {
     {
       type = 'java';
       request = 'attach';

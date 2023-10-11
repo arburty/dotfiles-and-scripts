@@ -13,6 +13,11 @@ local workspace_dir = home .. '/.cache/java_workspace/' .. project_name
 -- localmachine set in zshrc
 local mymachine = vim.env.localmachine
 
+local bundles = {
+  vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
+}
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/vscode-java-test/server/*.jar", 1), "\n"))
+
 local javaargs
 
 if mymachine == "WSL"
@@ -121,15 +126,14 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {
-      vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.46.0.jar", 1)
-    }
+    bundles = bundles
   },
 }
 
-config['on_attach'] = function(client, bufnr)
-  require('jdtls').setup_dap({ hotcodereplace = 'auto' })
-end
+--[[ config['on_attach'] = function(client, bufnr) ]]
+--[[ print('yup i git that') ]]
+require('jdtls').setup_dap({ hotcodereplace = 'auto' })
+--[[ end ]]
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
