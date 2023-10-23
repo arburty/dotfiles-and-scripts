@@ -49,8 +49,7 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "zl", "zL", opts) 
 keymap("n", "zh", "zH", opts) 
 
--- keymap("n", "<leader>e", ":Lex 30<cr>", opts)
-keymap("n", "<leader>ee", ":NvimTreeToggle<cr>", opts)
+keymap("n", "<leader>ee", "<cmd>lua require('nvim-tree.api').tree.toggle({find_file=true})<cr>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
@@ -176,3 +175,6 @@ keymap("n", ",0", "<cmd>lua require'user.markdownExample'.convertFile()<CR>", op
 
 keymap("n", "<leader>li", "<cmd>LspInfo<cr>", opts)
 keymap("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
+
+keymap("v", "<leader>a", "<Plug>(EasyAlign)", opts)
+keymap("v", "ga", "<Plug>(LiveEasyAlign)", opts)
