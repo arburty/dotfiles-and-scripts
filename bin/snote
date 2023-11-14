@@ -17,19 +17,34 @@ STORYNOTES="$HOME/story_notes"
 STORY=${$(git mybr | sed -E 's/[-_][a-zA-Z][-_0-9a-zA-Z]+$//' 2>/dev/null):-NONE}
 NEWSTORIES=${@:-NONE}
 mystory="$STORYNOTES/$STORY"
-new_sprint_value=$( sprint_values | tail -1 | awk '{split($1, a, "S"); print "S"a[2]+1}' )
+new_sprint_value=${$( sprint_values 2>/dev/null | tail -1 | awk '{split($1, a, "S"); print "S"a[2]+1}' ):-"S?"}
+ORIGINAL_WD=$(pwd)
 
 printNewStory() {
+
+jira_url="https://invesco.atlassian.net/browse"
+project="~/apps/PROJECT"
+if [ $(echo $ORIGINAL_WD | grep viking) ] 
+then
+  jira_url="https://vikingtravel.atlassian.net/browse"
+  project="aem-api"
+fi
 
 cat << EOF >> "$file"
 $new_story
 $(desc -l $new_story 2>/dev/null || printf "INFO_HEAD\nINFO_SUBH")
-~/apps/PROJECT
+$project
 $new_sprint_value
 
-[Jira](https://invesco.atlassian.net/browse/$new_story)
+[Jira]($jira_url/$new_story)
 
 |> [X] Research
+|> [X] Done
+
+
+# Description
+{}
+
 
 # Notes
 EOF
