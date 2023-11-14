@@ -3,7 +3,7 @@
 
 --vim.lsp.set_log_level("debug")
 
-vim.bo.expandtab = false -- convert tabs to spaces
+vim.bo.expandtab = true -- convert tabs to spaces
 vim.bo.tabstop = 4      -- insert 4 4paces for a tab
 vim.bo.shiftwidth = 0   -- the number of spaces inserted for each indentation
 

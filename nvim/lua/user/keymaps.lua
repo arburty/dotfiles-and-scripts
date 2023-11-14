@@ -50,6 +50,7 @@ keymap("n", "zl", "zL", opts)
 keymap("n", "zh", "zH", opts)
 
 keymap("n", "<leader>ee", "<cmd>lua require('nvim-tree.api').tree.toggle({find_file=true})<cr>", opts)
+keymap("n", "<leader>ea", "<cmd>lua require('nvim-tree.api').tree.toggle({ path='/Users/austinburt/viking/aem-api/' , find_file = true })<cr><cmd>cd ~/viking/aem-api/<cr>", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
