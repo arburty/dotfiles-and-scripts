@@ -30,7 +30,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 if [[ $machine == "Mac" ]]
 then
-  export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+  export JAVA_HOME=$(/usr/libexec/java_home -v 17)
   [ -d /usr/local/opt/tomcat@9/bin ] && PATH="$PATH:/usr/local/opt/tomcat@9/bin"
 elif [[ $machine == "Linux" ]]
 then
