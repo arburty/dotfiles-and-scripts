@@ -6,6 +6,20 @@
 
 lvim.plugins = {
   "mfussenegger/nvim-jdtls",
+
+  -- more git stuff
+  "tpope/vim-fugitive",
+  "tpope/vim-rhubarb", -- GitHub
+  "idanarye/vim-merginal",
+
+  "tpope/vim-unimpaired",
+  "kylechui/nvim-surround",
+  'junegunn/vim-easy-align',
+
+  -- Colorschemes
+  "lunarvim/darkplus.nvim",
+  "sainnhe/sonokai",
+  "bignimbus/pop-punk.vim",
 }
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
