@@ -3,7 +3,6 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
-
 lvim.plugins = {
   "mfussenegger/nvim-jdtls",
 
@@ -22,5 +21,7 @@ lvim.plugins = {
   "bignimbus/pop-punk.vim",
 }
 
+
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
-print("kill me")
+
+require("user.keymaps")
