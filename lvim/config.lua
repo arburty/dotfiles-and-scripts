@@ -25,3 +25,4 @@ lvim.plugins = {
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
 
 require("user.keymaps")
+require("user.options")
