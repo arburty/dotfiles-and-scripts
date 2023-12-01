@@ -2,6 +2,7 @@
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
 --vim.lsp.set_log_level("debug")
+local jdtls = require("jdtls")
 
 vim.bo.expandtab = true -- convert tabs to spaces
 vim.bo.tabstop = 4      -- insert 4 4paces for a tab
@@ -40,14 +41,13 @@ javaargs = {
   --[[ '--module-path', 'astro-dev/com.astro.dmp.dev.Application', ]]
   --[[ '--module com.jenkov.mymodule/com.jenkov.mymodule.Main' ]]
   '-Xmx1024m',
+  '-javaagent:' .. home .. '/.local/share/lvim/mason/share/jdtls/lombok.jar',
 
   -- 💀
-  --[[ '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar', ]]
-  --[[ '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.2.400.v20211117-0650.jar', ]]
   '-jar', java_jar,
   -- 💀
   --[[ '-configuration', './config_linux/config.ini', ]]
-  '-configuration', './config_mac/',
+  '-configuration', home .. "/.local/share/nvim/lsp_servers/jdtls/config_mac/",
   -- 💀
   '-data', workspace_dir
 }
@@ -74,9 +74,9 @@ local config = {
         -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
         runtimes = {
           { name = "JavaSE-11",
-            path = "/usr/local/opt/java11/", },
+            path = "/usr/local/Cellar/openjdk@11/11.0.21/libexec/openjdk.jdk/Contents/Home", },
           { name = "JavaSE-17",
-            path = "/usr/local/opt/java17/", },
+            path = "/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home", },
         }
       }
 
@@ -102,4 +102,6 @@ require('jdtls').setup_dap({ hotcodereplace = 'auto' })
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
-require('jdtls').start_or_attach(config)
+--[[ require('jdtls').start_or_attach(config) ]]
+
+jdtls.start_or_attach(config)
