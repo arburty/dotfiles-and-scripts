@@ -47,7 +47,7 @@ javaargs = {
   '-jar', java_jar,
   -- 💀
   --[[ '-configuration', './config_linux/config.ini', ]]
-  '-configuration', './config_mac/',
+  '-configuration', home .. "/.local/share/nvim/lsp_servers/jdtls/config_mac/",
   -- 💀
   '-data', workspace_dir
 }
