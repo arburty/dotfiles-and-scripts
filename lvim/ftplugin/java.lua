@@ -29,9 +29,7 @@ vim.list_extend(
   )
 )
 
---[[ local java_jar = vim.fn.glob(home .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", 1) ]]
 local java_jar = vim.fn.glob(home .. "/.local/share/lvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", 1)
-print("jj : " .. java_jar)
 
 lvim.builtin.dap.active = true
 
@@ -103,9 +101,9 @@ local config = {
         -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
         runtimes = {
           { name = "JavaSE-11",
-            path = "/usr/local/opt/java11/", },
+            path = "/usr/local/Cellar/openjdk@11/11.0.21/libexec/openjdk.jdk/Contents/Home", },
           { name = "JavaSE-17",
-            path = "/usr/local/opt/java17/", },
+            path = "/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home", },
         },
       },
       maven = {

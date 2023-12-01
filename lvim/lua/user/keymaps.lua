@@ -111,5 +111,7 @@ keymap('n', '<localleader>c', ':vs | term ~/aem-sdk/aem-curl/curl.sh<cr>:norm i<
 keymap('n', '<localleader>Z', ':vs ~/bin/rde-helper.zsh<cr>:norm i<CR>', opts)
 keymap('n', '<localleader>z', ':vs | term ~/bin/rde-helper.zsh<cr>:norm i<CR>', opts)
 
+keymap('n', '<localleader>q', '<cmd>BufferKill<cr>', opts)
+
 keymap('n', '<M-j', '<nop>', opts)
 keymap('n', '<M-k', '<nop>', opts)
