@@ -1,15 +1,15 @@
 local servers = {
-	"lua_ls",
+	--[[ "lua_ls", ]]
 
-	--[[ "jdtls", ]]
- --[[  "java-debug-adapter", ]]
- --[[  "java-test", ]]
+  --[[ "jdtls", ]]
+  --[[ "java-debug-adapter", ]]
+  --[[ "java-test", ]]
 
 	-- "cssls",
-	-- "html",
+	"html",
 	-- "tsserver",
 	"pyright",
-	-- "bashls",
+	"bashls",
 	"jsonls",
 	-- "yamlls",
 }
@@ -23,7 +23,7 @@ local settings = {
 			package_uninstalled = "◍",
 		},
 	},
-	log_level = vim.log.levels.INFO,
+	log_level = vim.log.levels.DEBUG,
 	max_concurrent_installers = 4,
 }
 
@@ -55,3 +55,6 @@ for _, server in pairs(servers) do
 
 	lspconfig[server].setup(opts)
 end
+
+--[[ print( "(start jdtls)" ) ]]
+--[[ lspconfig["jdtls"].setup(opts) ]]

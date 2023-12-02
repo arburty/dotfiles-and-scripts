@@ -1,6 +1,8 @@
-mpv/watch_later/
+lvim/lazy-lock.json
+nvim/spell/en.utf-8.add.spl
 mpv/git/
+mpv/watch_later/
 nvim/.netrwhist
+nvim/plugin/packer_compiled.lua
 qutebrowser/autoconfig.yml
 qutebrowser/dracula
-nvim/plugin/packer_compiled.lua

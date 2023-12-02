@@ -20,7 +20,7 @@ local bundles = {
 vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/vscode-java-test/server/*.jar", 1), "\n"))
 
 local java_jar = vim.fn.glob(home .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", 1)
-print("jj : " .. java_jar)
+print("nvim: jj : " .. java_jar)
 
 local javaargs
 
@@ -51,7 +51,6 @@ javaargs = {
   -- 💀
   '-data', workspace_dir
 }
-
 
 local config = {
   -- The command that starts the language server
@@ -102,6 +101,4 @@ require('jdtls').setup_dap({ hotcodereplace = 'auto' })
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
---[[ require('jdtls').start_or_attach(config) ]]
-
 jdtls.start_or_attach(config)

@@ -165,9 +165,9 @@ keymap("n", "<leader>sd", "<cmd>exe 'r!desc -l ' . expand('%:t:r')<cr>kddWi<cr><
 keymap("n", "gx", "<cmd>sil! exe  '!msedge.exe ' . shellescape('<cWORD>')<cr>", opts)
 keymap("n", "gwJ", [[vip:join<cr>]], opts)
 
-keymap("n", "\\z", [[:nnoremap <buffer> \z :]], opts)
+keymap("n", "<localleader>z", [[:nnoremap <buffer> \z :]], opts)
 
-keymap("n", "\\q", "<cmd>Bdelete<cr>", opts)
+keymap("n", "<localleader>q", "<cmd>Bdelete<cr>", opts)
 
 keymap("n", ",bn", "<cmd>ReplaceLineWithName!<cr>", opts)
 keymap("n", ",dn", "<cmd>ReplaceLineWithName<cr>", opts)
@@ -175,7 +175,7 @@ keymap("n", ",dn", "<cmd>ReplaceLineWithName<cr>", opts)
 keymap("n", ",0", "<cmd>lua require'user.markdownExample'.convertFile()<CR>", opts)
 
 keymap("n", "<leader>li", "<cmd>LspInfo<cr>", opts)
-keymap("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
+keymap("n", "<leader>lI", "<cmd>Mason<cr>", opts)
 
 keymap("v", "<leader>a", "<Plug>(EasyAlign)", opts)
 keymap("v", "ga", "<Plug>(LiveEasyAlign)", opts)
