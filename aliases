@@ -98,6 +98,7 @@ alias vv='$VEDITOR $HOME/.vimrc'
 alias va='$VEDITOR $HOME/.config/aliases'
 alias vt='$VEDITOR $HOME/todo.html'
 alias vq='$VEDITOR $HOME/.config/qutebrowser/config.py'
+alias v3='$VEDITOR $HOME/.config/i3/config'
 alias cs='$VEDITOR -c "let @*=@+|q"'
 alias vL='$VEDITOR $HOME/cloud_storage/Google_Drive/Links.txt'
 # function to open vim with Gitstatus open

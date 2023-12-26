@@ -4,6 +4,6 @@
 # Email  : austin@burt.us.com
 # Date   : 04/06/20
 
-vim -c "Man $@" -c "silent only"
+$EDITOR -c "Man $@" -c "silent only"
 
 exit 0
