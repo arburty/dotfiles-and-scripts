@@ -179,9 +179,14 @@ set $asusmonitor HDMI-1
 
 workspace $ws1 output $samsungmonitor $asusmonitor
 workspace $ws2 output $samsungmonitor $asusmonitor
+workspace $ws5 output $samsungmonitor $asusmonitor
+workspace $ws6 output $samsungmonitor $asusmonitor
+workspace $ws7 output $samsungmonitor $asusmonitor
 workspace $ws9 output $samsungmonitor $asusmonitor
 
 workspace $ws3 output $asusmonitor $samsungmonitor
+workspace $ws4 output $asusmonitor $samsungmonitor
+workspace $ws8 output $asusmonitor $samsungmonitor
 workspace $ws10 output $asusmonitor $samsungmonitor
 
 # reload the configuration file
@@ -192,10 +197,10 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resizing windows.
-bindsym $mod+y resize shrink width 10 px or 10 ppt
-bindsym $mod+u resize grow height 10 px or 10 ppt
-bindsym $mod+i resize shrink height 10 px or 10 ppt
-bindsym $mod+o resize grow width 10 px or 10 ppt
+# bindsym $mod+y resize shrink width 10 px or 10 ppt
+# bindsym $mod+u resize grow height 10 px or 10 ppt
+# bindsym $mod+i resize shrink height 10 px or 10 ppt
+# bindsym $mod+o resize grow width 10 px or 10 ppt
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -282,6 +287,12 @@ bindsym $mod+Shift+O \
           workspace $ws2  ; move workspace to output $samsungmonitor ;\
           workspace $ws1  ; move workspace to output $samsungmonitor
 
+bindsym $mod+o \
+          workspace $ws5 ;\
+          workspace $ws4 ;\
+          workspace $ws3 ;\
+          workspace $ws1 ;\
+          workspace $ws2 
 
 
 

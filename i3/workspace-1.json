@@ -1,0 +1,27 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "layout": "stacked",
+    "geometry": {
+       "height": 556,
+       "width": 964,
+       "x": 0,
+       "y": 0
+    },
+    "name": "zsh",
+    "marks": [
+       "a"
+    ],
+    "percent": 1,
+    "swallows": [
+        {
+            "instance": "^primary$",
+            "machine": "^pop\\-os$",
+            "title": "^zsh$",
+            "class": "^st\\-256color$"
+        }
+    ],
+    "type": "con"
+}
