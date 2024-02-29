@@ -1,1 +1,1 @@
-/Users/austinburt/.config/nvim/plugin/sprint_finder.vim
+../../../../nvim/plugin/sprint_finder.vim
