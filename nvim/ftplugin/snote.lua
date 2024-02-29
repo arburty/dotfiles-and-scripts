@@ -149,6 +149,8 @@ keymap(0, "n", '<Plug>(previous_header)', '<cmd>norm ?^#\\+<cr>', opts)
 keymap(0, "n", "]]", '<Plug>(next_header)', opts)
 keymap(0, "n", "[[", '<Plug>(previus_header)', opts)
 
+keymap(0, "n", ",tt", '<cmd>let @+=expand("%:t:r")<cr>', opts)
+
 keymap(0, "n", "<leader>sn"
   , string.format("<cmd>put '%s'<cr>", servicenowlink)
   -- , string.format("<cmd>lua print('%s %s 1>/dev/null 2>&1')<cr>", browser, servicenowlink)

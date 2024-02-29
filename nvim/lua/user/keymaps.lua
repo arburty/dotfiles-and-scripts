@@ -179,3 +179,5 @@ keymap("n", "<leader>lI", "<cmd>Mason<cr>", opts)
 
 keymap("v", "<leader>a", "<Plug>(EasyAlign)", opts)
 keymap("v", "ga", "<Plug>(LiveEasyAlign)", opts)
+
+keymap("n", "<leader>it", "<cmd>IlluminateToggle<cr>", opts)
