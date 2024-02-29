@@ -1,4 +1,3 @@
-
 -- source ./wsl_clip.vim
 local debug=false
 if debug then print("hello from plugin") end
