@@ -57,4 +57,4 @@ require("user.keymaps")
 require("user.options")
 require("user.nvimtree")
 require("nvim-surround").setup{}
-require("bqf")
+require("user.plugin")
