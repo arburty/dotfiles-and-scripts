@@ -23,5 +23,6 @@ local function sourceVimScript(i, path)
   vim.cmd("source " .. path)
 end
 
-table.foreach(vimscript_files, sourceVimScript)
-
+for i, path in pairs(vimscript_files) do
+  sourceVimScript(i, path)
+end
