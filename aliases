@@ -100,7 +100,7 @@ fi
 alias import_later='source $(which STASH_CONSTS)'
 
 # Vim related alias's {{{2
-VEDITOR='nvim'
+VEDITOR='lvim'
 alias v='$VEDITOR'
 alias G='$VEDITOR +G'
 alias vz='$VEDITOR $HOME/.zshrc'

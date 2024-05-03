@@ -49,6 +49,23 @@ lvim.plugins = {
   end,
 }
 
+lvim.autocommands = {
+  {
+    { "ColorScheme" },
+    {
+      pattern = "*",
+      callback = function()
+        -- change `Normal` to the group you want to change
+        -- and `#ffffff` to the color you want
+        -- see `:h nvim_set_hl` for more options
+        --[[ vim.api.nvim_set_hl(0, "Visual", { fg = "#afdf00", bg = "#d70061", underline = false, bold = false }) ]]
+        vim.api.nvim_set_hl(0, "Visual", { fg = "#afdf00", bg = "#323c44", underline = false, bold = true })
+        vim.api.nvim_set_hl(0, "IncSearch", { bg = "#d70061", underline = true, bold = true , standout=true})
+        vim.api.nvim_set_hl(0, "Folded", { bg = "#ffffff", fg = "#384048", underline = false, italic = true , standout = true })
+      end,
+    },
+  },
+}
 
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
