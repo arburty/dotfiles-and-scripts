@@ -17,6 +17,7 @@ augroup end
 "   3. Leave one whitespace if followed by anything else
 "   4. Remove blank lines beyond a single one after an opening brace
 "   5. Remove blank trailing lines in the file.
+"   6. Add one blank line before the closing brace.
 func! RemoveWhitespaceJava() abort
   let cur = getpos(".")
   let save_search = @/
@@ -26,6 +27,7 @@ func! RemoveWhitespaceJava() abort
   sil! %s/\v\zs(^$\n){2,}\ze\s*[^}]//e
   sil! %s/\v\{\n\zs(^$\n){2,}\ze//e
   sil! %s#\($\n\s*\)\+\%$##e
+  sil! $s/^}$/&/e
 
   call setpos('.', cur)
   let @/=save_search

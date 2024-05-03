@@ -137,6 +137,9 @@ keymap(0, "n", "<leader>gg", '<Plug>(snote_toTop)<cmd>/^\\(┌\\|┏\\|┍\\|┎
 keymap(0, "n", "<Plug>(snote_findJira)", '<Plug>(snote_toTop)<cmd>/\\[Jira\\]<cr>', opts)
 keymap(0, "n", "<leader>oj", '<Plug>(snote_findJira)<cmd>norm gx`z<cr>', opts)
 
+keymap(0, "n", "<Plug>(snote_find_toDevelop)", '<Plug>(snote_toTop)<cmd>/\\[to_develop#.\\+\\]<cr>', opts)
+keymap(0, "n", "<leader>od", '<Plug>(snote_find_toDevelop)<cmd>norm gx`z<cr>', opts)
+
 
 -- Opening Fortify links.
 keymap(0, "n", "<Plug>(snote_openAllIssues)", '<cmd>sil! g;\\[Issue_;norm gx<cr>', opts)
