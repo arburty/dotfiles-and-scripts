@@ -15,6 +15,7 @@ every instance of 'Permission denied".  There were a lot.
 `find ./ -iname "*.crt" -exec echo "{}" \;  -exec openssl x509 -in {} -text \; | less`
 : helped to check if my new PEM certificates were valid.
 
+
 ## Normies
 `history | tac | less`
 
@@ -40,12 +41,25 @@ not portable (Mac you bastard) so not good for scripts.
 `rsync -av --progress ~/.mutt/ ~/usb/mutt/ --exclude=cache --backup --backup-dir=BACKUPDIR`
 : use rsync backup my mutt files, and backing up changes (only one backup)
 
+
+# Zsh 
+
+## Zsh Expansion
+
+    array=(long longer longest short brief) o
+    print ${array[(r)${(l.${#${(O@)array//?/X}[1]}..?.)}]} # START
+    print ${(M)array:#${~${(O@)array//?/?}[1]}} # ALTERNATIVE, this one is better
+: Useful if you understand it
+[A_User's_Guide_to_the_Z-Shell](https://zsh.sourceforge.io/Guide/zshguide05.html)
+
+
 ## Tmux Related
 `echo -n 'tmux session: '; tmux ls | grep attached | cut -d ':' -f 1`
 : simple find the attached tmux session
 
 `tmux ls | grep -e "^workspace" -e "(attached)$"`
 : simple grep for if attached to workspace
+
 
 ## Vim Related Fun
 `exec $e +'$r!date "+\%a \%F \%R "' +startinsert! "$file"`
@@ -61,6 +75,7 @@ not portable (Mac you bastard) so not good for scripts.
 `map <leader>h :call RedirMessages("hi " . expand("<cWORD>"),'b 4 \| exe "norm G"')<cr>:bm<cr>`\``
 : a beaut to map a keybinding to call hi on the word under the cursor, and paste it into
 the first buffer at the bottom and return to start
+
 
 ## Printing Color
 ```awk
@@ -80,10 +95,12 @@ the first buffer at the bottom and return to start
 ```
 Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 
+
 ## Just4Fun
 `say -v afrikaans -p 80 "indefinitely and indubitable is industrialization"`
 : will speak, in the afrikaans voice with a pitch of 80 (default 50, 99 max)
     say is an alias for espeak. flag `--voices` to se the list of voices
+
 
 ## Random Math/Number and Looping Stuff
 `for i in {2..8}; do echo -n "420 / $i ="; let a=420/$i; echo $a; done`
@@ -110,6 +127,7 @@ Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 `while read font; do echo $font; figlet -f $font $font; done < <(ls | grep flf) | less`
 : print the name of a font and a sample
 
+
 ## Commands For Changing Audio Output
 `pactl list short sinks`
 
@@ -117,6 +135,7 @@ Prints a line of '/\' to show true color, or 256 color.  I did not write this.
 
 `pactl move-sink-input 8 2`
 : commands to change audio output
+
 
 ## SSH & Friends
 
@@ -132,6 +151,7 @@ heredoc exmples:
 
 rsync examples:
 [https://www.tecmint.com/rsync-local-remote-file-synchronization-commands/]
+
 
 ## Random
 
@@ -160,6 +180,7 @@ linux - Merge / convert multiple PDF files into one PDF - Stack Overflow
 `history | tac | awk '/gpg/ && !/history/ {$1=""; print $0;}' | less`
 : use awk to find recent 'gpg' commands and not the command(s) like above
 
+
 ## Script to take huge output and open in vim conveniently.
 
 <pre><code>
@@ -177,13 +198,15 @@ vim $logfile +/"\V$ddd" -c "norm! G"
 </code></pre>
 
 
-## Using ffmpeg
+
+# Using ffmpeg
 
 ### ffmpeg Compress Video
 
 `ffmpeg -i VID_20200921_225850_LS.mp4 -vcodec libx265 -crf 30 RL-is-broken.mp4`
 : Compresses vidoes.  Change the `-crf 30` to different values for different compressed sizes.
 (larger # = smaller size) link in: `~/notes/helpful_Links`
+
 
 ### ffmpeg Screenshots and Thumbnails
 
@@ -215,6 +238,7 @@ smaller/larger number is faster/slower.
 `ffprobe -show_entries format=duration myVideo.mp4 2>&1| grep "fps" | sed -e 's/^.*\, \([[:digit:]]\{2,\} fps\).*/\1/g'`
 : helped me grab the FPS for the video.
 
+
 ### ffmpeg Create GIF
 
 [How to Create a GIF from Images using FFmpeg? - OTTVerse](https://ottverse.com/how-to-create-gif-from-images-using-ffmpeg/)
@@ -222,6 +246,7 @@ smaller/larger number is faster/slower.
 `ffmpeg -f image2 -framerate 10 -i 01-%04d.jpg -loop -1 01-10fps.gif`
 : Create a gif with 10 frames a second of a series of images named like
 screenshot-001.jpg. (~5 min video / 1 screenshot per second = ~50 seconds for a 10x speed)
+
 
 ### ffmpeg Clipping
 
@@ -234,6 +259,7 @@ screenshot-001.jpg. (~5 min video / 1 screenshot per second = ~50 seconds for a 
 `ffmpeg -f concat -safe 0 -i listtocat.txt -c copy concatenated.mp4`
 : One way to concatenate 2 videos together. Where listtocat.txt contains lines
 like: `file '/path/to/file'`
+
 
 ## Exiv2 commands to add/modify metadata to images.
 
@@ -249,7 +275,8 @@ like: `file '/path/to/file'`
 `exiv2 -M"set Exif.Photo.UserComment charset=Ascii Comment made by arburty" mypic.jpg`
 : add a comment. this prints when using exiv2 with no flags.
 
-## Came from HomeAdvisor/General Mac related
+
+# Came from HomeAdvisor/General Mac related
 `docker run -dt -p 80:80 -p 443:443 -e HOSTIP=host.docker.internal -v ~/apps/sm-content:/usr/local/sm-apache/htdocs --name apache apache:2.4.3 #HELPFUL`
 
 `a=$(wc -l spd-update | tr -s [:blank:] | cut -d " " -f 2); let b=$a-2; tail -n $b spd-update`
@@ -267,6 +294,7 @@ like: `file '/path/to/file'`
 
 `nc towel.blinkenlights.nl 23 - Star wars movie`
 : Star Wars IV: A New Hope, remastered
+
 
 # Saved me | Troubleshooting
 
@@ -366,3 +394,5 @@ https://specifications.freedesktop.org/mpris-spec/latest/Player_Interface.html
 
 java -Xmx2048M -agentlib:jdwp=transport=dt_socket,address=8888,server=y,suspend=n -jar aem-author-p4502.jar #DEBUG AEM
 : aem debug starter command.
+
+

@@ -6,8 +6,11 @@
 # Date   : 06/18/20
 
 file=/tmp/Colorado-Doppler.gif
-curl "https://radar.weather.gov/lite/N0V/FTG_loop.gif" > $file
+curl https://radar.weather.gov/lite/N0V/FTG_loop.gif > $file
 mpv --loop-file=inf $file > /dev/null 2>&1
 rm $file
 
 exit 0
+
+# Try the new links, though I didn't find the replacement link yet
+# https://www.star.nesdis.noaa.gov/GOES/index.php

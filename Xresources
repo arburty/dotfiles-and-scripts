@@ -66,3 +66,6 @@ Sxiv.font:       Liberation Mono:size=16:style=bold
 ! Make c-insert the clipboard, S-Insert is still primary
 *VT100*translations:    #override \n\
     Ctrl <KeyPress> Insert: insert-selection(CLIPBOARD)
+
+Xcursor.theme: THEME_NAME
+Xcursor.size: 48

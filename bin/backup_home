@@ -11,6 +11,9 @@
 # This was a nicely made article I took my initial skeleton from.
 # https://opensource.com/article/19/5/advanced-rsync
 
+echo "refactor first!"
+exit 1
+
 starttime=$(date +'%s')
 echo "START BACKUP"
 date

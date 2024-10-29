@@ -5,8 +5,8 @@
     "floating": "auto_off",
     "layout": "stacked",
     "geometry": {
-       "height": 556,
-       "width": 964,
+       "height": 1389,
+       "width": 2556,
        "x": 0,
        "y": 0
     },
@@ -19,7 +19,6 @@
         {
             "instance": "^zst$",
             "title": "^zst$",
-            "machine": "^pop\\-os$",
             "class": "^st\\-256color$"
         }
     ],

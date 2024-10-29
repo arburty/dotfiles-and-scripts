@@ -17,16 +17,17 @@ die() {
 [ -z "$(command -v cryptsetup)" ] && die "cryptsetup not installed."
 
 virtualName="BackupDrive"
+devlocation="/dev/sdc1"
 mountdir="/media/vladislav/Backups"
 listblock=$(lsblk | grep $virtualName)
 mountedfield=$(echo $listblock | cut -d" " -f 7)
-
 
 mount_drive() {
   echo Mounting $virtualName
   echo $mountedfield
   [ -z "$mountedfield" ] || die "device is already mounted"
-  sudo cryptsetup luksOpen /dev/sdc1 BackupDrive
+
+  sudo cryptsetup luksOpen $devlocation $virtualName
   sudo mkdir -p $mountdir
   sudo mount /dev/mapper/$virtualName $mountdir
 }
@@ -39,12 +40,39 @@ unmount_drive() {
   sudo cryptsetup luksClose $virtualName
 }
 
-case $1 in
-  "-m" | "--mount") mount_drive ;;
-  "-u" | "--unmount" | "--umount" ) unmount_drive ;;
-  "-h" | "--help") echo "use '-m' or '-u' to mount or unmount the drive." ;;
-  *) 
-    echo "No flag used, We'll try mounting." 
-    mount_drive 
-    ;;
-esac
+while getopts "muh-:" arg; do
+  echo "->$arg"
+  case $arg in
+    -) 
+      echo "in the '-' param"
+      case "${OPTARG}" in
+        mount) mount_drive ;;
+        mount=*) 
+          virtualName="Sandisk2T"
+          devlocation="/dev/sdd"
+          mountdir="/media/vladislav/SD2T"
+          listblock=$(lsblk | grep $virtualName)
+          mountedfield=$(echo $listblock | cut -d" " -f 7)
+          mount_drive 
+          ;;
+        unmount|umount) unmount_drive ;;
+        unmount=*|umount=*) 
+          virtualName="Sandisk2T"
+          devlocation="/dev/sdd"
+          mountdir="/media/vladislav/SD2T"
+          listblock=$(lsblk | grep $virtualName)
+          mountedfield=$(echo $listblock | cut -d" " -f 7)
+          unmount_drive
+          ;;
+        help) echo "use '-m' or '-u' to mount or unmount the drive." ;;
+      esac 
+      ;;
+    "m" ) mount_drive ;;
+    "u" ) unmount_drive ;;
+    "h" ) echo "use '-m' or '-u' to mount or unmount the drive." ;;
+    *) 
+      echo "No flag used, We'll try mounting." 
+      mount_drive 
+      ;;
+  esac
+done

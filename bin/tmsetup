@@ -15,8 +15,16 @@ declare -r NAME=${1:-"workspace"}
 # if the session doesn't exist create it. otherwise attach to it
 tmux has-session -t $NAME 2>/dev/null
 if [[ $? != 0 ]]; then
-    # new session with NAME and a 'workstation' window split in 2 panes
-    tmux new -s ${NAME} -n workstation -d
+    if [[ $NAME == 'h' ]] ;then 
+      echo 'export PATH=$PATH:/home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin' >> $HOME/.zshrc
+      echo 'export HISTFILE=/home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/.cache/.history' >> $HOME/.zshrc
+      echo 'source $HOME/SD2T/Backup/shared/laptop-backup/.sysctl/bin/STASH_CONSTS' >> $HOME/.zshrc
+      tmux new -d -s ${NAME} 'export PATH=$PATH:/home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin ; exec zsh'
+      tmux set-env -t $NAME PATH /home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin:$PATH
+    else
+      # new session with NAME and a 'workstation' window split in 2 panes
+      tmux new -s ${NAME} -n workstation -d
+    fi
     tmux split-window -h -t $NAME
 
     # new window named 'vim'
@@ -60,5 +68,12 @@ fi
 
 # Only create the session if detach is true, do not attach to it. Otherwise attach
 [[ $detach == "true" ]] && echo "tmux session '$NAME' created" || tmux attach -t $NAME
+
+if [[ $NAME == 'h' ]] ;then 
+  sed -En -i '
+  /^export.*sysctl/d
+  /^source.*sysctl/d
+  p' $HOME/.zshrc
+fi
 
 exit 0

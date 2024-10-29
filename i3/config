@@ -48,7 +48,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-## fn+{F2,F3,F4} volup,voldown,mute
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
@@ -118,6 +117,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f fullscreen toggle global
 
 # change container layout (stacked, tabbed, toggle split)
+workspace_layout stacking
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -177,16 +177,22 @@ workspace_auto_back_and_forth yes
 set $samsungmonitor DP-1
 set $asusmonitor HDMI-1
 
+bindsym $mod+F2 \
+          exec xrandr --output DP-1 --primary --mode 2560x1440 --rate 99.95 --output HDMI-1 --mode 2560x1440 --rate 99.95 --left-of DP-1
+
+bindsym $mod+F3 \
+          exec xrandr --output DP-1 --primary --mode 2560x1440 --rate 99.95 --output HDMI-1 --mode 2560x1440 --rate 99.95 --right-of DP-1
+
 workspace $ws1 output $samsungmonitor $asusmonitor
 workspace $ws2 output $samsungmonitor $asusmonitor
 workspace $ws5 output $samsungmonitor $asusmonitor
 workspace $ws6 output $samsungmonitor $asusmonitor
 workspace $ws7 output $samsungmonitor $asusmonitor
+workspace $ws8 output $samsungmonitor $asusmonitor
 workspace $ws9 output $samsungmonitor $asusmonitor
 
 workspace $ws3 output $asusmonitor $samsungmonitor
 workspace $ws4 output $asusmonitor $samsungmonitor
-workspace $ws8 output $asusmonitor $samsungmonitor
 workspace $ws10 output $asusmonitor $samsungmonitor
 
 # reload the configuration file
@@ -207,6 +213,15 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bar {
   status_command i3status -c /home/$USER/.config/i3/i3status.conf
   tray_output primary
+
+  bindsym button4 nop
+  bindsym button5 nop
+  bindsym $mod+button4 nop
+  bindsym $mod+button5 nop
+
+  bindsym --whole-window $mod+button5 workspace next_on_output
+  bindsym --whole-window $mod+button4 workspace prev_on_output
+  bindsym --whole-window Ctrl+button5 workspace HELLO
 
   colors {
 
@@ -243,6 +258,10 @@ exec i3-msg "border pixel 5"
 
 # Swap out the caps lock key for escape
 exec xmodmap ~/.config/df/caps_to_esc -display $DISPLAY
+## REBIND CAPS LOCK. BE CAREFUL NOT TO LOCK IT INTO CAPS LIKE I JUST DID.
+bindsym $mod+F1 \
+          exec xdotool key Caps_Lock \
+          exec xmodmap ~/.config/df/caps_to_esc -display $DISPLAY
 
 bindsym $mod+c exec co-pw
 bindsym $mod+Shift+s exec spotify
@@ -288,8 +307,6 @@ bindsym $mod+Shift+O \
           workspace $ws1  ; move workspace to output $samsungmonitor
 
 bindsym $mod+o \
-          workspace $ws5 ;\
-          workspace $ws4 ;\
           workspace $ws3 ;\
           workspace $ws1 ;\
           workspace $ws2 
@@ -316,8 +333,6 @@ bindsym --release $mod+ctrl+0 \
           workspace number $ws6 ;\
           workspace number $ws10 ;\
           exec --no-startup-id xdotool key --clearmodifiers ctrl+x 0
-
-bindsym $mod+ctrl+k exec test_cmd
 
 mode "move_mouse" {
         # Click 
@@ -393,23 +408,23 @@ mode "move_mouse" {
         #bindsym 0 mapped to Top Right
 
         # Right Screen, 9 sections within the screen.
-        bindsym $mod+1 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+1 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$(((WIDTH/4)+$WIDTH))" "$((HEIGHT/4))"
-        bindsym $mod+2 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+2 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$((((WIDTH/4)*2)+$WIDTH))" "$((HEIGHT/4))"
-        bindsym $mod+3 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+3 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$((((WIDTH/4)*3)+$WIDTH))" "$((HEIGHT/4))"
-        bindsym $mod+4 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+4 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$(((WIDTH/4)+$WIDTH))" "$(((HEIGHT/4)*2))"
-        bindsym $mod+5 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+5 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$((((WIDTH/4)*2)+$WIDTH))" "$(((HEIGHT/4)*2))"
-        bindsym $mod+6 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+6 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$((((WIDTH/4)*3)+$WIDTH))" "$(((HEIGHT/4)*2))"
-        bindsym $mod+7 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+7 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$(((WIDTH/4)+$WIDTH))" "$(((HEIGHT/4)*3))"
-        bindsym $mod+8 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+8 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$((((WIDTH/4)*2)+$WIDTH))" "$(((HEIGHT/4)*3))"
-        bindsym $mod+9 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
+        bindsym shift+9 exec eval $(xdotool getdisplaygeometry --shell getmouselocation --shell) \
                       && xdotool mousemove "$((((WIDTH/4)*3)+$WIDTH))" "$(((HEIGHT/4)*3))"
 
         # spotify pause
@@ -433,3 +448,18 @@ mode "move_mouse" {
 }
 
 bindsym $mod+shift+m mode "move_mouse"
+
+include $HOME/SD2T/Backup/shared/laptop-backup/.sysctl/bin/i3/*.conf 
+
+# open shit up
+exec --no-startup-id "i3-msg 'workspace tmp'"
+exec --no-startup-id "i3-msg 'workspace 1:st; append_layout /home/vladislav/.config/i3/workspace-1.json'"
+exec --no-startup-id "i3-msg 'workspace 2:browser; append_layout /home/vladislav/.config/i3/workspace-2.json'"
+exec --no-startup-id "i3-msg 'workspace 3:spotify; append_layout /home/vladislav/.config/i3/workspace-3.json'"
+
+exec --no-startup-id st -n "primary" -t "zsh" -e "zsh" -c "tmstart -w"
+
+exec --no-startup-id qutebrowser
+exec --no-startup-id firefox
+exec --no-startup-id spotify
+

@@ -31,7 +31,10 @@ function timer_clipped()
     if running then
         timer = mp.add_periodic_timer(1, function()
             local currentpos = mp.get_property("percent-pos")
-            local msg = clipped .. "\n" .. "pct-pos: "..("%.2f"):format(math.floor(currentpos * 1000) / 1000), 1
+            local spaces = ("%.2f"):format(math.floor( (currentpos * 1000) - 1 ) / 1000) - 1
+            local spaces = string.rep("─", spaces) .. "┘"
+
+            local msg = clipped .. "\n" .. spaces .. " " ..("%.2f"):format(math.floor(currentpos * 1000) / 1000) .. "%"
             mp.osd_message(msg)
         end)
     else
@@ -49,7 +52,7 @@ function show_clipped()
 end
 
 function get_clipped_data()
-  local handle = io.popen('/home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin/clipped "' .. mp.get_property("filename") .. '"')
+  local handle = io.popen('/home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin/clipped "' .. mp.get_property("filename") .. '" | grep -v "clipped$"')
   local output = handle:read('*a')
   local time = output:gsub('[\r]', '\n')
   handle:close()
@@ -62,3 +65,10 @@ end
 
 --[[ mp.add_key_binding("ctrl+z", "show_clipped", show_clipped) ]]
 mp.add_key_binding("ctrl+z", "timer_clipped", timer_clipped)
+
+--[[ Start immediately ]]
+mp.register_event(
+  --[[ "file-loaded", function() mp.set_property_bool("pause", false) end ]]
+  "file-loaded", function() timer_clipped() end
+
+)

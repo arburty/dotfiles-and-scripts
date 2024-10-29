@@ -27,7 +27,7 @@
                {
                     "class": "^qutebrowser$",
                     "instance": "^qutebrowser$",
-                    "title": "^searx\\.org\\ \\-\\ qutebrowser$"
+                    "title": "^YouTube\\ \\-\\ qutebrowser$"
                }
             ],
             "type": "con"

@@ -1,1 +1,27 @@
 // vim:ts=4:sw=4:et
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "layout": "stacked",
+    "geometry": {
+       "height": 600,
+       "width": 800,
+       "x": 0,
+       "y": 0
+    },
+    "marks": [
+       "m"
+    ],
+    "name": "sxiv",
+    "percent": 1,
+    "swallows": [
+        {
+            "class": "^Sxiv$",
+            "instance": "^Madi&Friends$",
+            "title": "^sxiv$"
+        }
+    ],
+    "type": "con"
+}
+

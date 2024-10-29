@@ -3,6 +3,7 @@
     "border": "normal",
     "current_border_width": 2,
     "floating": "auto_off",
+    "layout": "stacked",
     "geometry": {
        "height": 600,
        "width": 800,

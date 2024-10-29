@@ -46,16 +46,16 @@ class save_sorted_files_buffer(Command):
 class linktops(Command):
     def execute(self):
         os.system("notify-send 'starting linktops'")
-        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/linktops")
+        os.system("setsid -f ~/SD2T/Backup/shared/laptop-backup/.sysctl/bin/linktops")
 
 
 class save_torrent(Command):
     def execute(self):
-        os.system("~/shared_drive/laptop-backup/.sysctl/bin/save_torrents "
+        os.system("~/SD2T/Backup/shared/laptop-backup/.sysctl/bin/save_torrents "
                   + shell_escape(self.fm.thisdir.path))
-        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/linktops")
+        os.system("setsid -f ~/SD2T/Backup/shared/laptop-backup/.sysctl/bin/linktops")
         newdir = self.fm.thisdir.basename
-        self.fm.tab_new("~/shared_drive/laptop-backup/.sysctl/Videos/Torrents/"
+        self.fm.tab_new("~/SD2T/Backup/shared/laptop-backup/.sysctl/Videos/Torrents/"
                         + newdir)
 
 class deleteAmp(Command):
@@ -66,15 +66,15 @@ class deleteAmp(Command):
             amp = self.fm.thisfile.path
         self.fm.notify("running deleteAmp " + amp)
         os.system("notify-send 'deleting Amp'")
-        os.system("setsid -f ~/shared_drive/laptop-backup/.sysctl/bin/deleteAmp " + amp)
+        os.system("setsid -f ~/SD2T/Backup/shared/laptop-backup/.sysctl/bin/deleteAmp " + amp)
 
 
 class count_images(Command):
     def execute(self):
-        # sys.path.insert(0, '/home/vladislav/shared_drive/laptop-backup/.sysctl/bin')
+        # sys.path.insert(0, '/home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin')
         # import count_images
         # totals = count_images.return_totals()
         
         if self.arg(1):
             dir = self.rest(1)
-        self.fm.execute_console('shell -p /home/vladislav/shared_drive/laptop-backup/.sysctl/bin/count_images.py ' + dir)
+        self.fm.execute_console('shell -p /home/vladislav/SD2T/Backup/shared/laptop-backup/.sysctl/bin/count_images.py ' + dir)

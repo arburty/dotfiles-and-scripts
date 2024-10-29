@@ -24,7 +24,7 @@ PHONE_ROOT=$(fdfind "^Internal shared storage$" -t d -d 2 --search-path="/run/us
 [ -z $PHONE_ROOT ] && echo "No phone storage found." && exit 1
 
 # BACKUP_ROOT=$HOME/Backups/Archive/phone_transfer_$(date +'%Y.%m.%d')
-BACKUP_ROOT=$HOME/shared_drive/laptop-backup/.sysctl/unsorted/phone/phone_transfer_$(date +'%Y.%m.%d')
+BACKUP_ROOT=$HOME/SD2T/Backup/shared/laptop-backup/.sysctl/unsorted/phone/phone_transfer_$(date +'%Y.%m.%d')
 echo $BACKUP_ROOT
 
 starttime=$(date +'%s')
