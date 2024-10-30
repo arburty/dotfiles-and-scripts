@@ -37,30 +37,30 @@ local javaargs
 
 javaargs = {
 
-  --[[ 'java', -- or '/path/to/java11_or_newer/bin/java' ]]
-  --[[]]
-  --[[ '-Declipse.application=org.eclipse.jdt.ls.core.id1', ]]
-  --[[ '-Dosgi.bundles.defaultStartLevel=4', ]]
-  --[[ '-Declipse.product=org.eclipse.jdt.ls.core.product', ]]
-  --[[ '-Dlog.protocol=true', ]]
-  --[[ '-Dlog.level=ALL', ]]
-  --[[ '-Xms1g', ]]
-  --[[ '--add-modules=ALL-SYSTEM', ]]
-  --[[ '--add-opens', 'java.base/java.util=ALL-UNNAMED', ]]
-  --[[ '--add-opens', 'java.base/java.lang=ALL-UNNAMED', ]]
+   'java', -- or '/path/to/java11_or_newer/bin/java' 
+  
+   '-Declipse.application=org.eclipse.jdt.ls.core.id1', 
+   '-Dosgi.bundles.defaultStartLevel=4', 
+   '-Declipse.product=org.eclipse.jdt.ls.core.product', 
+   '-Dlog.protocol=true', 
+   '-Dlog.level=ALL', 
+   '-Xms1g', 
+   '--add-modules=ALL-SYSTEM', 
+   '--add-opens', 'java.base/java.util=ALL-UNNAMED', 
+   '--add-opens', 'java.base/java.lang=ALL-UNNAMED', 
 
-    "java",
-    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-    "-Dosgi.bundles.defaultStartLevel=4",
-    "-Declipse.product=org.eclipse.jdt.ls.core.product",
-    "-Dlog.protocol=true",
-    "-Dlog.level=ALL",
-    "-Xms1g",
-    "--add-modules=ALL-SYSTEM",
-    "--add-opens",
-    "java.base/java.util=ALL-UNNAMED",
-    "--add-opens",
-    "java.base/java.lang=ALL-UNNAMED",
+    -- "java",
+    -- "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    -- "-Dosgi.bundles.defaultStartLevel=4",
+    -- "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    -- "-Dlog.protocol=true",
+    -- "-Dlog.level=ALL",
+    -- "-Xms1g",
+    -- "--add-modules=ALL-SYSTEM",
+    -- "--add-opens",
+    -- "java.base/java.util=ALL-UNNAMED",
+    -- "--add-opens",
+    -- "java.base/java.lang=ALL-UNNAMED",
 
   --[[ '--module-path', 'astro-modules/astro-dev.main', ]]
   --[[ '--module-path', 'astro-dev/com.astro.dmp.dev.Application', ]]
