@@ -228,10 +228,29 @@ fi
 # install NerdFonts {
 #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 2> /dev/null
 
-mkdir -p $homedir/.local/share/fonts
-cd $homedir/.local/share/fonts && curl -kfLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
-   https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
-cd -
+# TODO: these fonts weren't working for mac, I had to use brew instead.
+installNerdFonts() {
+  mkdir -p $homedir/.local/share/fonts
+  cd $homedir/.local/share/fonts 
+
+  echo "Install Nerd Fonts"
+  pwd
+  curl -kfLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" \
+    https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+
+  # curl -kfLo "Bitstream NerdFont Vera Sans Mono" \
+  #   https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/BitstreamVeraSansMono/Regular/BitstromWeraNerdFontMono-Regular.ttf
+
+  curl -fLo "Fira Code Nerd Font Complete.otf" \
+    https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/FiraCode/complete/FiraCode%20Nerd%20Font%20Complete.otf
+
+  echo -e "Done installing nerd fonts\n"
+  cd -
+
+# EXAMPLE : from the download page
+# curl -fLo "<FONT NAME> Nerd Font Complete.otf" \
+# https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/<FONT_PATH>/complete/<FONT_NAME>%20Nerd%20Font%20Complete.otf
+}
 
 #}
 

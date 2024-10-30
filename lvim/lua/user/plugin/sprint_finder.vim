@@ -1,0 +1,1 @@
+../../../../nvim/plugin/sprint_finder.vim

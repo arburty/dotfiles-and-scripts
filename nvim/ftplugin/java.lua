@@ -2,8 +2,9 @@
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
 --vim.lsp.set_log_level("debug")
+local jdtls = require("jdtls")
 
-vim.bo.expandtab = false -- convert tabs to spaces
+vim.bo.expandtab = true -- convert tabs to spaces
 vim.bo.tabstop = 4      -- insert 4 4paces for a tab
 vim.bo.shiftwidth = 0   -- the number of spaces inserted for each indentation
 
@@ -13,75 +14,43 @@ local workspace_dir = home .. '/.cache/java_workspace/' .. project_name
 -- localmachine set in zshrc
 local mymachine = vim.env.localmachine
 
+local bundles = {
+  vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
+}
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/vscode-java-test/server/*.jar", 1), "\n"))
+
+local java_jar = vim.fn.glob(home .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", 1)
+print("nvim: jj : " .. java_jar)
+
 local javaargs
 
-if mymachine == "WSL"
-then -- Invesco specific
-  local catalina_base = '/mnt/c/projects/' .. project_name .. '/.metadata/.plugins/org.eclipse.wst.server.core/tmp1'
-  local deploy = catalina_base .. '/wtpwebapps'
+javaargs = {
+  'java', -- or '/path/to/java11_or_newer/bin/java'
 
-  javaargs = {
-    --'java', -- or '/path/to/java11_or_newer/bin/java'
-    '/opt/jdk-17/bin/java',
+  '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+  '-Dosgi.bundles.defaultStartLevel=4',
+  '-Declipse.product=org.eclipse.jdt.ls.core.product',
+  '-Dlog.protocol=true',
+  '-Dlog.level=ALL',
+  '-Xms1g',
+  '--add-modules=ALL-SYSTEM',
+  '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+  '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
+  --[[ '--module-path', 'astro-modules/astro-dev.main', ]]
+  --[[ '--module-path', 'astro-dev/com.astro.dmp.dev.Application', ]]
+  --[[ '--module com.jenkov.mymodule/com.jenkov.mymodule.Main' ]]
+  '-Xmx1024m',
+  '-javaagent:' .. home .. '/.local/share/lvim/mason/share/jdtls/lombok.jar',
 
--- ==== GRADLE =======
-    '-Xmx1024m',
-    '-Djasypt.encryptor.password=Invesco123',
-
--- ==== MAGNOLIA =====
---    '${jrebel_args}',
---    '-Dcatalina.base=' .. catalina_base,
-    --'-Dcatalina.home=/mnt/c/usr/local/java/apache-tomcat-9.0.31',
---    '-Dwtp.deploy=' .. deploy,
-    --'--add-opens=java.base/java.lang=ALL-UNNAMED',
-    --'--add-opens=java.base/java.io=ALL-UNNAMED',
-    --'--add-opens=java.base/java.util=ALL-UNNAMED',
-    --'--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
-    --'--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED',
-    --'--add-modules=ALL-SYSTEM',
--- ===== END =========
-
-    '-Dinvesco.ad.access=Inve5co',
-    '-Doauth.access=Invesco123',
-
-    -- 💀
-    '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar',
-    -- 💀
-    '-configuration', './config_linux/config.ini',
-    -- 💀
-    '-data', workspace_dir
-  }
-else -- default args
-  javaargs = {
-    'java', -- or '/path/to/java11_or_newer/bin/java'
-
-    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-    '-Dosgi.bundles.defaultStartLevel=4',
-    '-Declipse.product=org.eclipse.jdt.ls.core.product',
-    '-Dlog.protocol=true',
-    '-Dlog.level=ALL',
-    '-Xms1g',
-    '--add-modules=ALL-SYSTEM',
-    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-
-    '--module-path', 'astro-modules/astro-dev.main',
-    --[[ '--module-path', 'astro-dev/com.astro.dmp.dev.Application', ]]
-    --[[ '--module com.jenkov.mymodule/com.jenkov.mymodule.Main' ]]
-    '-Xmx1024m',
-
-    -- 💀
-    --[[ '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar', ]]
-    '-jar', home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.2.400.v20211117-0650.jar',
-    -- 💀
-    --[[ '-configuration', './config_linux/config.ini', ]]
-    '-configuration', './config_mac/',
-    -- 💀
-    '-data', workspace_dir
-  }
-
-end
+  -- 💀
+  '-jar', java_jar,
+  -- 💀
+  --[[ '-configuration', './config_linux/config.ini', ]]
+  '-configuration', home .. "/.local/share/nvim/lsp_servers/jdtls/config_mac/",
+  -- 💀
+  '-data', workspace_dir
+}
 
 local config = {
   -- The command that starts the language server
@@ -104,9 +73,9 @@ local config = {
         -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
         runtimes = {
           { name = "JavaSE-11",
-            path = "/usr/local/opt/java11/", },
+            path = "/usr/local/Cellar/openjdk@11/11.0.21/libexec/openjdk.jdk/Contents/Home", },
           { name = "JavaSE-17",
-            path = "/usr/local/opt/java17/", },
+            path = "/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home", },
         }
       }
 
@@ -121,16 +90,15 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {
-      vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.46.0.jar", 1)
-    }
+    bundles = bundles
   },
 }
 
-config['on_attach'] = function(client, bufnr)
-  require('jdtls').setup_dap({ hotcodereplace = 'auto' })
-end
+--[[ config['on_attach'] = function(client, bufnr) ]]
+--[[ print('yup i git that') ]]
+require('jdtls').setup_dap({ hotcodereplace = 'auto' })
+--[[ end ]]
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
-require('jdtls').start_or_attach(config)
+jdtls.start_or_attach(config)

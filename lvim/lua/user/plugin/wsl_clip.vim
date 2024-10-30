@@ -1,0 +1,1 @@
+../../../../nvim/plugin/wsl_clip.vim

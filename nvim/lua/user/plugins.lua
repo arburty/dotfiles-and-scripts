@@ -52,10 +52,10 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
-  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  use "numToStr/Comment.nvim" -- Easily comment stuff
+  use "nvim-lua/popup.nvim"    -- An implementation of the Popup API from vim in Neovim
+  use "nvim-lua/plenary.nvim"  -- Useful lua functions used ny lots of plugins
+  use "windwp/nvim-autopairs"  -- Autopairs, integrates with both cmp and treesitter
+  use "numToStr/Comment.nvim"  -- Easily comment stuff
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
   use "moll/vim-bbye"
@@ -87,8 +87,12 @@ return packer.startup(function(use)
   use "akinsho/bufferline.nvim"
 
   -- LSP
-  use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+	use { "neovim/nvim-lspconfig", commit = "f11fdff7e8b5b415e5ef1837bdcdd37ea6764dda" } -- enable LSP
+  use { "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12"} -- simple to use language server installer
+  use { "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" }
+  use { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" } -- for formatters and linters
+  use { "RRethy/vim-illuminate", commit = "d6ca7f77eeaf61b3e6ce9f0e5a978d606df44298" }
+
   use "simrat39/symbols-outline.nvim"
 
   -- Telescope
@@ -128,6 +132,7 @@ return packer.startup(function(use)
   use "tpope/vim-unimpaired"
   -- use "JamshedVesuna/vim-markdown-preview"
   use "ellisonleao/glow.nvim"
+  use 'junegunn/vim-easy-align'
 
   -- }}}
 

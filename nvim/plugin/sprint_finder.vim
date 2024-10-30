@@ -6,7 +6,7 @@
 " Populate the quickfix menu with the story_notes for a given sprint.
 
 func! s:sprintFinder(sprintnum) abort
-  exe "vimgrep \"^S" . a:sprintnum . "$\" ~/story_notes/**/*.{md,snote}"
+  exe "vimgrep \"^S" . a:sprintnum . "\\(: [a-zA-Z]\\{3} \\d\\d\\?\\)\\?$\" ~/story_notes/**/*.{md,snote}"
 endfunc
 
 command! -nargs=1 Sprint :call <SID>sprintFinder(<args>)

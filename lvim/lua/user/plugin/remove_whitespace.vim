@@ -1,0 +1,1 @@
+../../../../nvim/plugin/remove_whitespace.vim

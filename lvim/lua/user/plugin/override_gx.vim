@@ -1,0 +1,1 @@
+../../../../nvim/plugin/override_gx.vim
