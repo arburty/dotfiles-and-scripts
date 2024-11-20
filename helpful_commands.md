@@ -396,3 +396,5 @@ java -Xmx2048M -agentlib:jdwp=transport=dt_socket,address=8888,server=y,suspend=
 : aem debug starter command.
 
 
+`xcalib -invert -alter`
+: Invert the colors in a window manager agnostic way.

@@ -102,6 +102,7 @@ alias import_later='source $(which STASH_CONSTS)'
 # Vim related alias's {{{2
 VEDITOR='lvim'
 alias v='$VEDITOR'
+alias lv='lvim'
 alias G='$VEDITOR +G'
 alias vz='$VEDITOR $HOME/.zshrc'
 alias vb='$VEDITOR $HOME/.bashrc'

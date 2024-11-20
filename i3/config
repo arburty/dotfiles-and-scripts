@@ -449,6 +449,8 @@ mode "move_mouse" {
 
 bindsym $mod+shift+m mode "move_mouse"
 
+bindsym $mod+shift+i exec --no-startup-id "xcalib -invert -alter"
+
 include $HOME/SD2T/Backup/shared/laptop-backup/.sysctl/bin/i3/*.conf 
 
 # open shit up
