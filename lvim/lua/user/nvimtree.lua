@@ -12,13 +12,13 @@ nvimtree.setup {
     width = 50,
     number = true,
     relativenumber = true,
-    mappings = {
-      custom_only = false,
-      list = {
-        keymap("n", "<left>", "<cmd>NvimTreeResize -10<cr>", opts),
-        keymap("n", "<right>", "<cmd>NvimTreeResize +10<cr>", opts),
-      },
-    },
+    -- mappings = {
+    --   custom_only = false,
+    --   list = {
+    --     keymap("n", "<left>", "<cmd>NvimTreeResize -10<cr>", opts),
+    --     keymap("n", "<right>", "<cmd>NvimTreeResize +10<cr>", opts),
+    --   },
+    -- },
   },
   update_focused_file = {
     enable = true,

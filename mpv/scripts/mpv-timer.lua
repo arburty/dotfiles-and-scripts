@@ -23,6 +23,20 @@ end
 --[[   mp.set_property("osd-font", "Liberation Mono") ]]
 --[[ end ]]
 
+local function divmod(a, b)
+    return a / b, a % b
+end
+
+local function human_time(input_seconds)
+  -- Taken and modified from https://github.com/Arieleg/mpv-copyTime/blob/master/copyTime.lua
+  local minutes, remainder = divmod(input_seconds, 60)
+  local hours, minutes = divmod(minutes, 60)
+  local seconds = math.floor(remainder)
+  local milliseconds = math.floor((remainder - seconds) * 1000)
+  local time = string.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, milliseconds)
+  return time
+end
+
 function timer_clipped()
     running = not running
     local clipped = get_clipped_data()
@@ -31,10 +45,12 @@ function timer_clipped()
     if running then
         timer = mp.add_periodic_timer(1, function()
             local currentpos = mp.get_property("percent-pos")
-            local spaces = ("%.2f"):format(math.floor( (currentpos * 1000) - 1 ) / 1000) - 1
-            local spaces = string.rep("─", spaces) .. "┘"
+            local currenttime = human_time(mp.get_property_number("time-pos"))
+            local spaces = ("%.2f"):format(math.floor( (currentpos * 1000) - 1 ) / 1000)
+            local spacesline = string.rep("─", spaces) .. "┘" .. " " ..("%.2f"):format(math.floor(currentpos * 1000) / 1000) .. "%" 
+            local spacetime = string.rep(" ", spaces - 1) .. currenttime
 
-            local msg = clipped .. "\n" .. spaces .. " " ..("%.2f"):format(math.floor(currentpos * 1000) / 1000) .. "%"
+            local msg = clipped .. "\n" .. spacesline .. "\n" .. spacetime
             mp.osd_message(msg)
         end)
     else

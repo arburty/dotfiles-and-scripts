@@ -3,6 +3,13 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
+-- Hacky override while plugins fix deprecated tbl_add_reverse_lookup
+vim.tbl_add_reverse_lookup = function (tbl)
+  for k, v in pairs(tbl) do
+    tbl[v] = k
+  end
+end
+
 lvim.plugins = {
   "mfussenegger/nvim-jdtls",
 

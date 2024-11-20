@@ -14,10 +14,21 @@ local workspace_dir = home .. '/.cache/java_workspace/' .. project_name
 -- localmachine set in zshrc
 local mymachine = vim.env.localmachine
 
-local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
-}
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/vscode-java-test/server/*.jar", 1), "\n"))
+-- local bundles = {
+--   vim.fn.glob(home .. "/.local/share/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar", 1)
+-- }
+
+local bundles = {}
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+vim.list_extend(bundles, vim.split(vim.fn.glob(mason_path .. "packages/java-test/extension/server/*.jar"), "\n"))
+vim.list_extend(
+  bundles,
+  vim.split(
+    vim.fn.glob(mason_path .. "packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"),
+    "\n"
+  )
+)
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/java/vscode-java-test/server/*.jar", 1), "\n"))
 
 local java_jar = vim.fn.glob(home .. "/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", 1)
 print("nvim: jj : " .. java_jar)
@@ -52,6 +63,8 @@ javaargs = {
   '-data', workspace_dir
 }
 
+lvim.builtin.dap.active = true
+
 local config = {
   -- The command that starts the language server
   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -77,10 +90,32 @@ local config = {
           { name = "JavaSE-17",
             path = "/usr/local/Cellar/openjdk@17/17.0.9/libexec/openjdk.jdk/Contents/Home", },
         }
-      }
-
-    }
+      },
+      eclipse = {
+        downloadSources = true,
+      },
+      maven = {
+        downloadSources = true,
+      },
+      referencesCodeLens = {
+        enabled = true,
+      },
+      references = {
+        includeDecompiledSources = true,
+      },
+      inlayHints = {
+        parameterNames = {
+          enabled = "all", -- literals, all, none
+        },
+      },
+      format = {
+        enabled = true, -- disable to use google-java-format
+      },
+    },
+    signatureHelp = { enabled = true },
+    extendedClientCapabilities = extendedClientCapabilities,
   },
+
 
   -- Language server `initializationOptions`
   -- You need to extend the `bundles` with paths to jar files
@@ -96,8 +131,25 @@ local config = {
 
 --[[ config['on_attach'] = function(client, bufnr) ]]
 --[[ print('yup i git that') ]]
-require('jdtls').setup_dap({ hotcodereplace = 'auto' })
+-- require('jdtls').setup_dap({ hotcodereplace = 'auto' })
 --[[ end ]]
+
+config["on_attach"] = function(client, bufnr)
+  local _, _ = pcall(vim.lsp.codelens.refresh)
+ require("jdtls").setup_dap({ hotcodereplace = "auto" })
+ require("lvim.lsp").on_attach(client, bufnr)
+  local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
+  if status_ok then
+    jdtls_dap.setup_dap_main_class_configs()
+  end
+end
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  pattern = { "*.java" },
+  callback = function()
+    local _, _ = pcall(vim.lsp.codelens.refresh)
+  end,
+})
 
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
